@@ -1,0 +1,7 @@
+{
+  "name": "DébaTemps",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
