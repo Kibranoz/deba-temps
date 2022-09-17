@@ -4,8 +4,7 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Inbox</ion-list-header>
-            <ion-note>hi@ionicframework.com</ion-note>
+            <ion-list-header>DébatTemps</ion-list-header>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -13,15 +12,6 @@
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          </ion-list>
-  
-          <ion-list id="labels-list">
-            <ion-list-header>Labels</ion-list-header>
-  
-            <ion-item v-for="(label, index) in labels" lines="none" :key="index">
-              <ion-icon slot="start" :ios="bookmarkOutline" :md="bookmarkSharp"></ion-icon>
-              <ion-label>{{ label }}</ion-label>
-            </ion-item>
           </ion-list>
         </ion-content>
       </ion-menu>
@@ -47,8 +37,7 @@ export default defineComponent({
     IonList, 
     IonListHeader, 
     IonMenu, 
-    IonMenuToggle, 
-    IonNote, 
+    IonMenuToggle,  
     IonRouterOutlet, 
     IonSplitPane,
   },
@@ -56,8 +45,8 @@ export default defineComponent({
     const selectedIndex = ref(0);
     const appPages = [
       {
-        title: 'Inbox',
-        url: '/folder/Inbox',
+        title: 'Parlementaire Brittanique',
+        url: '/debatePlay/uk',
         iosIcon: mailOutline,
         mdIcon: mailSharp
       },
