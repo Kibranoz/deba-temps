@@ -55,8 +55,6 @@ setUpperLimit(newUpperLimit:number) {
 
     getTimeString() {
             const currentTimeSeconds = this.currentTime / 1000
-            console.log("current time seconds ")
-            console.log(currentTimeSeconds)
             const hours = Math.floor(currentTimeSeconds / 3600)
             const minutes = Math.floor(currentTimeSeconds/60) % 60
             const seconds = Math.floor(currentTimeSeconds) % 60
