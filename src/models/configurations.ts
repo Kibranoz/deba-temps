@@ -26,6 +26,20 @@ class configuration{
             return this.totalRoundTime
         }
     }
+    equals(otherConfig:configuration):boolean {
+        if (this.totalRoundTime == otherConfig.totalRoundTime){
+            if (this.isMiddle == otherConfig.isMiddle){
+                if (this.isGrace == otherConfig.isGrace){
+                    if (this.amountOfSecondsProtectedInTheBeginning == otherConfig.amountOfSecondsProtectedInTheBeginning){
+                        if (this.amountOfSecondsProtectedInTheEnd == otherConfig.amountOfSecondsProtectedInTheEnd){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 }
 

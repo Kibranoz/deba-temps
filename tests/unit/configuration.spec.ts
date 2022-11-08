@@ -9,7 +9,7 @@ describe("configurationModel", ()=>{
         expect(configuration.getTimeWhenQuestionStartsToBeAllowed()).toBe(330)
     })
     it("determinates when an opponent can no longer be talking", ()=> {
-        let configuration = new sevenMinutes();
+        const configuration = new sevenMinutes();
         expect(configuration.getTimeWhenQuestionStopBeingAllowed()).toBe(60)
     })
     it("give a negative number if we are in an end configuration for time allowed", ()=> {
@@ -20,5 +20,14 @@ describe("configurationModel", ()=>{
         let configuration = new fourMinutes();
         expect(configuration.getTimeWhenQuestionStopBeingAllowed()).toBe(configuration.totalRoundTime)
     })
+    
+    it("can tell if two configurations are equals",()=>{
+        const aConfig = new sevenMinutes();
+        const sameConfig = new sevenMinutes();
+        const differentConfig = new sixMinutes();
+        expect(aConfig.equals(sameConfig)).toBe(true);
+        expect(aConfig.equals(differentConfig)).toBe(false);
+    }
+    )
 
 })
