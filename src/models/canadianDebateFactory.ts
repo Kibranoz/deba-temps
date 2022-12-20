@@ -9,7 +9,7 @@ import { configFromURL } from "@ionic/core";
 import configuration from "./configurations";
 
 class CanadianDebateFactory {
-    govMode = "7-3";
+    govMode = "sevenThree";
     oppMode = "split";
 
     setGovMode(govMode:string){
@@ -21,7 +21,7 @@ class CanadianDebateFactory {
 
     makeConfigList():any[]{
         const configuration = [];
-        if (this.govMode == "7-3"){
+        if (this.govMode == "sevenThree"){
             configuration.push(new sevenMinutes())
         }
         else {
@@ -44,7 +44,7 @@ class CanadianDebateFactory {
             configuration.push(new threeMinutes())
         }
         configuration.push(new fifteenSeconds())
-        if (this.govMode == "7-3"){
+        if (this.govMode == "sevenThree"){
             configuration.push(new threeMinutes())
         }
         else {
