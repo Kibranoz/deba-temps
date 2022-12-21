@@ -8,7 +8,7 @@
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+                <img :src="items[i]">
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
@@ -31,7 +31,7 @@ export default defineComponent({
   components: {
     IonApp, 
     IonContent, 
-    IonIcon, 
+    //IonIcon, 
     IonItem, 
     IonLabel, 
     IonList, 
@@ -41,44 +41,27 @@ export default defineComponent({
     IonRouterOutlet, 
     IonSplitPane,
   },
+  data() {
+    return {
+      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg"]
+    }
+  },
   setup() {
     const selectedIndex = ref(0);
     const appPages = [
       {
         title: 'Parlementaire Brittanique',
         url: '/debatePlay/uk',
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
+
       },
       {
-        title: 'Outbox',
-        url: '/folder/Outbox',
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
+        title: 'Parlementaire Canadien',
+        url: '/debatePlay/ca',
       },
       {
-        title: 'Favorites',
-        url: '/folder/Favorites',
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-      },
-      {
-        title: 'Archived',
-        url: '/folder/Archived',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
-      },
-      {
-        title: 'Trash',
-        url: '/folder/Trash',
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
-      },
-      {
-        title: 'Spam',
-        url: '/folder/Spam',
-        iosIcon: warningOutline,
-        mdIcon: warningSharp
+        title: 'Parlementaire US',
+        url: '/debatePlay/us',
+
       }
     ];
     const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
@@ -87,6 +70,8 @@ export default defineComponent({
     if (path !== undefined) {
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+
+    
     
     const route = useRoute();
     

@@ -23,19 +23,21 @@
     </div>
     </div>
 
-    <ion-modal class="canadianDebate" :is-open="true">
+    <ion-modal class="canadianDebate" :is-open="this.shouldOpenModal">
     <p>Canadien parlementaire</p>
     <p>Premier ministre : 6-4 ou 7-3</p>
     <span>
-        <ion-button forArea="primeMinisterSelect" id="sixFour" @click="greenify('sixFour')">6-4</ion-button>
-        <ion-button forArea="primeMinisterSelect" id="sevenThree" @click="greenify('sevenThree')">7-3</ion-button>
+        <ion-button forArea="primeMinisterSelect" id="sixFour" @click="selectOption('sixFour', 'gov')">6-4</ion-button>
+        <ion-button forArea="primeMinisterSelect" id="sevenThree" @click="selectOption('sevenThree', 'gov')">7-3</ion-button>
     </span>
 
     <p>Membre de l'opposition : Split ou traditionnel</p>
     <span>
-        <ion-button forArea="oppositionMemberSelect" id="splitElement" @click="greenify('splitElement')">Split</ion-button>
-        <ion-button forArea="oppositionMemberSelect" id="tradElement" @click="greenify('tradElement')">Traditionnel</ion-button>
+        <ion-button forArea="oppositionMemberSelect" id="split" @click="selectOption('split', 'opp')">Split</ion-button>
+        <ion-button forArea="oppositionMemberSelect" id="trad" @click="selectOption('trad', 'opp')">Traditionnel</ion-button>
     </span>
+
+    <span><ion-button @click="confirmSelection">Confirmer</ion-button></span>
     </ion-modal>
 
     <div class="informationArea">
@@ -66,21 +68,26 @@
 </template>
 <script lang="ts">
 
+import canadianDebateFactory from "@/models/canadianDebateFactory";
+import CanadianDebateFactory from "@/models/canadianDebateFactory";
 import configuration from "@/models/configurations";
 import  debate from "@/models/debate";
 import timer from "@/models/timer";
 import eightMinutes from "@/realizations/DebateConfigurations/eightMinutes";
 import fifteenSeconds from "@/realizations/DebateConfigurations/fifteenSeconds";
+import fiveMinutes from "@/realizations/DebateConfigurations/fiveMinutes";
+import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
 import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
 import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
+import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import { debuggerStatement } from "@babel/types";
-import { IonContent, IonHeader, IonIcon, IonModal, IonPage, IonTitle } from "@ionic/vue";
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
 import { HtmlAttributes } from "csstype";
-import {caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, chatbubbleSharp, handLeftSharp, personSharp} from "ionicons/icons"
-import { defineComponent } from "vue";
-
+import { getName } from "ionicons/dist/types/components/icon/utils";
+import {caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, chatbubbleSharp, handLeftSharp, personSharp, pause, play, time} from "ionicons/icons"
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
     name:"DebatePlay",
@@ -106,7 +113,9 @@ export default defineComponent({
     data() {
         return {
             isPlaying:false,
-            currentDebate: new debate([new sixMinutes(), new fifteenSeconds(),new tenMinutes()], ["role 1", "role b"]),
+            currentDebate: this.getNewDebate(this.$route.params.id),
+            canadianDebateFactory: new CanadianDebateFactory(),
+            shouldOpenModal:false,
             role : "",
             canTalk : "",
             time: "0:0:0"
@@ -123,7 +132,12 @@ export default defineComponent({
 
     },
 
+
     created() {
+        console.log('I am created')
+        if (this.$route.params.id == 'ca'){
+            this.shouldOpenModal = true;
+        }
         setInterval(()=>{
             this.currentDebate.getTimer().tick()
             this.time = this.currentDebate.getTimer().getTimeString();
@@ -167,12 +181,23 @@ export default defineComponent({
             this.role = this.currentDebate.getWhoIsTalking()
         },
 
-        greenify(targetId:string){
+        selectOption(targetId:string, forTeam:string){
             let button = document.getElementById(targetId) as HTMLElement;
             button.setAttribute("color", "success")
             this.redify(button.getAttribute("forArea") as string, targetId)
-
+            if (forTeam == "gov") {
+                this.canadianDebateFactory.setGovMode(targetId)
+            }
+            else {
+                this.canadianDebateFactory.setOppMode(targetId)
+            }
+        
         },
+
+        confirmSelection(){
+            this.currentDebate.setConfigurations(this.canadianDebateFactory.makeConfigList())
+        },
+
         redify(debateConfigCategory: string, targetId: string){
             console.log(debateConfigCategory)
             let elementsInDebateCategory = document.querySelectorAll("[forArea='"+debateConfigCategory+"']")
@@ -191,6 +216,23 @@ export default defineComponent({
 
         newRoleDetected(){
             this.role = this.currentDebate.getWhoIsTalking()
+        },
+
+        getNewDebate(symbol:string){
+            switch(symbol){
+                case "uk":
+                    console.log("uk")
+                    return new debate([new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds(),new sevenMinutes(),new thirtySeconds()], ["Le ou la Première ministre", "Le ou la Cheffe de l'opposition", "Le ou la vice première ministre", "Le ou la cheffe adjointe de l'opposition","Le Membre du gouvernement","Le membre de l'opposition", "Le whip du gouvernement", "Le whip de l'opposition"])
+                case "ca":
+                    // to do switch this
+                    return new debate([new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(),new fifteenSeconds(), new sevenMinutes(),new fifteenSeconds(),new sevenMinutes(),new fifteenSeconds(),new threeMinutes(),new fifteenSeconds(), new threeMinutes(), new fifteenSeconds()], ["Le ou la Première ministre", "Le ou la Cheffe de l'opposition", "Le ou la Ministre de la couronne", "Le Membre de l'opposition","Le ou la Cheffe de l'oppositon","Le ou la Première ministre"])
+                case 'us':
+                    console.log("us")
+                    this.currentDebate = new debate([new sevenMinutes(),new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new fourMinutes(), new thirtySeconds(),new fiveMinutes(), new thirtySeconds()],["Premier ministre", "Chef de l'opposition", "Membre du gouvernement", "Membre de l'opposition", "Chef de l'opposition", "Premier ministre"])
+            }
+
+            return new debate([new sevenMinutes(),new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new fourMinutes(), new thirtySeconds(),new fiveMinutes(), new thirtySeconds()],["Premier ministre", "Chef de l'opposition", "Membre du gouvernement", "Membre de l'opposition", "Chef de l'opposition", "Premier ministre"])
+
         }
 
     }
