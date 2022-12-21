@@ -123,7 +123,6 @@ export default defineComponent({
     },
     computed: {
         currentConfigurationIndex() {
-            console.log("currentConfigurationINdex")
             return this.currentDebate.configurationIndex;
         },
         currentDebatePlaying() {
@@ -155,6 +154,11 @@ export default defineComponent({
         }
             }
             ,1000)
+        setInterval(()=>{
+            this.currentDebate.getTimer().tick()
+            this.time = this.currentDebate.getTimer().getTimeString();
+
+        },100)
     },
 
 
@@ -196,6 +200,7 @@ export default defineComponent({
 
         confirmSelection(){
             this.currentDebate.setConfigurations(this.canadianDebateFactory.makeConfigList())
+            this.currentDebate.restartTimer()
         },
 
         redify(debateConfigCategory: string, targetId: string){

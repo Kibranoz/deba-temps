@@ -102,6 +102,9 @@ fastForward() {
 setConfigurations(configurations:[configuration]) {
     this.configurations = configurations;
 }
+restartTimer(){
+    this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
+}
 setRoles(roles:[string]) {
     this.roles = roles;
 }
