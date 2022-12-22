@@ -62,6 +62,10 @@ export default defineComponent({
         title: 'Parlementaire US',
         url: '/debatePlay/us',
 
+      },
+      {
+        title: 'Testing',
+        url: '/debatePlay/test'
       }
     ];
     const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];

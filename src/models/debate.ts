@@ -15,7 +15,6 @@ constructor(configurations:any,roles:any){
     this.configurations = configurations
     this.roles = roles;
     this.debateTimer = new timer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
-
 }
 
 getCurrentConfiguration():configuration {
@@ -34,7 +33,7 @@ getIfGrace():boolean {
 }
 
 getIfPOIAllowed():boolean {
-    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed() && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed()) {
+    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed()*1000 && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed()*1000) {
         return true;
     }
     return false;
@@ -47,8 +46,12 @@ nextConfiguration() {
     else {
         this.configurationIndex += 1;
     }
+    this.debateTimer.resetTimer()  
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
-    this.debateTimer.resetTimer()
+    if (!this.getCurrentConfiguration().isGrace){
+        this.debateTimer.tick();
+        this.debateTimer.pause();
+    }
 }
 
 previousConfiguration() {
@@ -58,9 +61,12 @@ previousConfiguration() {
     else {
         this.configurationIndex -= 1;
     }
-
-    this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
     this.debateTimer.resetTimer();
+    this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
+    if (!this.getCurrentConfiguration().isGrace){
+        this.debateTimer.tick()
+        this.debateTimer.pause();
+    }
 }
 fastBackward() {
     if (this.configurationIndex <= 0) {
@@ -109,8 +115,6 @@ setRoles(roles:[string]) {
     this.roles = roles;
 }
 }
-
-
 
 //export const Debate = new debate([new sixMinutes(), new tenMinutes()], ["role 1", "role b"])
 

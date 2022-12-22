@@ -21,16 +21,25 @@ class CanadianDebateFactory {
 
     makeConfigList():any[]{
         const configuration = [];
+        const roles = []
         if (this.govMode == "sevenThree"){
             configuration.push(new sevenMinutes())
         }
         else {
             configuration.push(new sixMinutes())
         }
+        roles.push("Permier ministre")
         configuration.push(new fifteenSeconds());
         if (this.oppMode == "split") {
             configuration.push(new sevenMinutes())
             configuration.push(new fifteenSeconds())
+            roles.push("Chef de l'opposition")
+            roles.push("Ministre de la couronne")
+            roles.push("Membre de l'opposition")
+        }
+        else {
+            roles.push("Membre de l'opposition")
+            roles.push("Ministre de la couronne")
         }
         configuration.push(new sevenMinutes());
         configuration.push(new fifteenSeconds());
@@ -43,6 +52,7 @@ class CanadianDebateFactory {
         else {
             configuration.push(new threeMinutes())
         }
+        roles.push("Chef de l'opposition")
         configuration.push(new fifteenSeconds())
         if (this.govMode == "sevenThree"){
             configuration.push(new threeMinutes())
@@ -50,9 +60,10 @@ class CanadianDebateFactory {
         else {
             configuration.push(new fourMinutes())
         }
+        roles.push('Premier Ministre')
         configuration.push(new fifteenSeconds())
 
-        return configuration
+        return [configuration,roles]
     }
 
 }
