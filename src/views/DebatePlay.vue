@@ -27,17 +27,17 @@
     <p>Canadien parlementaire</p>
     <p>Premier ministre : 6-4 ou 7-3</p>
     <span>
-        <ion-button forArea="primeMinisterSelect" id="sixFour" @click="selectOption('sixFour', 'gov')">6-4</ion-button>
-        <ion-button forArea="primeMinisterSelect" id="sevenThree" @click="selectOption('sevenThree', 'gov')">7-3</ion-button>
+        <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour" @click="selectOption('sixFour', 'gov')">6-4</button>
+        <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree" @click="selectOption('sevenThree', 'gov')">7-3</button>
     </span>
 
     <p>Membre de l'opposition : Split ou traditionnel</p>
     <span>
-        <ion-button forArea="oppositionMemberSelect" id="split" @click="selectOption('split', 'opp')">Split</ion-button>
-        <ion-button forArea="oppositionMemberSelect" id="trad" @click="selectOption('trad', 'opp')">Traditionnel</ion-button>
+        <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split" @click="selectOption('split', 'opp')">Split</button>
+        <button type="button"  class="modalButton" forArea="oppositionMemberSelect" id="trad" @click="selectOption('trad', 'opp')">Traditionnel</button>
     </span>
 
-    <span><ion-button @click="confirmSelection">Confirmer</ion-button></span>
+    <span><button type="button" class="modalButton" @click="confirmSelection">Confirmer</button></span>
     </ion-modal>
 
     <div class="informationArea">
@@ -185,7 +185,7 @@ export default defineComponent({
 
         selectOption(targetId:string, forTeam:string){
             let button = document.getElementById(targetId) as HTMLElement;
-            button.setAttribute("color", "success")
+            button.style.backgroundColor = "mediumseagreen"
             this.redify(button.getAttribute("forArea") as string, targetId)
             if (forTeam == "gov") {
                 this.canadianDebateFactory.setGovMode(targetId)
@@ -210,10 +210,11 @@ export default defineComponent({
             console.log('element in devate category')
             console.log(Array.from(elementsInDebateCategory))
                 Array.from(elementsInDebateCategory).forEach((element)=>{
+                    let htmlelement = element as HTMLElement
                     console.log(element.id)
                     if (element.id != targetId) {
                         console.log("Not target id")
-                        element.setAttribute("color", "danger")
+                        htmlelement.style.backgroundColor= "red"
                     }
                 })
                     
@@ -297,6 +298,13 @@ ion-icon {
     padding-bottom: 50px;
 
 
+}
+
+.modalButton {
+background-color: deepskyblue;
+font-size: 20px;
+padding:10px;
+margin:10px;
 }
 
 

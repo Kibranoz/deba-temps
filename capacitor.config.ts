@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'DébaTemps',
+  appId: 'com.debatemps.app',
+  appName: 'debatemps',
   webDir: 'dist',
   bundledWebRuntime: false
 };
