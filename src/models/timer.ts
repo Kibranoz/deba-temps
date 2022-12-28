@@ -1,4 +1,5 @@
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
+import { LocalNotifications } from "@capacitor/local-notifications";
 import { IonThumbnail } from "@ionic/vue";
 
 class timer {
@@ -14,7 +15,7 @@ constructor(upperLimit:number) {
     this.upperLimit = upperLimit
 }
 
-setUpperLimit(newUpperLimit:number) {
+async setUpperLimit(newUpperLimit:number) {
     this.upperLimit = newUpperLimit
 }
 
@@ -44,6 +45,7 @@ setUpperLimit(newUpperLimit:number) {
 
     resetTimer() {
         this.timeStartedAt = Date.now();
+        this.currentTime = (this.timeStartedAt + this.upperLimit * 1000) - Date.now();
     }
 
     pause(){
