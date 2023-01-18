@@ -220,6 +220,10 @@ ion-note {
   color: var(--ion-color-medium-shade);
 }
 
+ion-item img {
+  margin: 10px;
+}
+
 ion-item.selected {
   --color: var(--ion-color-primary);
 }

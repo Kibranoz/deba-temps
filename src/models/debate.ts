@@ -40,6 +40,8 @@ getIfPOIAllowed():boolean {
 }
 
 nextConfiguration() {
+    const clapping = new Audio("../../../assets/sounds/clapping.wav")
+    const moon = new Audio("../../../assets/sounds/moon.wav")
     if (this.configurationIndex >= this.configurations.length -1) {
         this.configurationIndex = 0;
     }
@@ -49,8 +51,12 @@ nextConfiguration() {
     this.debateTimer.resetTimer()  
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
     if (!this.getCurrentConfiguration().isGrace){
+        clapping.play();
         this.debateTimer.tick();
         this.debateTimer.pause();
+    }
+    else {
+        moon.play();
     }
 }
 

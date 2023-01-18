@@ -15,7 +15,7 @@ constructor(upperLimit:number) {
     this.upperLimit = upperLimit
 }
 
-async setUpperLimit(newUpperLimit:number) {
+setUpperLimit(newUpperLimit:number) {
     this.upperLimit = newUpperLimit
 }
 
@@ -28,7 +28,7 @@ async setUpperLimit(newUpperLimit:number) {
         // before was just get milliseconds
         }
     }
-    play(){
+    async play(){
 
         if (this.paused) {
             const pauseDelta:number = (this.currentPauseTime - this.pauseStartedAt)
@@ -41,6 +41,12 @@ async setUpperLimit(newUpperLimit:number) {
             this.timeStartedAt = Date.now();
             this.playing = true; 
         }
+        const whenToSend = new Date()
+        whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
+    
+        LocalNotifications.schedule({notifications:[{title: "Le temps est écoulé", body:"Terminez votre discours",
+        id:0, schedule:{at:whenToSend}
+    }]})
     }
 
     resetTimer() {
@@ -48,18 +54,25 @@ async setUpperLimit(newUpperLimit:number) {
         this.currentTime = (this.timeStartedAt + this.upperLimit * 1000) - Date.now();
     }
 
-    pause(){
+    async pause(){
         this.playing = false;
         this.paused = true
         this.pauseStartedAt = Date.now();
+        const pendingNotifications = (await LocalNotifications.getPending()).notifications
+        LocalNotifications.cancel({notifications:pendingNotifications})
         }
  
 
     getTimeString() {
-            const currentTimeSeconds = this.currentTime / 1000
+            let currentTimeSeconds = this.currentTime / 1000
             const hours = Math.floor(currentTimeSeconds / 3600)
-            const minutes = Math.floor(currentTimeSeconds/60) % 60
-            const seconds = Math.floor(currentTimeSeconds) % 60
+            currentTimeSeconds -= hours*3600
+            let minutes = Math.floor(currentTimeSeconds/60) % 60
+            currentTimeSeconds -= minutes*60
+            const seconds = Math.round(currentTimeSeconds) % 60
+            if (Math.round(currentTimeSeconds) == 60){
+                minutes+=1
+            }
             return hours.toString() + ":" + minutes.toString() + ":" + seconds.toString()
         
 }
