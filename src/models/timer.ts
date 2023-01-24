@@ -45,8 +45,7 @@ setUpperLimit(newUpperLimit:number) {
         whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
     
         LocalNotifications.schedule({notifications:[{title: "Le temps est écoulé", body:"Terminez votre discours",
-        id:0, schedule:{at:whenToSend}, sound: "moon.wav"
-    }]})
+        id:0, schedule:{at:whenToSend}, channelId:"roundOver"  }]})
     }
 
     resetTimer() {

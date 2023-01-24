@@ -89,6 +89,7 @@ import { HtmlAttributes } from "csstype";
 import { getName } from "ionicons/dist/types/components/icon/utils";
 import {caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, chatbubbleSharp, handLeftSharp, personSharp, pause, play, time} from "ionicons/icons"
 import { computed, defineComponent } from "vue";
+import { LocalNotifications } from "@capacitor/local-notifications";
 
 export default defineComponent({
     name:"DebatePlay",
@@ -132,11 +133,21 @@ export default defineComponent({
 
     },
 
-    created() {
+    async created() {
         console.log('I am created')
         if (this.$route.params.id == 'ca'){
             this.shouldOpenModal = true;
         }
+        await LocalNotifications.createChannel({
+            id: 'roundOver',
+            name:'Round is over notification',
+            importance:5,
+            description: "Be notified when the debatter turn is over",
+            sound: "moon.wav",
+            visibility:1,
+            vibration: true     
+        }
+        )
         setInterval(()=>{
             this.currentDebate.getTimer().tick()
             this.canTalk = (this.currentDebate.getIfPOIAllowed() ? "Oui" : "Non") ;
