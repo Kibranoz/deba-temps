@@ -13,12 +13,12 @@ describe("canadianFactory", ()=>{
         canadianFactory = new CanadianDebateFactory();
     })
     it("has default values",()=>{
-        expect(canadianFactory.govMode).toBe("7-3")
+        expect(canadianFactory.govMode).toBe("sevenThree")
         expect(canadianFactory.oppMode).toBe("split")
     }
     )
     it("will deliver a list according to specific modes", ()=>{
-        canadianFactory.setGovMode("6-4")
+        canadianFactory.setGovMode("sixFour")
         canadianFactory.setOppMode("trad");
         const expectedConfigurationList = [new sixMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new tenMinutes(), new fifteenSeconds(), new fourMinutes(), new fifteenSeconds()];
         const actualConfigurationList = canadianFactory.makeConfigList();

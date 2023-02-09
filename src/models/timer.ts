@@ -18,6 +18,9 @@ constructor(upperLimit:number) {
 setUpperLimit(newUpperLimit:number) {
     this.upperLimit = newUpperLimit
 }
+removeSecondsElapsedSinceLastTimeOut(milliseconds:number){
+    this.upperLimit -= milliseconds;
+}
 
     tick():void{
         if (this.paused) {

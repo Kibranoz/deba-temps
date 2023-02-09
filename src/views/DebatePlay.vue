@@ -138,7 +138,7 @@ export default defineComponent({
         if (this.$route.params.id == 'ca'){
             this.shouldOpenModal = true;
         }
-        await LocalNotifications.createChannel({
+       await LocalNotifications.createChannel({
             id: 'roundOver',
             name:'Round is over notification',
             importance:5,
@@ -147,9 +147,12 @@ export default defineComponent({
             visibility:1,
             vibration: true     
         }
+ 
         )
+
         setInterval(()=>{
             this.currentDebate.getTimer().tick()
+            console.log(this.currentDebate.getTimer().currentTime)
             this.canTalk = (this.currentDebate.getIfPOIAllowed() ? "Oui" : "Non") ;
             if (this.currentDebate.debateTimer.currentTime <= 0 && this.currentDebate.getTimer().playing) {
                 console.log("next configuration")
@@ -213,6 +216,7 @@ export default defineComponent({
             this.currentDebate.setRoles(configurationResults[1])
             this.shouldOpenModal = false
             this.currentDebate.restartTimer()
+            this.time = this.currentDebate.getTimer().getTimeString();
         },
 
         redify(debateConfigCategory: string, targetId: string){
