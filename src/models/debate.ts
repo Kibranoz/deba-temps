@@ -42,32 +42,16 @@ getIfPOIAllowed():boolean {
 nextConfiguration() {
     const clapping = new Audio("../../../assets/sounds/clapping.wav")
     const moon = new Audio("../../../assets/sounds/moon.wav")
-    let userLeftDuringDebate = false; 
-    let debateOverflow = 0;
+
     if (this.configurationIndex >= this.configurations.length -1) {
         this.configurationIndex = 0;
     }
     else {
         this.configurationIndex += 1;
-        if (this.getCurrentConfiguration().isGrace){
-        if (-1*this.debateTimer.currentTime/1000 > this.getCurrentConfiguration().getConfigurationTotalRunTime()) {
-            console.log("currentTime when leav"+this.debateTimer.currentTime)
-            this.configurationIndex +=1;
-        }
-        else {
-            console.log("user left debate")
-            debateOverflow = -1*this.debateTimer.currentTime/1000;
-            userLeftDuringDebate = true;
-        }
-    }
     }
         console.log("resetTimer")
     this.debateTimer.resetTimer()  
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
-    if (userLeftDuringDebate) {
-        this.debateTimer.removeSecondsElapsedSinceLastTimeOut(debateOverflow);
-    }
-
     if (!this.getCurrentConfiguration().isGrace){
         clapping.play();
         this.debateTimer.tick();

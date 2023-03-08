@@ -18,9 +18,6 @@ constructor(upperLimit:number) {
 setUpperLimit(newUpperLimit:number) {
     this.upperLimit = newUpperLimit
 }
-removeSecondsElapsedSinceLastTimeOut(milliseconds:number){
-    this.upperLimit -= milliseconds;
-}
 
     tick():void{
         if (this.paused) {
@@ -61,7 +58,6 @@ removeSecondsElapsedSinceLastTimeOut(milliseconds:number){
         this.paused = true
         this.pauseStartedAt = Date.now();
         const pendingNotifications = (await LocalNotifications.getPending()).notifications
-        LocalNotifications.cancel({notifications:pendingNotifications})
         }
  
 
