@@ -67,7 +67,6 @@
 </ion-page>
 </template>
 <script lang="ts">
-
 import canadianDebateFactory from "@/models/canadianDebateFactory";
 import CanadianDebateFactory from "@/models/canadianDebateFactory";
 import configuration from "@/models/configurations";
@@ -91,7 +90,7 @@ import {caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, 
 import { computed, defineComponent } from "vue";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { App } from '@capacitor/app';
-
+import { Device } from '@capacitor/device;
 
 export default defineComponent({
     name:"DebatePlay",
@@ -144,9 +143,13 @@ export default defineComponent({
         App.addListener('appStateChange', ({ isActive }) => {
   console.log('App state changed. Is active?', isActive);
 });
+        if (await (await LocalNotifications.checkPermissions()).display == "prompt"){
+        await LocalNotifications.requestPermissions()
+        }
+        if (await (await Device.getInfo()).platform == "android"){
        await LocalNotifications.createChannel({
-            id: 'roundOver',
-            name:'Round is over notification',
+          id: 'roundOver',
+           name:'Round is over notification',
             importance:5,
             description: "Be notified when the debatter turn is over",
             sound: "moon.wav",
@@ -155,6 +158,7 @@ export default defineComponent({
         }
  
         )
+    }
 
         setInterval(()=>{
             this.currentDebate.getTimer().tick()
@@ -270,8 +274,12 @@ export default defineComponent({
 })
 </script>
 <style lang="css">
+.ios ion-modal{
+    padding-top: 50px;
+}
 .canadianDebate .modal-wrapper{
     padding: 10px;
+
 }
 .hidden {
     display: none;
@@ -322,6 +330,7 @@ ion-icon {
 
 .modalButton {
 background-color: deepskyblue;
+color:black;
 font-size: 20px;
 padding:10px;
 margin:10px;
