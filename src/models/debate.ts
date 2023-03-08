@@ -33,7 +33,7 @@ getIfGrace():boolean {
 }
 
 getIfPOIAllowed():boolean {
-    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed()*1000 && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed()*1000) {
+    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed() * 1000 && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed() * 1000) {
         return true;
     }
     return false;
