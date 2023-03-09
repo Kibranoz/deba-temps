@@ -28,7 +28,7 @@ class CanadianDebateFactory {
         else {
             configuration.push(new sixMinutes())
         }
-        roles.push("Permier ministre")
+        roles.push("Premier ministre")
         configuration.push(new fifteenSeconds());
         if (this.oppMode == "split") {
             configuration.push(new sevenMinutes())

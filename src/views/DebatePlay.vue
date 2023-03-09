@@ -90,7 +90,7 @@ import {caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, 
 import { computed, defineComponent } from "vue";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { App } from '@capacitor/app';
-import { Device } from '@capacitor/device;
+import { Device } from '@capacitor/device';
 
 export default defineComponent({
     name:"DebatePlay",
