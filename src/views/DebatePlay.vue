@@ -156,7 +156,7 @@ export default defineComponent({
                 name: 'Round is over notification',
                 importance: 5,
                 description: "Be notified when the debatter turn is over",
-                sound: "moon.wav",
+                sound: "android.resource://com.debatemps.app/raw/moon.wav",
                 visibility: 1,
                 vibration: true
             }

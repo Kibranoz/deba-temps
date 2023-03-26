@@ -2,6 +2,7 @@ import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import configuration from "./configurations";
+import debateSoundManager from "./DebateSoundManager";
 import timer from "./timer";
 
 class debate {
@@ -9,6 +10,7 @@ class debate {
 configurations: any;
 configurationIndex = 0;
 time = 0
+POIAllowed = false;
 debateTimer:timer
 roles: any;
 constructor(configurations:any,roles:any){
@@ -18,62 +20,71 @@ constructor(configurations:any,roles:any){
 }
 
 getCurrentConfiguration():configuration {
-    return this.configurations[this.configurationIndex];
+    return this.configurations[this.configurationIndex]
 }
 getTimer():timer {
-    return this.debateTimer;
+    return this.debateTimer
 }
 
 getWhoIsTalking() {
-    return this.roles[Math.floor(this.configurationIndex/2)];
+    return this.roles[Math.floor(this.configurationIndex/2)]
 }
 
 getIfGrace():boolean {
-    return this.configurations[this.configurationIndex].isGrace;
+    return this.configurations[this.configurationIndex].isGrace
 }
 
 getIfPOIAllowed():boolean {
-    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed() * 1000 && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed() * 1000) {
-        return true;
-    }
-    return false;
-}
-
-nextConfiguration() {
-    const clapping = new Audio("../../../assets/sounds/clapping.wav")
-    const moon = new Audio("../../../assets/sounds/moon.wav")
-
-    if (this.configurationIndex >= this.configurations.length -1) {
-        this.configurationIndex = 0;
+    if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed() * 1000 
+    && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed() * 1000) {
+        //was not allowed, now is
+        if (!this.POIAllowed){
+            debateSoundManager.changePOIAllowed()
+            this.POIAllowed = true
+        }
     }
     else {
-        this.configurationIndex += 1;
+        // was allowed, now isn't 
+        if (this.POIAllowed){
+            debateSoundManager.changePOIAllowed()
+            this.POIAllowed = false
+        }
+    }
+    return this.POIAllowed
+}
+nextConfiguration() {
+
+    if (this.configurationIndex >= this.configurations.length -1) {
+        this.configurationIndex = 0
+    }
+    else {
+        this.configurationIndex += 1
     }
         console.log("resetTimer")
     this.debateTimer.resetTimer()  
-    this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
+    this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime())
     if (!this.getCurrentConfiguration().isGrace){
-        clapping.play();
+        debateSoundManager.roundIsReallyOver();
         this.debateTimer.tick();
         this.debateTimer.pause();
     }
-    else {
-        moon.play();
+    else{
+        debateSoundManager.roundIsOver()
     }
 }
 
 previousConfiguration() {
     if (this.configurationIndex <= 0) {
-        this.configurationIndex = this.configurations.length - 1;
+        this.configurationIndex = this.configurations.length - 1
     }
     else {
-        this.configurationIndex -= 1;
+        this.configurationIndex -= 1
     }
-    this.debateTimer.resetTimer();
+    this.debateTimer.resetTimer()
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
     if (!this.getCurrentConfiguration().isGrace){
         this.debateTimer.tick()
-        this.debateTimer.pause();
+        this.debateTimer.pause()
     }
 }
 fastBackward() {
@@ -105,12 +116,12 @@ fastForward() {
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
 
     if (this.getCurrentConfiguration().isGrace) {
-        this.fastForward();
+        this.fastForward()
     } 
     else {
-        this.debateTimer.resetTimer();
-        this.debateTimer.tick();
-        this.debateTimer.pause();
+        this.debateTimer.resetTimer()
+        this.debateTimer.tick()
+        this.debateTimer.pause()
     }
 }
 setConfigurations(configurations:[configuration]) {
@@ -120,7 +131,7 @@ restartTimer(){
     this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
 }
 setRoles(roles:[string]) {
-    this.roles = roles;
+    this.roles = roles
 }
 }
 

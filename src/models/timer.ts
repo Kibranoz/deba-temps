@@ -29,7 +29,6 @@ setUpperLimit(newUpperLimit:number) {
         }
     }
     async play(){
-
         if (this.paused) {
             const pauseDelta:number = (this.currentPauseTime - this.pauseStartedAt)
             this.timeStartedAt += pauseDelta;
