@@ -47,7 +47,7 @@ export default defineComponent({
     }
   },
   setup() {
-    const selectedIndex = ref(0);
+    const selectedIndex = ref(2);
     const appPages = [
       {
         title: 'Parlementaire Brittanique',
@@ -63,10 +63,11 @@ export default defineComponent({
         url: '/debatePlay/us',
 
       },
-      {
-        title: 'Testing',
+      /** {
+        //title: 'Testing',
         url: '/debatePlay/test'
       }
+      **/
     ];
     const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
     

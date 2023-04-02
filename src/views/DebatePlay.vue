@@ -23,25 +23,36 @@
                     </div>
                 </div>
 
-                <ion-modal class="canadianDebate" :is-open="shouldOpenModal">
-                    <p>Canadien parlementaire</p>
-                    <p>Premier ministre : 6-4 ou 7-3</p>
+                <ion-modal class="specialDebateModal" :is-open="shouldOpenModalCa">
+                    <p class="modalTitle">Canadien parlementaire</p>
+                    <p class="modalChoice">Premier ministre : 6-4 ou 7-3</p>
                     <span>
                         <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour"
-                            @click="selectOption('sixFour', 'gov')">6-4</button>
+                            @click="selectOptionCa('sixFour', 'gov')">6-4</button>
                         <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree"
-                            @click="selectOption('sevenThree', 'gov')">7-3</button>
+                            @click="selectOptionCa('sevenThree', 'gov')">7-3</button>
                     </span>
 
-                    <p>Membre de l'opposition : Split ou traditionnel</p>
+                    <p class="modalChoice">Membre de l'opposition : Split ou traditionnel</p>
                     <span>
                         <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split"
-                            @click="selectOption('split', 'opp')">Split</button>
+                            @click="selectOptionCa('split', 'opp')">Split</button>
                         <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
-                            @click="selectOption('trad', 'opp')">Traditionnel</button>
+                            @click="selectOptionCa('trad', 'opp')">Traditionnel</button>
                     </span>
 
                     <span><button type="button" class="modalButton" @click="confirmSelection">Confirmer</button></span>
+                </ion-modal>
+                <ion-modal :is-open="shouldOpenModalUk">
+                    <p class="modalTitle">Parlementaire Brittanique</p>
+                    <p class="modalChoice">Nombre de minutes</p>
+                    <button type="button" class="modalButton"
+                            @click="selectOptionUk(5)">5 min</button>
+                            <button type="button" class="modalButton"
+                            @click="selectOptionUk(6)">6 min</button>
+                    <button type="button" class="modalButton"
+                            @click="selectOptionUk(7)">7 min</button>
+                    
                 </ion-modal>
 
                 <div class="informationArea">
@@ -79,9 +90,11 @@ import timer from "@/models/timer";
 import eightMinutes from "@/realizations/DebateConfigurations/eightMinutes";
 import fifteenSeconds from "@/realizations/DebateConfigurations/fifteenSeconds";
 import fiveMinutes from "@/realizations/DebateConfigurations/fiveMinutes";
+import fiveMinutesUk from "@/realizations/DebateConfigurations/fiveMinutesUk";
 import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
 import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
 import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
+import sixMinutesUk from "@/realizations/DebateConfigurations/sixMinutesUk";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
@@ -95,6 +108,7 @@ import { computed, defineComponent } from "vue";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { App } from '@capacitor/app';
 import { Device } from '@capacitor/device';
+import { highlightTrailingWhitespace } from "jest-matcher-utils";
 
 export default defineComponent({
     name: "DebatePlay",
@@ -122,7 +136,8 @@ export default defineComponent({
             isPlaying: false,
             currentDebate: this.getNewDebate(this.$route.params.id),
             canadianDebateFactory: new CanadianDebateFactory(),
-            shouldOpenModal: false,
+            shouldOpenModalCa: false,
+            shouldOpenModalUk: false,
             role: "",
             canTalk: "",
             time: "0:0:0"
@@ -141,7 +156,10 @@ export default defineComponent({
     async created() {
         console.log('I am created')
         if (this.$route.params.id == 'ca') {
-            this.shouldOpenModal = true;
+            this.shouldOpenModalCa = true;
+        }
+        if (this.$route.params.id == 'uk') {
+            this.shouldOpenModalUk = true;
         }
 
         App.addListener('appStateChange', ({ isActive }) => {
@@ -210,7 +228,7 @@ export default defineComponent({
             this.role = this.currentDebate.getWhoIsTalking()
         },
 
-        selectOption(targetId: string, forTeam: string) {
+        selectOptionCa(targetId: string, forTeam: string) {
             let button = document.getElementById(targetId) as HTMLElement;
             button.style.backgroundColor = "mediumseagreen"
             this.redify(button.getAttribute("forArea") as string, targetId)
@@ -220,14 +238,28 @@ export default defineComponent({
             else {
                 this.canadianDebateFactory.setOppMode(targetId)
             }
-
+        },
+        selectOptionUk(minutes:number){
+            if (minutes == 5){
+                this.currentDebate.setConfigurations([new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), 
+                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
+                 new fiveMinutesUk(), new thirtySeconds()])
+            }
+            if (minutes == 6){
+                this.currentDebate.setConfigurations([new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), 
+                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
+                 new sixMinutesUk(), new thirtySeconds()])
+            }
+            this.shouldOpenModalUk = false;
+            this.currentDebate.restartTimer()
+            this.time = this.currentDebate.getTimer().getTimeString();
         },
 
         confirmSelection() {
             const configurationResults = this.canadianDebateFactory.makeConfigList()
             this.currentDebate.setConfigurations(configurationResults[0])
             this.currentDebate.setRoles(configurationResults[1])
-            this.shouldOpenModal = false
+            this.shouldOpenModalCa = false
             this.currentDebate.restartTimer()
             this.time = this.currentDebate.getTimer().getTimeString();
         },
@@ -296,9 +328,19 @@ export default defineComponent({
     padding-top: 50px;
 }
 
-.canadianDebate .modal-wrapper {
+.specialDebateModal .modal-wrapper {
     padding: 10px;
 
+}
+
+.modalTitle {
+    font-weight: bold;
+    margin-left: 20px;
+    font-size: 20px;
+}
+.modalChoice {
+    margin-left: 20px;
+    font-size: 15px;
 }
 
 .hidden {
