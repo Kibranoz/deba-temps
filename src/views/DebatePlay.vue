@@ -44,7 +44,7 @@
                     <span><button type="button" class="modalButton" @click="confirmSelection">Confirmer</button></span>
                 </ion-modal>
                 <ion-modal :is-open="shouldOpenModalUk">
-                    <p class="modalTitle">Parlementaire Brittanique</p>
+                    <p class="modalTitle">Parlementaire Britannique</p>
                     <p class="modalChoice">Nombre de minutes</p>
                     <button type="button" class="modalButton"
                             @click="selectOptionUk(5)">5 min</button>

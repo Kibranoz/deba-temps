@@ -11,8 +11,8 @@
 
         <ion-content>
             <div class="welcomeText">
-                Bienvenue dans l'application Débatemps
-
+                Bienvenue dans l'application Débatemps.
+                <br>
                 Vous pouvez choisir un type de débat dans le menu de droite. 
             </div>
             </ion-content>
