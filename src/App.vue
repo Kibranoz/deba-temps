@@ -50,7 +50,7 @@ export default defineComponent({
     const selectedIndex = ref(2);
     const appPages = [
       {
-        title: 'Parlementaire Brittanique',
+        title: 'Parlementaire Britannique',
         url: '/debatePlay/uk',
 
       },
