@@ -7,7 +7,7 @@ import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import { configFromURL } from "@ionic/core";
 import configuration from "./configurations";
-
+import {i18n} from "@/main"
 class CanadianDebateFactory {
     govMode = "sevenThree";
     oppMode = "split";
@@ -28,18 +28,18 @@ class CanadianDebateFactory {
         else {
             configuration.push(new sixMinutes())
         }
-        roles.push("Premier ministre")
+        roles.push(i18n.global.t("roles.cp.pm"))
         configuration.push(new fifteenSeconds());
         if (this.oppMode == "split") {
             configuration.push(new sevenMinutes())
             configuration.push(new fifteenSeconds())
-            roles.push("Chef de l'opposition")
-            roles.push("Ministre de la couronne")
-            roles.push("Membre de l'opposition")
+            roles.push(i18n.global.t("roles.cp.co"))
+            roles.push(i18n.global.t("roles.cp.mc"))
+            roles.push(i18n.global.t("roles.cp.mo"))
         }
         else {
-            roles.push("Membre de l'opposition")
-            roles.push("Ministre de la couronne")
+            roles.push(i18n.global.t("roles.cp.mo"))
+            roles.push(i18n.global.t("roles.cp.mc"))
         }
         configuration.push(new sevenMinutes());
         configuration.push(new fifteenSeconds());
@@ -52,7 +52,7 @@ class CanadianDebateFactory {
         else {
             configuration.push(new threeMinutes())
         }
-        roles.push("Chef de l'opposition")
+        roles.push(i18n.global.t("roles.cp.co"))
         configuration.push(new fifteenSeconds())
         if (this.govMode == "sevenThree"){
             configuration.push(new threeMinutes())
@@ -60,7 +60,7 @@ class CanadianDebateFactory {
         else {
             configuration.push(new fourMinutes())
         }
-        roles.push('Premier Ministre')
+        roles.push(i18n.global.t("roles.cp.pm"))
         configuration.push(new fifteenSeconds())
 
         return [configuration,roles]

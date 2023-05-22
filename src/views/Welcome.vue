@@ -19,13 +19,15 @@
                 <b>Crédit Son (retrouvés sur FreeSound)</b>
                 </div>
                 <ul>
+                <li>
                     Joe DeShon : son tappe pour le début et la fin du temps protégé
-                </ul>
-                <ul>
+                </li>
+                <li>
                     MoonCubeDesign : Son de début du temps de grâce, son des notification
-                </ul>
-                <ul>
+                </li>
+                <li>
                    Anagar : Son de fin du temps de grâce 
+                </li>
                 </ul>
             </ion-content>
     </ion-page>
