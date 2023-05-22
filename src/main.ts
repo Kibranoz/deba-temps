@@ -42,6 +42,12 @@ const messages =  {
       nbMinutes: "Nombre de minutes"
     }
   },
+  accessibility: {
+    back: "Retourner à une ronde précédente",
+    start: "Commencer le décompte",
+    pause: "Mettre sur pause", 
+    skip: "Passer cette ronde"
+  },
   debateView: {
     whoIsTalking: "Qui parle?",
     poi: "Questions autorisées ? (POI)",
@@ -98,6 +104,12 @@ const messages =  {
       poi: "Questions allowed ? (POI)",
       yes: "Yes",
       no: "No"
+    },
+    accessibility: {
+      back: "Go back to a previous round",
+      start: "Start countdown",
+      pause: "Pause", 
+      skip: "Skip this round"
     },
     roles :{
       cp:{
