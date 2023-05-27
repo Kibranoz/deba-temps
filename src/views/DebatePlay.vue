@@ -16,13 +16,13 @@
                         {{ time }}
                     </div>
                     <div class="controlArea">
-                        <ion-icon tabindex="0" aria-label="{{ $t('accessibility.back') }}" role="button" class="button"
+                        <ion-icon tabindex="0" :aria-label="$t('accessibility.back')" role="button" class="button"
                             :icon="playSkipBackSharp" @click="backward"></ion-icon>
-                        <ion-icon tabindex="1" role="button" aria-label="{{ $t('accessibility.start') }}" class="button"
+                        <ion-icon tabindex="1" role="button" :aria-label="$t('accessibility.start')" class="button"
                             v-if="!isPlaying" @click="play" :icon="caretForwardSharp"></ion-icon>
-                        <ion-icon tabindex="2" role="button" aria-label="{{ $t('accessibility.pause') }}" class="button" v-if="isPlaying"
+                        <ion-icon tabindex="2" role="button" :aria-label="$t('accessibility.pause')" class="button" v-if="isPlaying"
                             @click="pause" :icon="pauseSharp"></ion-icon>
-                        <ion-icon tabindex="3" role="button" aria-label="{{ $t('accessibility.skip') }}" class="button"
+                        <ion-icon tabindex="3" role="button" :aria-label="$t('accessibility.skip')" class="button"
                             :icon="playSkipForwardSharp" @click="forward"></ion-icon>
                     </div>
                 </div>

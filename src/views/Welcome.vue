@@ -5,28 +5,28 @@
                 <ion-buttons slot="start">
                     <ion-menu-button color="primary"></ion-menu-button>
                 </ion-buttons>
-                <ion-title> Accueil</ion-title>
+                <ion-title>{{ $t("welcome.header") }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content>
             <div class="welcomeText">
-                Bienvenue dans l'application Débatemps.
+                {{ $t("welcome.title") }}
             <br>
-                Vous pouvez choisir un type de débat dans le menu de droite. 
+            {{ $t("welcome.desc") }}
             </div>
             <div class="credits">
-                <b>Crédit Son (retrouvés sur FreeSound)</b>
+                <b>{{ $t("welcome.soundCreditTitle") }}</b>
                 </div>
                 <ul>
                 <li>
-                    Joe DeShon : son tappe pour le début et la fin du temps protégé
+                    {{ $t("welcome.Joe") }}
                 </li>
                 <li>
-                    MoonCubeDesign : Son de début du temps de grâce, son des notification
+                    {{ $t("welcome.MoonCube") }}
                 </li>
                 <li>
-                   Anagar : Son de fin du temps de grâce 
+                    {{ $t("welcome.Anagar") }}
                 </li>
                 </ul>
             </ion-content>

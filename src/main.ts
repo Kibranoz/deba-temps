@@ -77,6 +77,15 @@ const messages =  {
         wg: "Whip du gouvernement",
         wo: "Whip de l'opposition"
       }
+    },
+    welcome: {
+      header: "Accueil",
+      title: "Bienvenue dans l'application DébaTemps",
+      desc: "Vous pouvez choisir un type de débat dans le menu de droite",
+      soundCreditTitle: "Crédit son (Retrouvés sur FreeSound)",
+      Joe: "Joe DeShon : Son de tappe pour le début et la fin du temps protégé",
+      MoonCube: "MoonCubeDesign: Sound du début du temps de grâce, son des notifications",
+      Anagar: "Anagar: Son d'applaudissement de fin du temps de grâce"   
     }
   },
   en:{
@@ -134,11 +143,20 @@ const messages =  {
         wg: "Government whip",
         wo: "Opposition whip"
       }
+    },
+    welcome: {
+      header: "Welcome",
+      title: "Welcome in the DébaTemps Application",
+      desc: "You can choose a debate type in the right side menu",
+      soundCreditTitle: "Sound credits (Found on FreeSound)",
+      Joe: "Joe DeShon : Tap sound for the beginning and end of protected time",
+      MoonCube: "MoonCubeDesign: Sound of the beginning of the last seconds of grace and sound of the notification",
+      Anagar: "Anagar: Clapping sound when round is over"   
     }
   },
 }
 
-const lang = navigator.language == "fr"?"fr":"en";
+const lang = navigator.language.substring(0,2) == "fr"?"fr":"en";
 
 
 export const i18n = createI18n({
