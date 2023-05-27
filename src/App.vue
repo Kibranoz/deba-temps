@@ -1,5 +1,5 @@
 <template>
-  <ion-app lang="en">
+  <ion-app :lang="language">
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
@@ -45,9 +45,13 @@ export default defineComponent({
   },
   data() {
     return {
-      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg"]
+      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg"],
+      language: 'fr'
     }
   },
+  beforeMount() {
+    this.language = navigator.language.substring(0,2) == "fr"?"fr":"en";
+  }, 
   setup() {
     const { t } = useI18n();
 
