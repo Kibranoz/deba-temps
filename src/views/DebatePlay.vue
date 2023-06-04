@@ -27,8 +27,8 @@
                     </div>
                 </div>
 
-                <ion-modal class="specialDebateModal" :is-open="shouldOpenModalCa">
-                     <CPSelect :format="this.$route.params.id" v-model:debateProp="currentDebate" @confirm="confirm"></CPSelect>
+                <ion-modal class="specialDebateModal" :is-open="shouldOpenModal">
+                     <CPSelect :format="format" v-model:debateProp="currentDebate" @confirm="confirm"></CPSelect>
                 </ion-modal>
 
                 <div class="informationArea">
@@ -119,11 +119,11 @@ export default defineComponent({
             isPlaying: false,
             currentDebate: this.getNewDebate(this.$route.params.id),
             canadianDebateFactory: new CanadianDebateFactory(),
-            shouldOpenModalCa: false,
-            shouldOpenModalUk: false,
+            shouldOpenModal: false,
             role: "",
             canTalk: "",
-            time: "0:0:0"
+            time: "0:0:0",
+            format: ""
         }
     },
     computed: {
@@ -136,15 +136,22 @@ export default defineComponent({
 
     },
 
-    async created() {
-        console.log('I am created')
+    mounted() {
+        this.format = this.$route.params.id.toString();
         if (this.$route.params.id == 'ca') {
-            this.shouldOpenModalCa = true;
+            this.shouldOpenModal = true;
         }
         if (this.$route.params.id == 'uk') {
-            this.shouldOpenModalCa = true;
+            this.shouldOpenModal = true;
         }
 
+    },
+
+    beforeUnmount() {
+        this.shouldOpenModal = false;
+    },
+
+    async created() {
         App.addListener('appStateChange', ({ isActive }) => {
             console.log('App state changed. Is active?', isActive);
         });
@@ -185,15 +192,6 @@ export default defineComponent({
             , 100)
     },
 
-    watch: {
-        currentDebate: {
-            handler(newValue: any) {
-                    console.log(JSON.stringify(newValue))
-            }, 
-            deep:true
-        }
-    },
-
 
     methods: {
         play() {
@@ -222,7 +220,7 @@ export default defineComponent({
 
         confirm() {
             console.log("confirmCa")
-            this.shouldOpenModalCa = false
+            this.shouldOpenModal = false
             this.currentDebate.restartTimer()
            this.time = this.currentDebate.getTimer().getTimeString();
         },
