@@ -76,9 +76,14 @@ export default defineComponent({
       }
       **/
     ];
-    
 
 
+
+  const path = window.location.pathname;
+  console.log(path)
+    if (path !== undefined) {
+      selectedIndex.value = appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
+    }
 
     
     
