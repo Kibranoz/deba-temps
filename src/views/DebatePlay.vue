@@ -28,15 +28,7 @@
                 </div>
 
                 <ion-modal class="specialDebateModal" :is-open="shouldOpenModalCa">
-                     <CPSelect v-model:debateProp="currentDebate" @confirmCa="confirmCa"></CPSelect>
-                </ion-modal>
-                <ion-modal :is-open="shouldOpenModalUk">
-                    <p class="modalTitle">{{$t("options.bp.title")}}</p>
-                    <p class="modalChoice">{{$t("options.bp.nbMinutes")}}</p>
-                    <button type="button" class="modalButton" @click="selectOptionUk(5)">5 min</button>
-                    <button type="button" class="modalButton" @click="selectOptionUk(6)">6 min</button>
-                    <button type="button" class="modalButton" @click="selectOptionUk(7)">7 min</button>
-
+                     <CPSelect :format="this.$route.params.id" v-model:debateProp="currentDebate" @confirm="confirm"></CPSelect>
                 </ion-modal>
 
                 <div class="informationArea">
@@ -84,6 +76,7 @@ import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import oneMinute from "@/realizations/DebateConfigurations/oneMinute"
 import  CPSelect  from "@/views/selection/CPSelect.vue"
+import  BPSelect  from "@/views/selection/BPSelect.vue"
 import { debuggerStatement } from "@babel/types";
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
 import { HtmlAttributes } from "csstype";
@@ -105,7 +98,10 @@ export default defineComponent({
         IonContent,
         IonIcon,
         IonModal,
-        CPSelect
+        CPSelect,
+        IonMenuButton,
+        IonToolbar
+
     },
     setup() {
         return {
@@ -146,7 +142,7 @@ export default defineComponent({
             this.shouldOpenModalCa = true;
         }
         if (this.$route.params.id == 'uk') {
-            this.shouldOpenModalUk = true;
+            this.shouldOpenModalCa = true;
         }
 
         App.addListener('appStateChange', ({ isActive }) => {
@@ -189,6 +185,15 @@ export default defineComponent({
             , 100)
     },
 
+    watch: {
+        currentDebate: {
+            handler(newValue: any) {
+                    console.log(JSON.stringify(newValue))
+            }, 
+            deep:true
+        }
+    },
+
 
     methods: {
         play() {
@@ -214,23 +219,9 @@ export default defineComponent({
             this.time = this.currentDebate.getTimer().getTimeString()
             this.role = this.currentDebate.getWhoIsTalking()
         },
-        selectOptionUk(minutes: number) {
-            if (minutes == 5) {
-                this.currentDebate.setConfigurations([new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
-                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
-                new fiveMinutesUk(), new thirtySeconds()])
-            }
-            if (minutes == 6) {
-                this.currentDebate.setConfigurations([new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
-                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
-                new sixMinutesUk(), new thirtySeconds()])
-            }
-            this.shouldOpenModalUk = false;
-            this.currentDebate.restartTimer()
-            this.time = this.currentDebate.getTimer().getTimeString();
-        },
 
-        confirmCa() {
+        confirm() {
+            console.log("confirmCa")
             this.shouldOpenModalCa = false
             this.currentDebate.restartTimer()
            this.time = this.currentDebate.getTimer().getTimeString();
@@ -275,8 +266,6 @@ export default defineComponent({
 
 
     }
-
-
 
 })
 </script>
