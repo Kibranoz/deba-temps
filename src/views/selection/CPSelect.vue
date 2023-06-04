@@ -26,7 +26,6 @@
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
-import canadianDebateFactory from "@/models/canadianDebateFactory";
 import CanadianDebateFactory from '@/models/canadianDebateFactory';
 import debate from '@/models/debate';
 import fiveMinutesUk from '@/realizations/DebateConfigurations/fiveMinutesUk';
@@ -81,18 +80,20 @@ export default defineComponent({
 
         selectOptionUk(minutes: number) {
             if (minutes == 5) {
+                console.log("five")
                 this.dataDebate!.setConfigurations([new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
-                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
-                new fiveMinutesUk(), new thirtySeconds()])
+                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk().setIsMiddle(false), new thirtySeconds(),
+                new fiveMinutesUk().setIsMiddle(false), new thirtySeconds()])
             }
             if (minutes == 6) {
                 this.dataDebate!.setConfigurations([new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
-                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
-                new sixMinutesUk(), new thirtySeconds()])
+                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk().setIsMiddle(false), new thirtySeconds(),
+                new sixMinutesUk().setIsMiddle(false), new thirtySeconds()])
             }
 
-            else {
-                this.dataDebate!.setConfigurations([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds()])
+            if (minutes == 7) {
+                console.log("seven")
+                this.dataDebate!.setConfigurations([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds()])
             }
 
             this.$emit("update:debateProp", this.dataDebate);
