@@ -1,4 +1,4 @@
-<template>
+<template><template v-if="isCa">
     <p class="modalTitle">{{ $t("titles.cp") }}</p>
     <p class="modalChoice">{{ $t("options.cp.pmOption") }}</p>
     <span>
@@ -14,20 +14,32 @@
         <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
             @click="selectOptionCa('trad', 'opp')">{{ $t("options.cp.trad") }}</button>
     </span>
-
     <span><button type="button" class="modalButton" @click="confirmSelection">{{ $t("options.cp.confirm") }}</button></span>
+</template>
+<template v-if="isUk">
+    <p class="modalTitle">{{ $t("options.bp.title") }}</p>
+    <p class="modalChoice">{{ $t("options.bp.nbMinutes") }}</p>
+    <button type="button" class="modalButton" @click="selectOptionUk(5)">5 min</button>
+    <button type="button" class="modalButton" @click="selectOptionUk(6)">6 min</button>
+    <button type="button" class="modalButton" @click="selectOptionUk(7)">7 min</button>
+</template>
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
 import canadianDebateFactory from "@/models/canadianDebateFactory";
 import CanadianDebateFactory from '@/models/canadianDebateFactory';
 import debate from '@/models/debate';
+import fiveMinutesUk from '@/realizations/DebateConfigurations/fiveMinutesUk';
+import sevenMinutes from '@/realizations/DebateConfigurations/sevenMinutes';
+import sixMinutesUk from '@/realizations/DebateConfigurations/sixMinutesUk';
+import thirtySeconds from '@/realizations/DebateConfigurations/thirtySeconds';
 
 
 export default defineComponent({
     name: "CPSelect",
     props: {
         debateProp: debate,
+        format: String
     },
     data() {
         return {
@@ -36,14 +48,22 @@ export default defineComponent({
 
         };
     },
-    emits: ["confirmCa", "update:debateProp"],
+    computed: {
+        isCa():boolean {
+            return this.format == "ca"
+        },
+        isUk():boolean {
+            return this.format == "uk"
+        }
+    },
+    emits: ["confirm", "update:debateProp"],
     methods: {
         confirmSelection() {
             const configurationResults = this.canadianDebateFactory.makeConfigList();
             this.dataDebate!.setConfigurations(configurationResults[0])
             this.dataDebate!.setRoles(configurationResults[1]);
             this.$emit("update:debateProp", this.dataDebate);
-            this.$emit("confirmCa")
+            this.$emit("confirm")
         },
 
         selectOptionCa(targetId: string, forTeam: string) {
@@ -57,6 +77,26 @@ export default defineComponent({
             else {
                 this.canadianDebateFactory.setOppMode(targetId)
             }
+        },
+
+        selectOptionUk(minutes: number) {
+            if (minutes == 5) {
+                this.dataDebate!.setConfigurations([new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
+                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
+                new fiveMinutesUk(), new thirtySeconds()])
+            }
+            if (minutes == 6) {
+                this.dataDebate!.setConfigurations([new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
+                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
+                new sixMinutesUk(), new thirtySeconds()])
+            }
+
+            else {
+                this.dataDebate!.setConfigurations([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds()])
+            }
+
+            this.$emit("update:debateProp", this.dataDebate);
+            this.$emit("confirm");
         },
 
         redify(debateConfigCategory: string, targetId: string) {

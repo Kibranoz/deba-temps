@@ -1,3 +1,4 @@
+import { i18n } from "@/main";
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { IonThumbnail } from "@ionic/vue";
@@ -43,7 +44,7 @@ setUpperLimit(newUpperLimit:number) {
         const whenToSend = new Date()
         whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
     
-        LocalNotifications.schedule({notifications:[{title: "Le temps est écoulé", body:"Terminez votre discours",
+        LocalNotifications.schedule({notifications:[{title: i18n.global.t("notifications.title"), body: i18n.global.t("notifications.subtitle"),
         id:0, schedule:{at:whenToSend}, channelId:"roundOver"  }]})
     }
 

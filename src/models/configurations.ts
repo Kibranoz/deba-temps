@@ -18,6 +18,11 @@ class configuration{
 
     }
 
+    setIsMiddle(middle:boolean):configuration {
+        this.isMiddle = middle;
+        return this;
+    }
+
     getTimeWhenQuestionStopBeingAllowed():number{
         if (this.isMiddle) {
             return this.amountOfSecondsProtectedInTheEnd;

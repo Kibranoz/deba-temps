@@ -124,7 +124,7 @@ fastForward() {
         this.debateTimer.pause()
     }
 }
-setConfigurations(configurations:[configuration]) {
+setConfigurations(configurations:configuration[]) {
     this.configurations = configurations;
 }
 restartTimer(){

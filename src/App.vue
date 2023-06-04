@@ -6,8 +6,8 @@
           <ion-list id="inbox-list">
             <ion-list-header>DébatTemps</ion-list-header>
   
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :href="p.url" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
+              <ion-item @click="selectedIndex = i" router-direction="root" :href="p.url" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <img :src="items[i]">
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -60,7 +60,6 @@ export default defineComponent({
       {
         title: t('titles.bp'),
         url: '/debatePlay/uk',
-
       },
       {
         title: t('titles.cp'),
@@ -78,11 +77,6 @@ export default defineComponent({
       **/
     ];
     
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
 
 
 

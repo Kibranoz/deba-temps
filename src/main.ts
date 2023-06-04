@@ -28,6 +28,10 @@ const messages =  {
       cp: "Parlementaire Canadien",
       usp:"Parlementaire Américain"
     },
+    notifications: {
+      title: "Le temps est écoulé",
+      subtitle: "Terminez votre ronde"
+    },
     options: {
     cp: {
       title:"Parlementaire Canadien",
@@ -93,6 +97,10 @@ const messages =  {
     bp : "British Parliamentary",
     cp: "Canadian Parliamentary",
     usp:"American parliamentary"
+    },
+    notifications: {
+      title: "Time is over",
+      subtitle: "Finish your round"
     },
     options: {
       cp: {
