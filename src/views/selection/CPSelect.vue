@@ -1,31 +1,33 @@
-<template><template v-if="isCa">
-    <p class="modalTitle">{{ $t("titles.cp") }}</p>
-    <p class="modalChoice">{{ $t("options.cp.pmOption") }}</p>
-    <span>
-        <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour"
-            @click="selectOptionCa('sixFour', 'gov')">6-4</button>
-        <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree"
-            @click="selectOptionCa('sevenThree', 'gov')">7-3</button>
-    </span>
-    <p class="modalChoice">{{ $t("options.cp.coOption") }}</p>
-    <span>
-        <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split"
-            @click="selectOptionCa('split', 'opp')">{{ $t("options.cp.split") }}</button>
-        <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
-            @click="selectOptionCa('trad', 'opp')">{{ $t("options.cp.trad") }}</button>
-    </span>
-    <span><button type="button" class="modalButton" @click="confirmSelection">{{ $t("options.cp.confirm") }}</button></span>
-</template>
-<template v-if="isUk">
-    <p class="modalTitle">{{ $t("options.bp.title") }}</p>
-    <p class="modalChoice">{{ $t("options.bp.nbMinutes") }}</p>
-    <button type="button" class="modalButton" @click="selectOptionUk(5)">5 min</button>
-    <button type="button" class="modalButton" @click="selectOptionUk(6)">6 min</button>
-    <button type="button" class="modalButton" @click="selectOptionUk(7)">7 min</button>
-</template>
+<template>
+    <template v-if="isCa">
+        <p class="modalTitle">{{ $t("titles.cp") }}</p>
+        <p class="modalChoice">{{ $t("options.cp.pmOption") }}</p>
+        <span>
+            <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour"
+                @click="selectOptionCa('sixFour', 'gov')">6-4</button>
+            <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree"
+                @click="selectOptionCa('sevenThree', 'gov')">7-3</button>
+        </span>
+        <p class="modalChoice">{{ $t("options.cp.coOption") }}</p>
+        <span>
+            <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split"
+                @click="selectOptionCa('split', 'opp')">{{ $t("options.cp.split") }}</button>
+            <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
+                @click="selectOptionCa('trad', 'opp')">{{ $t("options.cp.trad") }}</button>
+        </span>
+        <span><button type="button" class="modalButton" @click="confirmSelection">{{ $t("options.cp.confirm")
+        }}</button></span>
+    </template>
+    <template v-if="isUk">
+        <p class="modalTitle">{{ $t("options.bp.title") }}</p>
+        <p class="modalChoice">{{ $t("options.bp.nbMinutes") }}</p>
+        <button type="button" class="modalButton" @click="selectOptionUk(5)">5 min</button>
+        <button type="button" class="modalButton" @click="selectOptionUk(6)">6 min</button>
+        <button type="button" class="modalButton" @click="selectOptionUk(7)">7 min</button>
+    </template>
 </template>
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import CanadianDebateFactory from '@/models/canadianDebateFactory';
 import debate from '@/models/debate';
 import fiveMinutesUk from '@/realizations/DebateConfigurations/fiveMinutesUk';
@@ -48,10 +50,10 @@ export default defineComponent({
         };
     },
     computed: {
-        isCa():boolean {
+        isCa(): boolean {
             return this.format == "ca"
         },
-        isUk():boolean {
+        isUk(): boolean {
             return this.format == "uk"
         }
     },
@@ -96,6 +98,8 @@ export default defineComponent({
                 this.dataDebate!.setConfigurations([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds()])
             }
 
+            this.dataDebate!.setRoles([this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
+
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm");
         },
@@ -114,8 +118,8 @@ export default defineComponent({
                     htmlelement.style.borderStyle = "none"
                 }
             })
+        }
     }
-}
 }
 );
 </script>
@@ -139,5 +143,4 @@ export default defineComponent({
     margin: 10px;
     border-width: medium;
 }
-
 </style>

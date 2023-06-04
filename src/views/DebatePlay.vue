@@ -5,7 +5,7 @@
                 <ion-buttons slot="start">
                     <ion-menu-button color="primary"></ion-menu-button>
                 </ion-buttons>
-                <ion-title> {{ getTitle($route.params.id) }}</ion-title>
+                <ion-title> {{ getTitle(format) }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -20,15 +20,15 @@
                             :icon="playSkipBackSharp" @click="backward"></ion-icon>
                         <ion-icon tabindex="1" role="button" :aria-label="$t('accessibility.start')" class="button"
                             v-if="!isPlaying" @click="play" :icon="caretForwardSharp"></ion-icon>
-                        <ion-icon tabindex="2" role="button" :aria-label="$t('accessibility.pause')" class="button" v-if="isPlaying"
-                            @click="pause" :icon="pauseSharp"></ion-icon>
+                        <ion-icon tabindex="2" role="button" :aria-label="$t('accessibility.pause')" class="button"
+                            v-if="isPlaying" @click="pause" :icon="pauseSharp"></ion-icon>
                         <ion-icon tabindex="3" role="button" :aria-label="$t('accessibility.skip')" class="button"
                             :icon="playSkipForwardSharp" @click="forward"></ion-icon>
                     </div>
                 </div>
 
                 <ion-modal class="specialDebateModal" :is-open="shouldOpenModal">
-                     <CPSelect :format="format" v-model:debateProp="currentDebate" @confirm="confirm"></CPSelect>
+                    <CPSelect :format="format" v-model:debateProp="currentDebate" @confirm="confirm"></CPSelect>
                 </ion-modal>
 
                 <div class="informationArea">
@@ -37,7 +37,7 @@
                             <ion-icon class="lowered" :icon="personSharp"></ion-icon>
                             <ion-icon :icon="chatbubbleSharp"></ion-icon>
                         </div>
-                         {{ $t("debateView.whoIsTalking") }}
+                        {{ $t("debateView.whoIsTalking") }}
                     </div>
                     <div class="middle">:</div>
                     {{ role }}
@@ -75,8 +75,8 @@ import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
 import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import oneMinute from "@/realizations/DebateConfigurations/oneMinute"
-import  CPSelect  from "@/views/selection/CPSelect.vue"
-import  BPSelect  from "@/views/selection/BPSelect.vue"
+import CPSelect from "@/views/selection/CPSelect.vue"
+import BPSelect from "@/views/selection/BPSelect.vue"
 import { debuggerStatement } from "@babel/types";
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
 import { HtmlAttributes } from "csstype";
@@ -117,7 +117,7 @@ export default defineComponent({
     data() {
         return {
             isPlaying: false,
-            currentDebate: this.getNewDebate(this.$route.params.id),
+            currentDebate: this.getNewDebate("uk"),
             canadianDebateFactory: new CanadianDebateFactory(),
             shouldOpenModal: false,
             role: "",
@@ -136,22 +136,21 @@ export default defineComponent({
 
     },
 
-    mounted() {
-        this.format = this.$route.params.id.toString();
-        if (this.$route.params.id == 'ca') {
-            this.shouldOpenModal = true;
-        }
-        if (this.$route.params.id == 'uk') {
-            this.shouldOpenModal = true;
-        }
-
-    },
-
     beforeUnmount() {
         this.shouldOpenModal = false;
     },
 
     async created() {
+        this.format = this.$route.params.id.toString();
+        if (this.format == 'ca') {
+            this.shouldOpenModal = true;
+        }
+        if (this.format == 'uk') {
+            this.shouldOpenModal = true;
+        }
+        else {
+            this.currentDebate = this.getNewDebate(this.format)
+        }
         App.addListener('appStateChange', ({ isActive }) => {
             console.log('App state changed. Is active?', isActive);
         });
@@ -222,7 +221,7 @@ export default defineComponent({
             console.log("confirmCa")
             this.shouldOpenModal = false
             this.currentDebate.restartTimer()
-           this.time = this.currentDebate.getTimer().getTimeString();
+            this.time = this.currentDebate.getTimer().getTimeString();
         },
 
 
@@ -243,14 +242,14 @@ export default defineComponent({
             }
         },
 
-        getNewDebate(symbol: string): debate{
+        getNewDebate(symbol: string): debate {
             switch (symbol) {
                 case "uk":
                     console.log("uk")
                     return new debate([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds()], [this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
                 case "ca":
                     return new debate([new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new threeMinutes(), new fifteenSeconds(), new threeMinutes(), new fifteenSeconds()], [this.$t("roles.cp.pm"),
-                     this.$t("roles.cp.co"), this.$t("roles.cp.mc"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
+                    this.$t("roles.cp.co"), this.$t("roles.cp.mc"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
                 case 'us':
                     console.log("us")
                     return new debate([new sevenMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new fourMinutes(), new thirtySeconds(), new fiveMinutes(), new thirtySeconds()], [this.$t("roles.cp.pm"), this.$t("roles.cp.pm"), this.$t("roles.ap.mg"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
@@ -358,4 +357,5 @@ ion-icon {
     font-size: 40px;
     justify-content: center;
 
-}</style>
+}
+</style>
