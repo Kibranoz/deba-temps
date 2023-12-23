@@ -1,18 +1,35 @@
 import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import configuration from "./configurations";
 import debateSoundManager from "./DebateSoundManager";
 import timer from "./timer";
 
-class debate {
+class debateState {
     //caN Be any amount 
     configurations: any;
     configurationIndex = 0;
     time = 0
     POIAllowed = false;
+    private _POIAllowedJustChanged = false;
+
+    private _roundJustEnded = false;
+    public get roundJustEnded() {
+        return this._roundJustEnded;
+    }
+    public set roundJustEnded(value) {
+        this._roundJustEnded = value;
+    }
+
+    public get POIAllowedJustChanged() {
+        return this._POIAllowedJustChanged;
+    }
+    public set POIAllowedJustChanged(value) {
+        this._POIAllowedJustChanged = value;
+    }
+    
     debateTimer: timer
     roles: any;
+
     constructor(configurations: any, roles: any) {
         this.configurations = configurations
         this.roles = roles;
@@ -27,11 +44,7 @@ class debate {
     }
 
     getWhoIsTalking() {
-        return this.roles[Math.floor(this.configurationIndex / 2)]
-    }
-
-    getIfGrace(): boolean {
-        return this.configurations[this.configurationIndex].isGrace
+        return this.roles[this.configurationIndex]
     }
 
     getIfPOIAllowed(): boolean {
@@ -39,14 +52,14 @@ class debate {
             && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed() * 1000) {
             //was not allowed, now is
             if (!this.POIAllowed) {
-                debateSoundManager.changePOIAllowed()
+                this.POIAllowedJustChanged = true;
                 this.POIAllowed = true
             }
         }
         else {
             // was allowed, now isn't 
             if (this.POIAllowed) {
-                debateSoundManager.changePOIAllowed()
+                this.POIAllowedJustChanged = true;
                 this.POIAllowed = false
             }
         }
@@ -63,14 +76,9 @@ class debate {
         console.log("resetTimer")
         this.debateTimer.resetTimer()
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime())
-        if (!this.getCurrentConfiguration().isGrace) {
-            debateSoundManager.roundIsReallyOver();
-            this.debateTimer.tick();
-            this.debateTimer.pause();
-        }
-        else {
-            debateSoundManager.roundIsOver()
-        }
+        this.roundJustEnded = true;
+        this.debateTimer.tick();
+        this.debateTimer.pause();
     }
 
     previousConfiguration() {
@@ -82,10 +90,9 @@ class debate {
         }
         this.debateTimer.resetTimer()
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
-        if (!this.getCurrentConfiguration().isGrace) {
-            this.debateTimer.tick()
-            this.debateTimer.pause()
-        }
+        this.debateTimer.tick()
+        this.debateTimer.pause()
+        
     }
     fastBackward() {
         if (this.configurationIndex <= 0) {
@@ -97,13 +104,8 @@ class debate {
 
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
 
-        if (this.getCurrentConfiguration().isGrace) {
-            this.fastBackward();
-        }
-        else {
-            this.debateTimer.pause();
-            this.debateTimer.resetTimer()
-        }
+        this.debateTimer.pause();
+        this.debateTimer.resetTimer()
     }
 
     fastForward() {
@@ -115,14 +117,9 @@ class debate {
         }
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
 
-        if (this.getCurrentConfiguration().isGrace) {
-            this.fastForward()
-        }
-        else {
-            this.debateTimer.resetTimer()
-            this.debateTimer.tick()
-            this.debateTimer.pause()
-        }
+        this.debateTimer.resetTimer()
+        this.debateTimer.tick()
+        this.debateTimer.pause()
     }
     setConfigurations(configurations: configuration[]) {
         this.configurations = configurations;
@@ -137,4 +134,4 @@ class debate {
 
 //export const Debate = new debate([new sixMinutes(), new tenMinutes()], ["role 1", "role b"])
 
-export default debate
+export default debateState

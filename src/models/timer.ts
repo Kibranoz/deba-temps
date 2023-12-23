@@ -1,5 +1,4 @@
 import { i18n } from "@/main";
-import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { IonThumbnail } from "@ionic/vue";
 
@@ -11,6 +10,8 @@ class timer {
     pauseStartedAt = 0;
     currentPauseTime = 0;
     upperLimit: number;
+    minutes = 0;
+    seconds = 0;
 
 constructor(upperLimit:number) {
     this.upperLimit = upperLimit
@@ -43,7 +44,10 @@ setUpperLimit(newUpperLimit:number) {
         }
         const whenToSend = new Date()
         whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
-    
+        this.sendNotification(whenToSend)
+    }
+
+    sendNotification(whenToSend:Date) {
         LocalNotifications.schedule({notifications:[{title: i18n.global.t("notifications.title"), body: i18n.global.t("notifications.subtitle"),
         id:0, schedule:{at:whenToSend}, channelId:"roundOver"  }]})
     }
@@ -59,19 +63,30 @@ setUpperLimit(newUpperLimit:number) {
         this.pauseStartedAt = Date.now();
         const pendingNotifications = (await LocalNotifications.getPending()).notifications
         }
- 
+
+    hasExactlyNMinutesRemaining(n:number) {
+        return this.minutes == n && this.seconds == 0 
+    }
+
+    formatNumber(num:number) {
+        if (num>=10){
+            return num.toString()
+        }
+        else {
+            return "0"+num.toString();
+        }
+
+    }
 
     getTimeString() {
             let currentTimeSeconds = this.currentTime / 1000
-            const hours = Math.floor(currentTimeSeconds / 3600)
-            currentTimeSeconds -= hours*3600
-            let minutes = Math.floor(currentTimeSeconds/60) % 60
-            currentTimeSeconds -= minutes*60
-            const seconds = Math.round(currentTimeSeconds) % 60
+            this.minutes = Math.floor(currentTimeSeconds/60) % 60
+            currentTimeSeconds -= this.minutes*60
+            this.seconds = Math.round(currentTimeSeconds) % 60
             if (Math.round(currentTimeSeconds) == 60){
-                minutes+=1
+                this.minutes+=1
             }
-            return hours.toString() + ":" + minutes.toString() + ":" + seconds.toString()
+            return this.formatNumber(this.minutes) + ":" + this.formatNumber(this.seconds)
         
 }
 }

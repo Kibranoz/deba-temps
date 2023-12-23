@@ -64,7 +64,6 @@ import configuration from "@/models/configurations";
 import debate from "@/models/debate";
 import timer from "@/models/timer";
 import eightMinutes from "@/realizations/DebateConfigurations/eightMinutes";
-import fifteenSeconds from "@/realizations/DebateConfigurations/fifteenSeconds";
 import fiveMinutes from "@/realizations/DebateConfigurations/fiveMinutes";
 import fiveMinutesUk from "@/realizations/DebateConfigurations/fiveMinutesUk";
 import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
@@ -72,7 +71,6 @@ import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
 import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
 import sixMinutesUk from "@/realizations/DebateConfigurations/sixMinutesUk";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import oneMinute from "@/realizations/DebateConfigurations/oneMinute"
 import CPSelect from "@/views/selection/CPSelect.vue"
@@ -88,6 +86,7 @@ import { App } from '@capacitor/app';
 import { Device } from '@capacitor/device';
 import { highlightTrailingWhitespace } from "jest-matcher-utils";
 import { I18nInjectionKey } from "vue-i18n";
+import debateSoundManager from "@/models/DebateSoundManager";
 
 export default defineComponent({
     name: "DebatePlay",
@@ -187,6 +186,7 @@ export default defineComponent({
                 this.isPlaying = false;
             }
             this.time = this.currentDebate.getTimer().getTimeString();
+            debateSoundManager.playAnyNecessarySound(this.currentDebate)
         }
             , 100)
     },
@@ -246,18 +246,18 @@ export default defineComponent({
             switch (symbol) {
                 case "uk":
                     console.log("uk")
-                    return new debate([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds()], [this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
-                case "ca":
-                    return new debate([new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new sevenMinutes(), new fifteenSeconds(), new threeMinutes(), new fifteenSeconds(), new threeMinutes(), new fifteenSeconds()], [this.$t("roles.cp.pm"),
+                    return new debate([new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(),  new sevenMinutes(), new sevenMinutes(), ], [this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
+                case "ca": //fallback value
+                    return new debate([new sevenMinutes(),  new sevenMinutes(),  new sevenMinutes(),  new sevenMinutes(),  new threeMinutes(),  new threeMinutes()], [this.$t("roles.cp.pm"),
                     this.$t("roles.cp.co"), this.$t("roles.cp.mc"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
                 case 'us':
                     console.log("us")
-                    return new debate([new sevenMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new fourMinutes(), new thirtySeconds(), new fiveMinutes(), new thirtySeconds()], [this.$t("roles.cp.pm"), this.$t("roles.cp.pm"), this.$t("roles.ap.mg"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
+                    return new debate([new sevenMinutes(), new eightMinutes(), new eightMinutes(), new eightMinutes(), new fourMinutes(), new fiveMinutes() ], [this.$t("roles.cp.pm"), this.$t("roles.cp.pm"), this.$t("roles.ap.mg"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
                 case 'test':
-                    return new debate([new oneMinute(), new thirtySeconds()], ['role1', 'role2'])
+                    return new debate([new oneMinute() ], ['role1', 'role2'])
             }
 
-            return new debate([new sevenMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new eightMinutes(), new thirtySeconds(), new fourMinutes(), new thirtySeconds(), new fiveMinutes(), new thirtySeconds()], [this.$t("roles.ap.pm"), this.$t("roles.ap.co"), this.$t("roles.ap.mg"), this.$t("roles.ap.mo"), this.$t("roles.ap.co"), this.$t("roles.ap.pm")])
+            return new debate([new sevenMinutes(), new eightMinutes(), new eightMinutes(), new eightMinutes(), new fourMinutes(), new fiveMinutes(), ], [this.$t("roles.ap.pm"), this.$t("roles.ap.co"), this.$t("roles.ap.mg"), this.$t("roles.ap.mo"), this.$t("roles.ap.co"), this.$t("roles.ap.pm")])
 
         }
 

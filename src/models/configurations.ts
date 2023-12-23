@@ -27,7 +27,7 @@ class configuration{
         if (this.isMiddle) {
             return this.amountOfSecondsProtectedInTheEnd;
         }
-        else {
+        else { 
             return this.totalRoundTime
         }
     }

@@ -1,9 +1,7 @@
-import fifteenSeconds from "@/realizations/DebateConfigurations/fifteenSeconds";
 import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
 import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
 import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
 import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
 import { configFromURL } from "@ionic/core";
 import configuration from "./configurations";
@@ -29,10 +27,8 @@ class CanadianDebateFactory {
             configuration.push(new sixMinutes())
         }
         roles.push(i18n.global.t("roles.cp.pm"))
-        configuration.push(new fifteenSeconds());
         if (this.oppMode == "split") {
             configuration.push(new sevenMinutes())
-            configuration.push(new fifteenSeconds())
             roles.push(i18n.global.t("roles.cp.co"))
             roles.push(i18n.global.t("roles.cp.mc"))
             roles.push(i18n.global.t("roles.cp.mo"))
@@ -42,9 +38,7 @@ class CanadianDebateFactory {
             roles.push(i18n.global.t("roles.cp.mc"))
         }
         configuration.push(new sevenMinutes());
-        configuration.push(new fifteenSeconds());
         configuration.push(new sevenMinutes());
-        configuration.push(new fifteenSeconds());
 
         if (this.oppMode == "trad"){
             configuration.push(new tenMinutes());
@@ -53,7 +47,6 @@ class CanadianDebateFactory {
             configuration.push(new threeMinutes())
         }
         roles.push(i18n.global.t("roles.cp.co"))
-        configuration.push(new fifteenSeconds())
         if (this.govMode == "sevenThree"){
             configuration.push(new threeMinutes())
         }
@@ -61,8 +54,6 @@ class CanadianDebateFactory {
             configuration.push(new fourMinutes())
         }
         roles.push(i18n.global.t("roles.cp.pm"))
-        configuration.push(new fifteenSeconds())
-
         return [configuration,roles]
     }
 

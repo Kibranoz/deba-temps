@@ -1,10 +1,8 @@
 import configuration from "@/models/configurations";
 //import  debate from "@/models/debate"
 import eightMinutes from "@/realizations/DebateConfigurations/eightMinutes";
-import thirtySeconds from "@/realizations/DebateConfigurations/thirtySeconds";
 describe("debateModel", ()=>{
     let eightMinutes:eightMinutes;
-    let thirtySeconds:thirtySeconds
     beforeEach(()=>{
 
         //déclarer ailleurs

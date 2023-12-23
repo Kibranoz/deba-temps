@@ -29,24 +29,23 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CanadianDebateFactory from '@/models/canadianDebateFactory';
-import debate from '@/models/debate';
 import fiveMinutesUk from '@/realizations/DebateConfigurations/fiveMinutesUk';
 import sevenMinutes from '@/realizations/DebateConfigurations/sevenMinutes';
 import sixMinutesUk from '@/realizations/DebateConfigurations/sixMinutesUk';
-import thirtySeconds from '@/realizations/DebateConfigurations/thirtySeconds';
+import debateState from '@/models/debate';
+import BritishDebateFactory from '@/models/BritishDebateFactory';
 
 
 export default defineComponent({
     name: "CPSelect",
     props: {
-        debateProp: debate,
+        debateProp: debateState,
         format: String
     },
     data() {
         return {
             dataDebate: this.debateProp,
             canadianDebateFactory: new CanadianDebateFactory()
-
         };
     },
     computed: {
@@ -81,25 +80,7 @@ export default defineComponent({
         },
 
         selectOptionUk(minutes: number) {
-            if (minutes == 5) {
-                console.log("five")
-                this.dataDebate!.setConfigurations([new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(),
-                new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk(), new thirtySeconds(), new fiveMinutesUk().setIsMiddle(false), new thirtySeconds(),
-                new fiveMinutesUk().setIsMiddle(false), new thirtySeconds()])
-            }
-            if (minutes == 6) {
-                this.dataDebate!.setConfigurations([new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(),
-                new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk(), new thirtySeconds(), new sixMinutesUk().setIsMiddle(false), new thirtySeconds(),
-                new sixMinutesUk().setIsMiddle(false), new thirtySeconds()])
-            }
-
-            if (minutes == 7) {
-                console.log("seven")
-                this.dataDebate!.setConfigurations([new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes(), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds(), new sevenMinutes().setIsMiddle(false), new thirtySeconds()])
-            }
-
-            this.dataDebate!.setRoles([this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
-
+            this.dataDebate! = BritishDebateFactory.fromMinutes(minutes)
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm");
         },
