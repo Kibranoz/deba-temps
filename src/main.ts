@@ -54,28 +54,28 @@ const messages =  {
   },
   debateView: {
     whoIsTalking: "Qui parle?",
-    poi: "Questions autorisées ? (POI)",
+    poi: "Questions autorisées ?",
     yes: "Oui",
     no: "Non"
   },
     roles :{
       cp:{
-        pm:"Première ministre",
-        co:"Chef de l'opposition",
+        pm:"Premier(ère) ministre",
+        co:"Chef(fe) de l'opposition",
         mc: "Ministre de la couronne",
         mo: "Membre de l'opposition"
       },
       ap: {
-        pm:"Président de la chambre",
-        co:"Cheffe de la minorité",
+        pm:"Président(e) de la chambre",
+        co:"Chef(fe) de la minorité",
         mg:"Membre de la majorité",
         mo: "Membre de la minorité"
       },
       bp: {
-        pm: "Premier ministre",
-        co:"Cheffe de l'opposition",
-        vpm: "Vice Premier ministre",
-        cao: "Chef adjoint de l'opposition",
+        pm: "Premier(ère) ministre",
+        co:"Chef(fe) de l'opposition",
+        vpm: "Vice Premier(ère) ministre",
+        cao: "Chef(fe) adjoint(e) de l'opposition",
         mg: "Membre du gouvernement",
         mo: "Membre de l'opposition",
         wg: "Whip du gouvernement",

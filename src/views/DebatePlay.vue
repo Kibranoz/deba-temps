@@ -40,7 +40,7 @@
                         {{ $t("debateView.whoIsTalking") }}
                     </div>
                     <div class="middle">:</div>
-                    {{ role }}
+                    <div class="infoText">{{ role }}</div>
                 </div>
 
                 <div class="informationArea">
@@ -51,7 +51,9 @@
                         {{ $t("debateView.poi") }}
                     </div>
                     <div class="middle">:</div>
-                    {{ canTalk }}
+                    <div class="infoText">
+                        {{ canTalk }}
+                        </div>
                 </div>
             </div>
         </ion-content>
@@ -298,6 +300,9 @@ export default defineComponent({
     height: 100%;
 }
 
+.infoText {
+    font-size: 20px;
+}
 .tallIconContainer {
     height: 110px;
 }
