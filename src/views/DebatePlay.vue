@@ -60,21 +60,8 @@
     </ion-page>
 </template>
 <script lang="ts">
-import canadianDebateFactory from "@/models/canadianDebateFactory";
 import CanadianDebateFactory from "@/models/canadianDebateFactory";
-import configuration from "@/models/configurations";
 import debate from "@/models/debate";
-import timer from "@/models/timer";
-import eightMinutes from "@/realizations/DebateConfigurations/eightMinutes";
-import fiveMinutes from "@/realizations/DebateConfigurations/fiveMinutes";
-import fiveMinutesUk from "@/realizations/DebateConfigurations/fiveMinutesUk";
-import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
-import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
-import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
-import sixMinutesUk from "@/realizations/DebateConfigurations/sixMinutesUk";
-import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
-import oneMinute from "@/realizations/DebateConfigurations/oneMinute"
 import CPSelect from "@/views/selection/CPSelect.vue"
 import BPSelect from "@/views/selection/BPSelect.vue"
 import { debuggerStatement } from "@babel/types";
@@ -89,6 +76,12 @@ import { Device } from '@capacitor/device';
 import { highlightTrailingWhitespace } from "jest-matcher-utils";
 import { I18nInjectionKey } from "vue-i18n";
 import debateSoundManager from "@/models/DebateSoundManager";
+import BritishDebateFactory from "@/models/BritishDebateFactory";
+import CanadianDebateOrchestrator from "@/models/canadianDebateFactory";
+import GovMode from "@/enum/GovMode";
+import OppMode from "@/enum/OppMode";
+import USDebateFactory from "@/models/USDebateFactory";
+import debateState from "@/models/debate";
 
 export default defineComponent({
     name: "DebatePlay",
@@ -244,22 +237,22 @@ export default defineComponent({
             }
         },
 
-        getNewDebate(symbol: string): debate {
-            switch (symbol) {
-                case "uk":
+        getNewDebate(symbol: string): debateState {
+                if (symbol == "uk"){
                     console.log("uk")
-                    return new debate([new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(), new sevenMinutes(),  new sevenMinutes(), new sevenMinutes(), ], [this.$t("roles.bp.pm"), this.$t("roles.bp.co"), this.$t("roles.bp.vpm"), this.$t("roles.bp.cao"), this.$t("roles.bp.mg"), this.$t("roles.bp.mo"), this.$t("roles.bp.wg"), this.$t("roles.bp.wo")])
-                case "ca": //fallback value
-                    return new debate([new sevenMinutes(),  new sevenMinutes(),  new sevenMinutes(),  new sevenMinutes(),  new threeMinutes(),  new threeMinutes()], [this.$t("roles.cp.pm"),
-                    this.$t("roles.cp.co"), this.$t("roles.cp.mc"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
-                case 'us':
-                    console.log("us")
-                    return new debate([new sevenMinutes(), new eightMinutes(), new eightMinutes(), new eightMinutes(), new fourMinutes(), new fiveMinutes() ], [this.$t("roles.cp.pm"), this.$t("roles.cp.pm"), this.$t("roles.ap.mg"), this.$t("roles.cp.mo"), this.$t("roles.cp.co"), this.$t("roles.cp.pm")])
-                case 'test':
-                    return new debate([new oneMinute() ], ['role1', 'role2'])
-            }
+                    return BritishDebateFactory.fromMinutes(6);
+                }
+                if (symbol == "ca"){ //fallback value
+                   let debateCa = new CanadianDebateOrchestrator();
+                   debateCa.setGovMode(GovMode.SEVEN_THREE);
+                   debateCa.setOppMode(OppMode.SPLIT);
+                   return new debateState(debateCa.makeConfigList())
+                }
+                if (symbol =='us') {
+                    return  new debateState(new USDebateFactory().createDefaultDebate())
+                }
 
-            return new debate([new sevenMinutes(), new eightMinutes(), new eightMinutes(), new eightMinutes(), new fourMinutes(), new fiveMinutes(), ], [this.$t("roles.ap.pm"), this.$t("roles.ap.co"), this.$t("roles.ap.mg"), this.$t("roles.ap.mo"), this.$t("roles.ap.co"), this.$t("roles.ap.pm")])
+            return BritishDebateFactory.fromMinutes(6);
 
         }
 

@@ -1,6 +1,4 @@
-import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
-import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import configuration from "./configurations";
+import Round from "./round";
 import debateSoundManager from "./DebateSoundManager";
 import timer from "./timer";
 
@@ -28,15 +26,13 @@ class debateState {
     }
     
     debateTimer: timer
-    roles: any;
 
-    constructor(configurations: any, roles: any) {
+    constructor(configurations: any) {
         this.configurations = configurations
-        this.roles = roles;
         this.debateTimer = new timer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
     }
 
-    getCurrentConfiguration(): configuration {
+    getCurrentConfiguration(): Round {
         return this.configurations[this.configurationIndex]
     }
     getTimer(): timer {
@@ -44,12 +40,12 @@ class debateState {
     }
 
     getWhoIsTalking() {
-        return this.roles[this.configurationIndex]
+        return this.configurations[this.configurationIndex].getRole();
     }
 
     getIfPOIAllowed(): boolean {
-        if (this.debateTimer.currentTime <= this.getCurrentConfiguration().getTimeWhenQuestionStartsToBeAllowed() * 1000
-            && this.debateTimer.currentTime > this.getCurrentConfiguration().getTimeWhenQuestionStopBeingAllowed() * 1000) {
+        if (this.getCurrentConfiguration().timeIsAboveLowerBound(this.debateTimer.currentTime)
+            && this.getCurrentConfiguration().timeIsBelowUpperBound(this.debateTimer.currentTime)) {
             //was not allowed, now is
             if (!this.POIAllowed) {
                 this.POIAllowedJustChanged = true;
@@ -121,14 +117,11 @@ class debateState {
         this.debateTimer.tick()
         this.debateTimer.pause()
     }
-    setConfigurations(configurations: configuration[]) {
+    setConfigurations(configurations: Round[]) {
         this.configurations = configurations;
     }
     restartTimer() {
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
-    }
-    setRoles(roles: string[]) {
-        this.roles = roles
     }
 }
 

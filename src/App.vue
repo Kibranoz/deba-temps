@@ -68,8 +68,11 @@ export default defineComponent({
       {
         title: t('titles.usp'),
         url: '/debatePlay/us',
-
       },
+      {
+        title: "Configuration maker",
+        url: "/configMaker"
+      }
       /** {
         //title: 'Testing',
         url: '/debatePlay/test'

@@ -13,6 +13,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/debatePlay/:id',
     component: () => import ('../views/DebatePlay.vue')
+  },
+  {
+    path: '/configMaker',
+    component: () => import("../views/DebateConfigurationMaker.vue")
   }
 ]
 

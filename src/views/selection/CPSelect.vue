@@ -4,16 +4,16 @@
         <p class="modalChoice">{{ $t("options.cp.pmOption") }}</p>
         <span>
             <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour"
-                @click="selectOptionCa('sixFour', 'gov')">6-4</button>
+                @click="selectOptionCa(GovMode.SIX_FOUR, 'sixFour', 'gov')">6-4</button>
             <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree"
-                @click="selectOptionCa('sevenThree', 'gov')">7-3</button>
+                @click="selectOptionCa(GovMode.SEVEN_THREE,'sevenThree', 'gov')">7-3</button>
         </span>
         <p class="modalChoice">{{ $t("options.cp.coOption") }}</p>
         <span>
             <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split"
-                @click="selectOptionCa('split', 'opp')">{{ $t("options.cp.split") }}</button>
+                @click="selectOptionCa(OppMode.SPLIT,'split', 'opp')">{{ $t("options.cp.split") }}</button>
             <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
-                @click="selectOptionCa('trad', 'opp')">{{ $t("options.cp.trad") }}</button>
+                @click="selectOptionCa(OppMode.TRAD,'trad', 'opp')">{{ $t("options.cp.trad") }}</button>
         </span>
         <span><button type="button" class="modalButton" @click="confirmSelection">{{ $t("options.cp.confirm")
         }}</button></span>
@@ -29,11 +29,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CanadianDebateFactory from '@/models/canadianDebateFactory';
-import fiveMinutesUk from '@/realizations/DebateConfigurations/fiveMinutesUk';
-import sevenMinutes from '@/realizations/DebateConfigurations/sevenMinutes';
-import sixMinutesUk from '@/realizations/DebateConfigurations/sixMinutesUk';
 import debateState from '@/models/debate';
 import BritishDebateFactory from '@/models/BritishDebateFactory';
+import GovMode from '@/enum/GovMode';
+import OppMode from '@/enum/OppMode';
 
 
 export default defineComponent({
@@ -44,6 +43,8 @@ export default defineComponent({
     },
     data() {
         return {
+            GovMode:GovMode,
+            OppMode:OppMode,
             dataDebate: this.debateProp,
             canadianDebateFactory: new CanadianDebateFactory()
         };
@@ -60,22 +61,21 @@ export default defineComponent({
     methods: {
         confirmSelection() {
             const configurationResults = this.canadianDebateFactory.makeConfigList();
-            this.dataDebate!.setConfigurations(configurationResults[0])
-            this.dataDebate!.setRoles(configurationResults[1]);
+            this.dataDebate!.setConfigurations(configurationResults)
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm")
         },
 
-        selectOptionCa(targetId: string, forTeam: string) {
+        selectOptionCa(choice:GovMode|OppMode, targetId: string, forTeam: string) {
             let button = document.getElementById(targetId) as HTMLElement;
             button.style.backgroundColor = "mediumseagreen"
             button.style.borderStyle = "dotted"
             this.redify(button.getAttribute("forArea") as string, targetId)
             if (forTeam == "gov") {
-                this.canadianDebateFactory.setGovMode(targetId)
+                this.canadianDebateFactory.setGovMode(choice as GovMode)
             }
             else {
-                this.canadianDebateFactory.setOppMode(targetId)
+                this.canadianDebateFactory.setOppMode(choice as OppMode)
             }
         },
 

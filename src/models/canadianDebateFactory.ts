@@ -1,62 +1,91 @@
-import fourMinutes from "@/realizations/DebateConfigurations/fourMinutes";
-import sevenMinutes from "@/realizations/DebateConfigurations/sevenMinutes";
-import sixMinutes from "@/realizations/DebateConfigurations/sixMinutes";
-import tenMinutes from "@/realizations/DebateConfigurations/tenMinutes";
-import threeMinutes from "@/realizations/DebateConfigurations/threeMinutes";
-import { configFromURL } from "@ionic/core";
-import configuration from "./configurations";
+import Round from "./round";
 import {i18n} from "@/main"
-class CanadianDebateFactory {
-    govMode = "sevenThree";
-    oppMode = "split";
+import RoundBuilder from "./roundBuilder";
+import GovMode from "@/enum/GovMode";
+import OppMode from "@/enum/OppMode";
+class CanadianDebateOrchestrator {
+    govMode = GovMode.SEVEN_THREE;
+    oppMode = OppMode.SPLIT;
 
-    setGovMode(govMode:string){
+    private configuration:Round[] = []
+
+    setGovMode(govMode:GovMode){
         this.govMode = govMode
     }
-    setOppMode(oppMode:string){
+    setOppMode(oppMode:OppMode){
         this.oppMode = oppMode
     }
 
-    makeConfigList():any[]{
-        const configuration = [];
-        const roles = []
-        if (this.govMode == "sevenThree"){
-            configuration.push(new sevenMinutes())
-        }
-        else {
-            configuration.push(new sixMinutes())
-        }
-        roles.push(i18n.global.t("roles.cp.pm"))
-        if (this.oppMode == "split") {
-            configuration.push(new sevenMinutes())
-            roles.push(i18n.global.t("roles.cp.co"))
-            roles.push(i18n.global.t("roles.cp.mc"))
-            roles.push(i18n.global.t("roles.cp.mo"))
-        }
-        else {
-            roles.push(i18n.global.t("roles.cp.mo"))
-            roles.push(i18n.global.t("roles.cp.mc"))
-        }
-        configuration.push(new sevenMinutes());
-        configuration.push(new sevenMinutes());
+    makeConfigList():Round[]{
+        this.makePrimeMinisterBeginning();
+        this.makeOppositionLeaderBeginning()
+        this.makeSecondSpeaker(i18n.global.t("roles.cp.mc"))
+        this.makeSecondSpeaker(i18n.global.t("roles.cp.mo"))
+        this.makeOppositionLeaderEnd();
+        this.makePrimeMinisterEnd()
 
-        if (this.oppMode == "trad"){
-            configuration.push(new tenMinutes());
+        return this.configuration
+    }
+
+    private getBaseCanadianBuilder():RoundBuilder{
+        return new RoundBuilder().setProtectedAmount(30);
+    }
+
+    private makePrimeMinisterBeginning() {
+        let roundBuilder = this.getBaseCanadianBuilder()
+        if (this.govMode == GovMode.SEVEN_THREE){
+            roundBuilder = roundBuilder.setMinutes(7)
         }
         else {
-            configuration.push(new threeMinutes())
+            roundBuilder = roundBuilder.setMinutes(6)
         }
-        roles.push(i18n.global.t("roles.cp.co"))
-        if (this.govMode == "sevenThree"){
-            configuration.push(new threeMinutes())
+        roundBuilder.setRoles(i18n.global.t("roles.cp.pm"))
+        this.configuration.push(roundBuilder.getResult())
+    }
+
+    private makeOppositionLeaderBeginning(){
+        if (this.oppMode == OppMode.SPLIT){
+            let roundBuilder = this.getBaseCanadianBuilder()
+            roundBuilder = roundBuilder.setMinutes(7)
+            roundBuilder.setRoles(i18n.global.t("roles.cp.co"))
+            this.configuration.push(roundBuilder.getResult())
+        }
+    }
+
+    private makeSecondSpeaker(role:string){
+        let roundBuilder = this.getBaseCanadianBuilder();
+        roundBuilder = roundBuilder.setMinutes(7)
+        roundBuilder.setRoles(role)
+        this.configuration.push(roundBuilder.getResult())
+    }
+
+    private makeOppositionLeaderEnd(){
+        let roundBuilder = this.getBaseCanadianBuilder();
+        if (this.oppMode == OppMode.TRAD){
+            roundBuilder = roundBuilder.setMinutes(10);
+        }
+
+        else{
+            roundBuilder = roundBuilder.setMinutes(3)
+            roundBuilder = roundBuilder.setToBeClosingRound();
+        }
+        roundBuilder.setRoles(i18n.global.t("roles.cp.co"))
+        this.configuration.push(roundBuilder.getResult())
+    }
+
+    private makePrimeMinisterEnd(){
+        let roundBuilder = this.getBaseCanadianBuilder()
+        if (this.govMode == GovMode.SEVEN_THREE){
+            roundBuilder = roundBuilder.setMinutes(3)
         }
         else {
-            configuration.push(new fourMinutes())
+            roundBuilder = roundBuilder.setMinutes(4)
         }
-        roles.push(i18n.global.t("roles.cp.pm"))
-        return [configuration,roles]
+        roundBuilder.setRoles(i18n.global.t("roles.cp.pm"))
+        roundBuilder.setToBeClosingRound()
+        this.configuration.push(roundBuilder.getResult())
     }
 
 }
 
-export default CanadianDebateFactory
+export default CanadianDebateOrchestrator

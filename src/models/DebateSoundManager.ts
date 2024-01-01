@@ -1,8 +1,8 @@
 import debate from "./debate";
 
 class DebateSoundManager  {
-    minutesReminderFor = [3,2,1];
-    clockSoundsJustPlayed:any = {"3":false, "2":false, "1":false};
+    minutesReminderFor = [5,4,3,2,1];
+    clockSoundsJustPlayed:any = {"5":false,"4":false,"3":false, "2":false, "1":false};
     roundIsOver(){
         const moon = new Audio("../../../assets/sounds/moon.wav");
         moon.play();
@@ -18,7 +18,7 @@ class DebateSoundManager  {
     minutesRemaining(minutesRemaining:number){
         const clock = new Audio("../../../assets/sounds/clock.wav")
         for (let i=0;i<minutesRemaining;i++) {
-            setTimeout(()=>{clock.play()},500*i)
+            setTimeout(()=>{clock.play()},(600*i))
         }
     }
 
@@ -39,11 +39,11 @@ class DebateSoundManager  {
                 if (!this.clockSoundsJustPlayed[minute.toString()]){
                 this.minutesRemaining(minute)
                 }
-                this.clockSoundsJustPlayed[minute] = true
+                this.clockSoundsJustPlayed[minute.toString()] = true
                 return
             }
             else {
-                this.clockSoundsJustPlayed[minute] = false
+                this.clockSoundsJustPlayed[minute.toString()] = false
             }
         });
 
