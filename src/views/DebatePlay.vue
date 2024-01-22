@@ -165,6 +165,8 @@ export default defineComponent({
             )
         }
 
+        await debateSoundManager.fetchPreferences()
+
         setInterval(() => {
             this.currentDebate.getTimer().tick()
             this.canTalk = (this.currentDebate.getIfPOIAllowed() ? this.$t("debateView.yes") : this.$t("debateView.no"));

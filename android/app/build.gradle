@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-
     namespace 'com.debatemps.app'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {

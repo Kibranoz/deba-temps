@@ -70,9 +70,10 @@ export default defineComponent({
         url: '/debatePlay/us',
       },
       {
-        title: "Configuration maker",
-        url: "/configMaker"
+        title: t("settings.title"),
+        url: "/settings"
       }
+
       /** {
         //title: 'Testing',
         url: '/debatePlay/test'

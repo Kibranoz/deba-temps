@@ -8,6 +8,18 @@ class debateState {
     configurationIndex = 0;
     time = 0
     POIAllowed = false;
+    private switchingRound = false;
+
+    public isSwitchingRound(): boolean {
+        return this.switchingRound;
+    }
+
+    public dismissIsSwitchingRound() {
+
+    this.switchingRound = false;
+
+    }
+    
     private _POIAllowedJustChanged = false;
 
     private _roundJustEnded = false;
@@ -91,6 +103,7 @@ class debateState {
         
     }
     fastBackward() {
+        this.switchingRound = true;
         if (this.configurationIndex <= 0) {
             this.configurationIndex = this.configurations.length - 1;
         }
@@ -102,9 +115,11 @@ class debateState {
 
         this.debateTimer.pause();
         this.debateTimer.resetTimer()
+
     }
 
     fastForward() {
+        this.switchingRound = true
         if (this.configurationIndex >= this.configurations.length - 1) {
             this.configurationIndex = 0;
         }
@@ -116,7 +131,7 @@ class debateState {
         this.debateTimer.resetTimer()
         this.debateTimer.tick()
         this.debateTimer.pause()
-    }
+        }
     setConfigurations(configurations: Round[]) {
         this.configurations = configurations;
     }

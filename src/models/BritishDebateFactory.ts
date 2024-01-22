@@ -23,6 +23,7 @@ class BritishDebateFactory {
 
     private static makeMiddleDebateRoundFromMinutes(minutes:number, role:string):Round{
         let roundBuilder:RoundBuilder = new RoundBuilder();
+        roundBuilder = roundBuilder.setProtectedAmount(60)
         roundBuilder = roundBuilder.setMinutes(minutes);
         roundBuilder = roundBuilder.setRoles(role)
 

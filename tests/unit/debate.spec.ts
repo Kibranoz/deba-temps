@@ -14,7 +14,6 @@ describe("debateModel", ()=>{
 
         debateState.getTimer().tick();
 
-
         //déclarer ailleurs
         //eightMinutes = new eightMinutes();
         //let thirtySeconds:thirtySeconds = new thirtySeconds()
@@ -46,6 +45,16 @@ describe("debateModel", ()=>{
 
         expect(debateState.getIfPOIAllowed()).toBe(true);
 
+    })
+
+    it("when faast forwarding, no sound should be able to play", ()=>{
+        debateState.fastForward()
+        expect(debateState.isSwitchingRound()).toBe(true)
+    })
+
+    it("when fast backwarding, no sound should be able to play", ()=>{
+        debateState.fastBackward()
+        expect(debateState.isSwitchingRound()).toBe(true)
     })
 
     it("when time is not within bounds, then poi are  not allowed", ()=>{

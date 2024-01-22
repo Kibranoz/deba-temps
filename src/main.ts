@@ -32,6 +32,11 @@ const messages =  {
       title: "Le temps est écoulé",
       subtitle: "Terminez votre ronde"
     },
+    settings : {
+      "title": "Paramètres",
+      "playMinutesRemainingSound": "Jouer le son des minutes",
+      "minuteRemainingRange": "Pour cet intervalle"
+    },
     options: {
     cp: {
       title:"Parlementaire Canadien",
@@ -101,6 +106,11 @@ const messages =  {
     notifications: {
       title: "Time is over",
       subtitle: "Finish your round"
+    },
+    settings : {
+      "title": "Settings",
+      "playMinutesRemainingSound": "Play minutes remaining sound?",
+      "minuteRemainingRange": "For this minute range"
     },
     options: {
       cp: {

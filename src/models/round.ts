@@ -21,6 +21,10 @@ class Round{
         return this.totalRoundTime;
     }
 
+    public getTotalRoundTimeInMinutes(){
+        return this.totalRoundTime / 60
+    }
+
     public setTotalRoundTime(totalRoundTime: number): void {
         this.totalRoundTime = totalRoundTime;
     }

@@ -6,6 +6,7 @@ describe("configurationModel", ()=>{
     const TIME_ABOVE_UPPER_BOUND = 359000;
     const NEVER = -10
     const ONE_MINUTE = 60
+    const NUMBER_OF_MINUTES = 6
     const TIME_REMAINING_WHEN_QUESTIONS_STARTS_ALLOWED = 300;
     it("determinates when opponent can talk", ()=>{
         let configuration = new RoundBuilder().setMinutes(6).getResult()
@@ -45,5 +46,9 @@ describe("configurationModel", ()=>{
         expect(configuration.timeIsAboveLowerBound(TIME_BELOW_LOWER_BOUND)).toBe(false)
     }
     )
+    it("can tell how many minutes the round has", ()=>{
+        const configuration = new RoundBuilder().setMinutes(NUMBER_OF_MINUTES).getResult()
+        expect(configuration.getTotalRoundTimeInMinutes()).toBe(NUMBER_OF_MINUTES)
+    })
 
 })

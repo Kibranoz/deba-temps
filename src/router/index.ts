@@ -17,7 +17,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/configMaker',
     component: () => import("../views/DebateConfigurationMaker.vue")
-  }
+  },
+  {
+  path: "/settings",
+  component: ()=> import("../views/Settings.vue")
+}
 ]
 
 const router = createRouter({
