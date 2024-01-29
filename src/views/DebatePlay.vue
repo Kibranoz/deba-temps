@@ -192,7 +192,7 @@ export default defineComponent({
     methods: {
         play() {
             this.isPlaying = true;
-            this.currentDebate.debateTimer.play()
+            this.currentDebate.play()
             this.role = this.currentDebate.getWhoIsTalking()
             console.log("playing")
         },

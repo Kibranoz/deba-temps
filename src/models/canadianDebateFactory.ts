@@ -28,7 +28,7 @@ class CanadianDebateOrchestrator {
     }
 
     private getBaseCanadianBuilder():RoundBuilder{
-        return new RoundBuilder().setProtectedAmount(30);
+        return new RoundBuilder().setProtectedAmount(60);
     }
 
     private makePrimeMinisterBeginning() {
@@ -38,6 +38,7 @@ class CanadianDebateOrchestrator {
         }
         else {
             roundBuilder = roundBuilder.setMinutes(6)
+            roundBuilder = roundBuilder.setProtectedAmount(30)
         }
         roundBuilder.setRoles(i18n.global.t("roles.cp.pm"))
         this.configuration.push(roundBuilder.getResult())

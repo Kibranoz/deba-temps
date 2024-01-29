@@ -55,7 +55,6 @@ class DebateSoundManager  {
 
 
         if (debateState.isSwitchingRound()){
-            debateState.dismissIsSwitchingRound()
             return
         }
 

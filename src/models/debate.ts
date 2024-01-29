@@ -99,8 +99,12 @@ class debateState {
         this.debateTimer.resetTimer()
         this.debateTimer.setUpperLimit(this.getCurrentConfiguration().getConfigurationTotalRunTime());
         this.debateTimer.tick()
-        this.debateTimer.pause()
-        
+        this.debateTimer.pause() 
+    }
+
+    play() {
+        this.dismissIsSwitchingRound()
+        this.debateTimer.play()
     }
     fastBackward() {
         this.switchingRound = true;
@@ -115,6 +119,8 @@ class debateState {
 
         this.debateTimer.pause();
         this.debateTimer.resetTimer()
+        this.getIfPOIAllowed()
+        this.POIAllowedJustChanged = false
 
     }
 
@@ -131,6 +137,8 @@ class debateState {
         this.debateTimer.resetTimer()
         this.debateTimer.tick()
         this.debateTimer.pause()
+        this.getIfPOIAllowed()
+        this.POIAllowedJustChanged = false
         }
     setConfigurations(configurations: Round[]) {
         this.configurations = configurations;
