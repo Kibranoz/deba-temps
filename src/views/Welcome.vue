@@ -20,13 +20,16 @@
                 </div>
                 <ul>
                 <li>
-                    {{ $t("welcome.Joe") }}
+                    {{ $t("welcome.alshred") }}
                 </li>
                 <li>
                     {{ $t("welcome.MoonCube") }}
                 </li>
                 <li>
-                    {{ $t("welcome.Anagar") }}
+                    {{ $t("welcome.tubbers") }}
+                </li>
+                <li>
+                    {{ $t("welcome.cabled_mess") }}
                 </li>
                 </ul>
             </ion-content>
