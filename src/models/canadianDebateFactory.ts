@@ -19,8 +19,7 @@ class CanadianDebateOrchestrator {
     makeConfigList():Round[]{
         this.makePrimeMinisterBeginning();
         this.makeOppositionLeaderBeginning()
-        this.makeSecondSpeaker(i18n.global.t("roles.cp.mc"))
-        this.makeSecondSpeaker(i18n.global.t("roles.cp.mo"))
+        this.makeSecondSpeakers()
         this.makeOppositionLeaderEnd();
         this.makePrimeMinisterEnd()
 
@@ -53,6 +52,16 @@ class CanadianDebateOrchestrator {
         }
     }
 
+    private makeSecondSpeakers() {
+        if (this.oppMode == OppMode.SPLIT) {
+            this.makeSecondSpeaker(i18n.global.t("roles.cp.mc"))
+            this.makeSecondSpeaker(i18n.global.t("roles.cp.mo"))
+        }
+        else {
+            this.makeSecondSpeaker(i18n.global.t("roles.cp.mo")) 
+            this.makeSecondSpeaker(i18n.global.t("roles.cp.mc"))
+        }
+    }
     private makeSecondSpeaker(role:string){
         let roundBuilder = this.getBaseCanadianBuilder();
         roundBuilder = roundBuilder.setMinutes(7)

@@ -11,8 +11,7 @@ class BritishDebateFactory {
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.vpm")))
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.cao")))
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.mg")))
-        configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.pm")))
-        configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.pm")))
+        configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.mo")))
         configurations.push(this.makeEndDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.wg")))
         configurations.push(this.makeEndDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.wo")))
 
