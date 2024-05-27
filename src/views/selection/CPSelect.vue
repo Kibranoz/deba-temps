@@ -25,6 +25,15 @@
         <button type="button" class="modalButton" @click="selectOptionUk(6)">6 min</button>
         <button type="button" class="modalButton" @click="selectOptionUk(7)">7 min</button>
     </template>
+    <template v-if="isMace">
+        <p class="modalTitle">{{ $t("options.mace.title") }}</p>
+        <p class="modalChoice">{{ $t("options.mace.minutesMain") }}</p>
+        <input class="choiceInput" type="number" v-model="minutesMain">
+        <p class="modalChoice">{{ $t("options.mace.minutesSummary") }}</p>
+        <input class="choiceInput" type="number" v-model="minutesSummary">
+        <span><button type="button" class="modalButton" @click="confirmSelectionMace">{{ $t("options.cp.confirm") }} </button> </span>
+
+    </template>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -33,6 +42,7 @@ import debateState from '@/models/debate';
 import BritishDebateFactory from '@/models/BritishDebateFactory';
 import GovMode from '@/enum/GovMode';
 import OppMode from '@/enum/OppMode';
+import MaceExtendedDebateOrchestrator from '@/models/MaceExtendedFactory';
 
 
 export default defineComponent({
@@ -45,6 +55,8 @@ export default defineComponent({
         return {
             GovMode:GovMode,
             OppMode:OppMode,
+            minutesMain:5,
+            minutesSummary:5,
             dataDebate: this.debateProp,
             canadianDebateFactory: new CanadianDebateFactory()
         };
@@ -55,6 +67,9 @@ export default defineComponent({
         },
         isUk(): boolean {
             return this.format == "uk"
+        },
+        isMace(): boolean {
+            return this.format == "me"
         }
     },
     emits: ["confirm", "update:debateProp"],
@@ -64,6 +79,15 @@ export default defineComponent({
             this.dataDebate!.setConfigurations(configurationResults)
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm")
+        },
+        confirmSelectionMace() {
+            const maceExtendedDebateFactory = new MaceExtendedDebateOrchestrator();
+            maceExtendedDebateFactory.setMainSpeakerMinutes(this.minutesMain)
+            maceExtendedDebateFactory.setSummarySpeakerMinutes(this.minutesSummary)
+            const configurationResults = maceExtendedDebateFactory.makeConfigList()
+            this.dataDebate!.setConfigurations(configurationResults)
+            this.$emit("update:debateProp", this.dataDebate)
+            this.$emit("confirm");
         },
 
         selectOptionCa(choice:GovMode|OppMode, targetId: string, forTeam: string) {
@@ -114,6 +138,10 @@ export default defineComponent({
 .modalChoice {
     margin-left: 20px;
     font-size: 15px;
+}
+
+.choiceInput {
+    margin-left: 20px;
 }
 
 .modalButton {

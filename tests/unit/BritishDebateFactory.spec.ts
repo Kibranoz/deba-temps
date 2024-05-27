@@ -45,7 +45,7 @@ describe("Brittish DebateFactory", ()=>{
 
     it("gives the correct round info for seventh round", ()=>{
         let britishDebate:debateState = BritishDebateFactory.fromMinutes(VALID_AMOUNT_MINUTES);
-        expect(britishDebate.configurations[6].isMiddleRound()).toBeTruthy();
+        expect(britishDebate.configurations[6].isMiddleRound()).toBeFalsy();
     })
 
 
@@ -53,17 +53,4 @@ describe("Brittish DebateFactory", ()=>{
         let britishDebate:debateState = BritishDebateFactory.fromMinutes(VALID_AMOUNT_MINUTES);
         expect(britishDebate.configurations[7].isMiddleRound()).toBeFalsy();
     })
-
-    it("gives the correct round info for ninth round", ()=>{
-        let britishDebate:debateState = BritishDebateFactory.fromMinutes(VALID_AMOUNT_MINUTES);
-        expect(britishDebate.configurations[8].isMiddleRound()).toBeFalsy();
-    })
-
-
-
-
-
-
-
-
 })

@@ -20,165 +20,34 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 import { createI18n } from 'vue-i18n'
+import enFile from "../public/assets/strings/en.json"
+import frFile from "../public/assets/strings/fr.json"
+import deFile from "../public/assets/strings/de.json"
+import esFile from "../public/assets/strings/es.json"
+import idFile from "../public/assets/strings/id.json"
+import itFile from "../public/assets/strings/it.json"
+import jaFile from "../public/assets/strings/ja.json"
+import koFile from "../public/assets/strings/ko.json"
+import ptFile from "../public/assets/strings/pt.json"
+import ruFile from "../public/assets/strings/ru.json"
+import svFile from "../public/assets/strings/sv.json"
+import trFile from "../public/assets/strings/tr.json"
+import zhFile from "../public/assets/strings/zh.json"
+
+
+
+ 
 
 const messages =  {
-    fr:{
-      titles:{
-      bp : "Parlementaire Britanique",
-      cp: "Parlementaire Canadien",
-      usp:"Parlementaire Américain"
-    },
-    notifications: {
-      title: "Le temps est écoulé",
-      subtitle: "Terminez votre ronde"
-    },
-    settings : {
-      "title": "Paramètres",
-      "playMinutesRemainingSound": "Jouer le son des minutes",
-      "minuteRemainingRange": "Pour cet intervalle"
-    },
-    options: {
-    cp: {
-      title:"Parlementaire Canadien",
-      pmOption: "Premier ministre : Rondes de 7-3 ou 6-4 minutes",
-      coOption: "Chef de l'opposition : Une longue ronde (Traditionnel) ou divisée (Split)",
-      split: "Split",
-      trad: "Traditionnel",
-      confirm: "Confirmer"
-    },
-    bp: {
-      title: "Parlementaire Britannique",
-      nbMinutes: "Nombre de minutes"
-    }
-  },
-  accessibility: {
-    back: "Retourner à une ronde précédente",
-    start: "Commencer le décompte",
-    pause: "Mettre sur pause", 
-    skip: "Passer cette ronde"
-  },
-  debateView: {
-    whoIsTalking: "Qui parle?",
-    poi: "Questions autorisées ?",
-    yes: "Oui",
-    no: "Non"
-  },
-    roles :{
-      cp:{
-        pm:"Premier(ère) ministre",
-        co:"Chef(fe) de l'opposition",
-        mc: "Ministre de la couronne",
-        mo: "Membre de l'opposition"
-      },
-      ap: {
-        pm:"Président(e) de la chambre",
-        co:"Chef(fe) de la minorité",
-        mg:"Membre de la majorité",
-        mo: "Membre de la minorité"
-      },
-      bp: {
-        pm: "Premier(ère) ministre",
-        co:"Chef(fe) de l'opposition",
-        vpm: "Vice Premier(ère) ministre",
-        cao: "Chef(fe) adjoint(e) de l'opposition",
-        mg: "Membre du gouvernement",
-        mo: "Membre de l'opposition",
-        wg: "Whip du gouvernement",
-        wo: "Whip de l'opposition"
-      }
-    },
-    welcome: {
-      header: "Accueil",
-      title: "Bienvenue dans l'application DébaTemps",
-      desc: "Vous pouvez choisir un type de débat dans le menu de droite",
-      soundCreditTitle: "Crédit son (Retrouvés sur FreeSound)",
-      alshred: "Alshred : Son pour le début et la fin du temps protégé",
-      MoonCube: "MoonCubeDesign: son des notifications",
-      tubbers: "Tubbers: Son d'applaudissement de fin du temps",
-      cabled_mess: "Cabled mess: son du temps restant"   
-    }
-  },
-  en:{
-    titles:{
-    bp : "British Parliamentary",
-    cp: "Canadian Parliamentary",
-    usp:"American parliamentary"
-    },
-    notifications: {
-      title: "Time is over",
-      subtitle: "Finish your round"
-    },
-    settings : {
-      "title": "Settings",
-      "playMinutesRemainingSound": "Play minutes remaining sound?",
-      "minuteRemainingRange": "For this minute range"
-    },
-    options: {
-      cp: {
-        title:"Canadian Parliamentary",
-        pmOption: "Prime minister 6-4  or 7-3 minutes rounds",
-        coOption: "Chief of the opposition : One long round (Traditionnal) or Split",
-        split: "Split",
-        trad: "Traditionnal",
-        confirm: "Confirm"
-      },
-      bp: {
-        title: "British Parliamentary",
-        nbMinutes: "Number of minutes"
-      }
-    },
-    debateView: {
-      whoIsTalking: "Who is talking?",
-      poi: "Questions allowed ? (POI)",
-      yes: "Yes",
-      no: "No"
-    },
-    accessibility: {
-      back: "Go back to a previous round",
-      start: "Start countdown",
-      pause: "Pause", 
-      skip: "Skip this round"
-    },
-    roles :{
-      cp:{
-        pm:"Prime Minister",
-        co:"Opposition leader",
-        mc: "Crown Minister",
-        mo: "Opposition member"
-      },
-      ap: {
-        pm:"Speaker of the House",
-        co:"Minority Leader",
-        mg:"Member of the majority",
-        mo: "Member of the minority"
-      },
-      bp: {
-        pm: "Prime minister",
-        co:"Chief of the opposition",
-        vpm: "Deputy prime minister",
-        cao: "Deputy leader of the opposition",
-        mg: "Member of the governement",
-        mo: "Membre of the opposition",
-        wg: "Government whip",
-        wo: "Opposition whip"
-      }
-    },
-    welcome: {
-      header: "Welcome",
-      title: "Welcome in the DébaTemps Application",
-      desc: "You can choose a debate type in the right side menu",
-      soundCreditTitle: "Sound credits (Found on FreeSound)",
-      alshred: "Alshred : Sound for the beginning and end of protected time",
-      tubbers: "Tubbers: Clapping sound for round's end",
-      cabled_mess: "Cabled mess: sound for remaining time",   
-      MoonCube: "MoonCubeDesign: Sound of the beginning of the last seconds of grace and sound of the notification",
-    }
-  },
+    en:enFile, fr: frFile, de:deFile, es:esFile, id:idFile, it: itFile, ja: jaFile, ko: koFile, 
+    pt:ptFile, ru:ruFile, sv:svFile, tr: trFile, zh:zhFile
 }
 
-const lang = navigator.language.substring(0,2) == "fr"?"fr":"en";
-
-
+let lang = navigator.language.substring(0,2) 
+const supportedLanguages = Object.keys(messages)
+if (!supportedLanguages.includes(lang)){
+  lang = "en"
+}
 export const i18n = createI18n({
   legacy: false,
   useScope:'global',
@@ -198,4 +67,4 @@ const app = createApp(App)
   
 router.isReady().then(() => {
   app.mount('#app');
-});
+})

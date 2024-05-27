@@ -1,5 +1,6 @@
 import GovMode from "@/enum/GovMode";
 import OppMode from "@/enum/OppMode";
+import { i18n } from "@/main";
 import CanadianDebateOrchestrator from "@/models/canadianDebateFactory"
 describe("canadianFactory", ()=>{
     let canadianFactory:CanadianDebateOrchestrator;
@@ -8,6 +9,7 @@ describe("canadianFactory", ()=>{
     const FOUR_MINUTES = 4*60;
     const THREE_MINUTES = 3*60;
     const CO_BEGIN_SPLIT = 1;
+    const SECOND_SPEAKER_POSITION = 1;
     const CO_END_SPLIT = 4;
     const CO_END_TRADITIONNAL = 3;
     const TEN_MINUTES = 10*60
@@ -54,6 +56,19 @@ describe("canadianFactory", ()=>{
         let roundList = canadianFactory.makeConfigList();
         expect(roundList[PM_BEGIN_SPLIT].getConfigurationTotalRunTime()).toBe(SEVEN_MINUTES)
         expect(roundList[PM_END_SPLIT].getConfigurationTotalRunTime()).toBe(THREE_MINUTES)
+    })
+
+    it("in trad mode, second speaker will be opposition member", ()=>{
+        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
+        canadianFactory.setOppMode(OppMode.TRAD);
+        let roundList = canadianFactory.makeConfigList();
+        expect(roundList[SECOND_SPEAKER_POSITION].getRole()).toBe(i18n.global.t("roles.cp.mo"));
+    })
+    it("in trad mode, opposition leader gets 4 minutes of protected time", ()=>{
+        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
+        canadianFactory.setOppMode(OppMode.TRAD);
+        let roundList = canadianFactory.makeConfigList();
+        expect(roundList[CO_END_TRADITIONNAL].getAmountOfSecondsProtectedInTheEnd()).toBe(FOUR_MINUTES);
     })
 
     it("PM first speech should be a round with POI", ()=>{

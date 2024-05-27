@@ -73,6 +73,7 @@ class CanadianDebateOrchestrator {
         let roundBuilder = this.getBaseCanadianBuilder();
         if (this.oppMode == OppMode.TRAD){
             roundBuilder = roundBuilder.setMinutes(10);
+            roundBuilder.overrideProtectedEndAmount(4*60)
         }
 
         else{

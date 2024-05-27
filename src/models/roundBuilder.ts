@@ -30,6 +30,10 @@ class RoundBuilder {
 		this.round.setAmountOfSecondsProtectedInTheEnd(protectedAmount)
 		return this
 	}
+	overrideProtectedEndAmount(protectedEndAmount:number) {
+		this.round.setAmountOfSecondsProtectedInTheEnd(protectedEndAmount)
+		return this
+	}
 
 	getResult() {
 		return this.round

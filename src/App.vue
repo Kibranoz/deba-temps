@@ -45,7 +45,7 @@ export default defineComponent({
   },
   data() {
     return {
-      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg"],
+      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg", "assets/mace.svg", "assets/settings.svg"],
       language: 'fr'
     }
   },
@@ -68,6 +68,10 @@ export default defineComponent({
       {
         title: t('titles.usp'),
         url: '/debatePlay/us',
+      },
+      {
+        title: t("titles.me"),
+        url: '/debatePlay/me'
       },
       {
         title: t("settings.title"),

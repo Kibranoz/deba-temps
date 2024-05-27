@@ -53,7 +53,7 @@
                     <div class="middle">:</div>
                     <div class="infoText">
                         {{ canTalk }}
-                        </div>
+                    </div>
                 </div>
             </div>
         </ion-content>
@@ -141,6 +141,9 @@ export default defineComponent({
         }
         if (this.format == 'uk') {
             this.shouldOpenModal = true;
+        }
+        if (this.format == 'me') {
+            this.shouldOpenModal  = true
         }
         else {
             this.currentDebate = this.getNewDebate(this.format)
@@ -234,25 +237,27 @@ export default defineComponent({
                     return this.$t("titles.bp")
                 case "us":
                     return this.$t("titles.usp")
+                case "me":
+                    return this.$t("titles.me")
                 default:
                     return "Débat de type inconnu"
             }
         },
 
         getNewDebate(symbol: string): debateState {
-                if (symbol == "uk"){
-                    console.log("uk")
-                    return BritishDebateFactory.fromMinutes(6);
-                }
-                if (symbol == "ca"){ //fallback value
-                   let debateCa = new CanadianDebateOrchestrator();
-                   debateCa.setGovMode(GovMode.SEVEN_THREE);
-                   debateCa.setOppMode(OppMode.SPLIT);
-                   return new debateState(debateCa.makeConfigList())
-                }
-                if (symbol =='us') {
-                    return  new debateState(new USDebateFactory().createDefaultDebate())
-                }
+            if (symbol == "uk") {
+                console.log("uk")
+                return BritishDebateFactory.fromMinutes(6);
+            }
+            if (symbol == "ca") { //fallback value
+                let debateCa = new CanadianDebateOrchestrator();
+                debateCa.setGovMode(GovMode.SEVEN_THREE);
+                debateCa.setOppMode(OppMode.SPLIT);
+                return new debateState(debateCa.makeConfigList())
+            }
+            if (symbol == 'us') {
+                return new debateState(new USDebateFactory().createDefaultDebate())
+            }
 
             return BritishDebateFactory.fromMinutes(6);
 
@@ -298,6 +303,7 @@ export default defineComponent({
 .infoText {
     font-size: 20px;
 }
+
 .tallIconContainer {
     height: 110px;
 }
