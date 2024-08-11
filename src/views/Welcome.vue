@@ -32,6 +32,7 @@
                     {{ $t("welcome.cabled_mess") }}
                 </li>
                 </ul>
+                <a class="link" href='https://sites.google.com/view/louis-couture/politique-de-confidentialit%C3%A9?authuser=0'>  {{ $t("welcome.privacy_policy") }}</a>
             </ion-content>
     </ion-page>
 </template>
@@ -72,5 +73,8 @@ export default defineComponent({
     height:auto;
     padding-left: 10px;
     padding-right: 10px;
+}
+.link {
+    padding-left: 10px;
 }
 </style>

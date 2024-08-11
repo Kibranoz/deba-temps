@@ -49,9 +49,6 @@ export default defineComponent({
       language: 'fr'
     }
   },
-  beforeMount() {
-    this.language = navigator.language.substring(0,2) == "fr"?"fr":"en";
-  }, 
   setup() {
     const { t } = useI18n();
 

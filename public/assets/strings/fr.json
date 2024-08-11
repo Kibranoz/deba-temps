@@ -80,11 +80,12 @@
   "welcome": {
     "header": "Accueil",
     "title": "Bienvenue dans l'application DébaTemps",
-    "desc": "Vous pouvez choisir un type de débat dans le menu de droite",
+    "desc": "Vous pouvez choisir un type de débat dans le menu en haut à gauche",
     "soundCreditTitle": "Crédit son (Retrouvés sur FreeSound)",
     "alshred": "Alshred : Son pour le début et la fin du temps protégé",
     "MoonCube": "MoonCubeDesign: son des notifications",
     "tubbers": "Tubbers: Son d'applaudissement de fin du temps",
+    "privacy_policy": "Politique de confidentialité ici",
     "cabled_mess": "Cabled mess: son du temps restant"
   }
 }

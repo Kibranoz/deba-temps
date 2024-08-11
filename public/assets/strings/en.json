@@ -81,11 +81,12 @@
   "welcome": {
   "header": "Welcome",
   "title": "Welcome in the DébaTemps Application",
-  "desc": "You can choose a debate type in the right side menu",
+  "desc": "You can choose a debate type in the upper left menu",
   "soundCreditTitle": "Sound credits (Found on FreeSound)",
   "alshred": "Alshred : Sound for the beginning and end of protected time",
   "tubbers": "Tubbers: Clapping sound for round's end",
   "cabled_mess": "Cabled mess: sound for remaining time",
+  "privacy_policy": "Privacy policy here",
   "MoonCube": "MoonCubeDesign: Sound of the beginning of the last seconds of grace and sound of the notification"
   }
   }

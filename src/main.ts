@@ -24,23 +24,14 @@ import enFile from "../public/assets/strings/en.json"
 import frFile from "../public/assets/strings/fr.json"
 import deFile from "../public/assets/strings/de.json"
 import esFile from "../public/assets/strings/es.json"
-import idFile from "../public/assets/strings/id.json"
-import itFile from "../public/assets/strings/it.json"
-import jaFile from "../public/assets/strings/ja.json"
-import koFile from "../public/assets/strings/ko.json"
 import ptFile from "../public/assets/strings/pt.json"
-import ruFile from "../public/assets/strings/ru.json"
 import svFile from "../public/assets/strings/sv.json"
-import trFile from "../public/assets/strings/tr.json"
-import zhFile from "../public/assets/strings/zh.json"
-
-
 
  
 
 const messages =  {
-    en:enFile, fr: frFile, de:deFile, es:esFile, id:idFile, it: itFile, ja: jaFile, ko: koFile, 
-    pt:ptFile, ru:ruFile, sv:svFile, tr: trFile, zh:zhFile
+    en:enFile, fr: frFile, de:deFile, es:esFile,
+    pt:ptFile, sv: svFile
 }
 
 let lang = navigator.language.substring(0,2) 
