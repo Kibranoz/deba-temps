@@ -1,4 +1,4 @@
-import BritishDebateFactory from "@/models/BritishDebateFactory";
+import BritishDebateBuilder from "@/models/BritishDebateBuilder";
 import Round from "@/models/round";
 import debateState from "@/models/debate";
 //import  debate from "@/models/debate"
@@ -6,7 +6,7 @@ import debateState from "@/models/debate";
 describe("debateModel", ()=>{
     let debateState:debateState;
     beforeEach(()=>{
-        debateState= BritishDebateFactory.fromMinutes(5);
+        debateState= BritishDebateBuilder.fromMinutes(5);
         debateState.getTimer().sendNotification = ()=>{
 
         }

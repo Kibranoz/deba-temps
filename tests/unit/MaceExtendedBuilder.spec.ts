@@ -1,7 +1,7 @@
-import MaceExtendedDebateOrchestrator from "@/models/MaceExtendedFactory";
+import MaceExtendedDebateBuilder from "@/models/MaceExtendedBuilder";
 
-describe("Mace extended factory", ()=> {
-    let maceExtendedFactory:MaceExtendedDebateOrchestrator
+describe("Mace extended builder", ()=> {
+    let maceExtendedBuilder:MaceExtendedDebateBuilder
     const MAIN_SPEAKER_CONFIG_INDEX = 0;
     const ANY_CONFIG_INDEX = 0
     const MAIN_SPEAKER_MINUTES = 6
@@ -9,34 +9,34 @@ describe("Mace extended factory", ()=> {
     const SUMMARY_SPEAKER_CONFIG_INDEX = 4
     const ONE_MINUTE_IN__SECONDS = 60;
     beforeEach(()=>{
-        maceExtendedFactory = new MaceExtendedDebateOrchestrator();
+        maceExtendedBuilder = new MaceExtendedDebateBuilder();
     })
 
     it("has default values for main speaker minutes", ()=> {
-        expect(maceExtendedFactory.mainSpeakerMinutes).toBe(5)
-        expect(maceExtendedFactory.summarySpeakerMinutes).toBe(5)
+        expect(maceExtendedBuilder.mainSpeakerMinutes).toBe(5)
+        expect(maceExtendedBuilder.summarySpeakerMinutes).toBe(5)
     })
     it("for a given main speaker configuration, it gives the amount of minutes specified", ()=>{
-        maceExtendedFactory.setMainSpeakerMinutes(MAIN_SPEAKER_MINUTES)
-        const configList = maceExtendedFactory.makeConfigList()
+        maceExtendedBuilder.setMainSpeakerMinutes(MAIN_SPEAKER_MINUTES)
+        const configList = maceExtendedBuilder.makeConfigList()
         expect(configList[MAIN_SPEAKER_CONFIG_INDEX].getTotalRoundTimeInMinutes()).toBe(MAIN_SPEAKER_MINUTES)
     })
     it("for a given summary speaker configuration, it gives the amount of minutes specified", ()=>{
-        maceExtendedFactory.setSummarySpeakerMinutes(SUMMARY_SPEAKER_MINUTES)
-        const configList = maceExtendedFactory.makeConfigList()
+        maceExtendedBuilder.setSummarySpeakerMinutes(SUMMARY_SPEAKER_MINUTES)
+        const configList = maceExtendedBuilder.makeConfigList()
         expect(configList[SUMMARY_SPEAKER_CONFIG_INDEX].getTotalRoundTimeInMinutes()).toBe(SUMMARY_SPEAKER_MINUTES)
     })
     it ("for any configuration we have middle round ", ()=>{
-        const configList = maceExtendedFactory.makeConfigList()
+        const configList = maceExtendedBuilder.makeConfigList()
         expect(configList[ANY_CONFIG_INDEX].isMiddleRound()).toBe(true)
     })
     it("for any configuration we have one minute protected time", ()=>{
-        const configList = maceExtendedFactory.makeConfigList()
+        const configList = maceExtendedBuilder.makeConfigList()
         expect(configList[ANY_CONFIG_INDEX].getAmountOfSecondsProtectedInTheBeginning()).toBe(ONE_MINUTE_IN__SECONDS)
     })
 
     it("have six speakers in total", ()=>{
-        const configList = maceExtendedFactory.makeConfigList()
+        const configList = maceExtendedBuilder.makeConfigList()
         expect(configList.length).toBe(6)  
     })
 })

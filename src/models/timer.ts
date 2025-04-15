@@ -44,7 +44,9 @@ setUpperLimit(newUpperLimit:number) {
         }
         const whenToSend = new Date()
         whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
+    if (LocalNotifications) {
         this.sendNotification(whenToSend)
+        }
     }
 
     sendNotification(whenToSend:Date) {

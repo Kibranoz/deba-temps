@@ -2,7 +2,7 @@ import { i18n } from "@/main";
 import Round from "./round";
 import RoundBuilder from "./roundBuilder";
 
-class MaceExtendedDebateOrchestrator {
+class MaceExtendedDebateBuilder {
     private configurations:Round[] = []
     public mainSpeakerMinutes = 5
 
@@ -74,4 +74,4 @@ class MaceExtendedDebateOrchestrator {
 
 }
 
-export default MaceExtendedDebateOrchestrator
+export default MaceExtendedDebateBuilder

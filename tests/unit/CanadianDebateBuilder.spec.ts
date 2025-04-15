@@ -1,9 +1,9 @@
 import GovMode from "@/enum/GovMode";
 import OppMode from "@/enum/OppMode";
 import { i18n } from "@/main";
-import CanadianDebateOrchestrator from "@/models/canadianDebateFactory"
-describe("canadianFactory", ()=>{
-    let canadianFactory:CanadianDebateOrchestrator;
+import CanadianDebateBuilder from "@/models/CanadianDebateBuilder"
+describe("canadian builder", ()=>{
+    let canadianBuilder:CanadianDebateBuilder;
     const SEVEN_MINUTES =  7*60;
     const SIX_MINUTES = 6*60
     const FOUR_MINUTES = 4*60;
@@ -19,88 +19,88 @@ describe("canadianFactory", ()=>{
     const MC_SPLIT = 2
 
     beforeEach(()=>{
-        canadianFactory = new CanadianDebateOrchestrator();
+        canadianBuilder = new CanadianDebateBuilder();
     })
     it("has default values",()=>{
-        expect(canadianFactory.govMode).toBe(GovMode.SEVEN_THREE)
-        expect(canadianFactory.oppMode).toBe(OppMode.SPLIT)
+        expect(canadianBuilder.govMode).toBe(GovMode.SEVEN_THREE)
+        expect(canadianBuilder.oppMode).toBe(OppMode.SPLIT)
     }
     )
     it("will set the correct time for split", ()=>{
-        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
-        canadianFactory.setOppMode(OppMode.SPLIT)
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SEVEN_THREE);
+        canadianBuilder.setOppMode(OppMode.SPLIT)
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_BEGIN_SPLIT].getConfigurationTotalRunTime()).toBe(SEVEN_MINUTES)
         expect(roundList[CO_END_SPLIT].getConfigurationTotalRunTime()).toBe(THREE_MINUTES)
     })
 
     it("will set the correct time for traditionnal", ()=>{
-        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
-        canadianFactory.setOppMode(OppMode.TRAD)
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SEVEN_THREE);
+        canadianBuilder.setOppMode(OppMode.TRAD)
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_END_TRADITIONNAL].getConfigurationTotalRunTime()).toBe(TEN_MINUTES)
     })
 
     it("will set the correct time for 6-4", ()=>{
-        canadianFactory.setGovMode(GovMode.SIX_FOUR);
-        canadianFactory.setOppMode(OppMode.SPLIT)
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SIX_FOUR);
+        canadianBuilder.setOppMode(OppMode.SPLIT)
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[PM_BEGIN_SPLIT].getConfigurationTotalRunTime()).toBe(SIX_MINUTES)
         expect(roundList[PM_END_SPLIT].getConfigurationTotalRunTime()).toBe(FOUR_MINUTES)
 
     })
 
     it("will set the correct time for 7-3", ()=>{
-        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
-        canadianFactory.setOppMode(OppMode.SPLIT)
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SEVEN_THREE);
+        canadianBuilder.setOppMode(OppMode.SPLIT)
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[PM_BEGIN_SPLIT].getConfigurationTotalRunTime()).toBe(SEVEN_MINUTES)
         expect(roundList[PM_END_SPLIT].getConfigurationTotalRunTime()).toBe(THREE_MINUTES)
     })
 
     it("in trad mode, second speaker will be opposition member", ()=>{
-        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
-        canadianFactory.setOppMode(OppMode.TRAD);
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SEVEN_THREE);
+        canadianBuilder.setOppMode(OppMode.TRAD);
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[SECOND_SPEAKER_POSITION].getRole()).toBe(i18n.global.t("roles.cp.mo"));
     })
     it("in trad mode, opposition leader gets 4 minutes of protected time", ()=>{
-        canadianFactory.setGovMode(GovMode.SEVEN_THREE);
-        canadianFactory.setOppMode(OppMode.TRAD);
-        let roundList = canadianFactory.makeConfigList();
+        canadianBuilder.setGovMode(GovMode.SEVEN_THREE);
+        canadianBuilder.setOppMode(OppMode.TRAD);
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_END_TRADITIONNAL].getAmountOfSecondsProtectedInTheEnd()).toBe(FOUR_MINUTES);
     })
 
     it("PM first speech should be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[PM_BEGIN_SPLIT].isMiddleRound()).toBe(true)
     })
 
     it("CO first speech in split should be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_BEGIN_SPLIT].isMiddleRound()).toBe(true)
     })
     it("MO speech should be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[MO_SPLIT].isMiddleRound()).toBe(true)
     })
     it("MC speech should be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[MC_SPLIT].isMiddleRound()).toBe(true)
     })
 
     it("PM last speech should not be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[PM_END_SPLIT].isMiddleRound()).toBe(false)
     })
 
     it("CO last speech in split should not be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_END_SPLIT].isMiddleRound()).toBe(false)
     })
 
     it("CO round in trad should be a round with POI", ()=>{
-        let roundList = canadianFactory.makeConfigList();
+        let roundList = canadianBuilder.makeConfigList();
         expect(roundList[CO_END_TRADITIONNAL].isMiddleRound()).toBe(true)
     })
 

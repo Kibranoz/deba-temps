@@ -1,4 +1,4 @@
-import BritishDebateFactory from "@/models/BritishDebateFactory";
+import BritishDebateBuilder from "@/models/BritishDebateBuilder";
 import debateSoundManager from "@/models/DebateSoundManager";
 import debateState from "@/models/debate";
 import Round from "@/models/round";
@@ -59,7 +59,7 @@ it("does not play any sound following the forwarding of a round", ()=> {
 })
 
 it("will prevent the minutes clock from being played at the beginning using the block function", ()=> {
-    let debateState:debateState = BritishDebateFactory.fromMinutes(MINUTES_AMOUNT);
+    let debateState:debateState = BritishDebateBuilder.fromMinutes(MINUTES_AMOUNT);
     debateSoundManager.blockFirstSoundFromPopping(debateState)
     expect(debateSoundManager.clockSoundsJustPlayed[MINUTES_INDEX]).toBeTruthy()
 })

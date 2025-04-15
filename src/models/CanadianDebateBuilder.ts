@@ -3,7 +3,7 @@ import {i18n} from "@/main"
 import RoundBuilder from "./roundBuilder";
 import GovMode from "@/enum/GovMode";
 import OppMode from "@/enum/OppMode";
-class CanadianDebateOrchestrator {
+class CanadianDebateBuilder {
     govMode = GovMode.SEVEN_THREE;
     oppMode = OppMode.SPLIT;
 
@@ -99,4 +99,4 @@ class CanadianDebateOrchestrator {
 
 }
 
-export default CanadianDebateOrchestrator
+export default CanadianDebateBuilder

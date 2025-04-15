@@ -2,7 +2,7 @@ import { i18n } from "@/main";
 import Round from "./round";
 import RoundBuilder from "./roundBuilder";
 
-class USDebateFactory {
+class USDebateBuilder {
     configurations:Round[] = []
     public createDefaultDebate():Round[] {
         this.addRound(7,i18n.global.t("roles.cp.pm"))
@@ -27,4 +27,4 @@ class USDebateFactory {
     }
 }
 
-export default USDebateFactory;
+export default USDebateBuilder;

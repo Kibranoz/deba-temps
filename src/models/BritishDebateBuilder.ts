@@ -3,7 +3,7 @@ import { i18n } from "@/main";
 import Round from "./round";
 import RoundBuilder from "./roundBuilder";
 
-class BritishDebateFactory {
+class BritishDebateBuilder {
     static fromMinutes(minutes:number):debateState {
         const configurations: (Round | undefined)[] = []
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.pm")))
@@ -42,4 +42,4 @@ class BritishDebateFactory {
 }
 
 
-export default BritishDebateFactory;
+export default BritishDebateBuilder;

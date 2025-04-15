@@ -37,12 +37,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CanadianDebateFactory from '@/models/canadianDebateFactory';
+import CanadianDebateBuilder from '@/models/CanadianDebateBuilder';
 import debateState from '@/models/debate';
-import BritishDebateFactory from '@/models/BritishDebateFactory';
+import BritishDebateBuilder from '@/models/BritishDebateBuilder';
 import GovMode from '@/enum/GovMode';
 import OppMode from '@/enum/OppMode';
-import MaceExtendedDebateOrchestrator from '@/models/MaceExtendedFactory';
+import MaceExtendedDebateBuilder from '@/models/MaceExtendedBuilder';
 
 
 export default defineComponent({
@@ -58,7 +58,7 @@ export default defineComponent({
             minutesMain:5,
             minutesSummary:5,
             dataDebate: this.debateProp,
-            canadianDebateFactory: new CanadianDebateFactory()
+            canadianDebateFactory: new CanadianDebateBuilder()
         };
     },
     computed: {
@@ -81,7 +81,7 @@ export default defineComponent({
             this.$emit("confirm")
         },
         confirmSelectionMace() {
-            const maceExtendedDebateFactory = new MaceExtendedDebateOrchestrator();
+            const maceExtendedDebateFactory = new MaceExtendedDebateBuilder();
             maceExtendedDebateFactory.setMainSpeakerMinutes(this.minutesMain)
             maceExtendedDebateFactory.setSummarySpeakerMinutes(this.minutesSummary)
             const configurationResults = maceExtendedDebateFactory.makeConfigList()
@@ -104,7 +104,7 @@ export default defineComponent({
         },
 
         selectOptionUk(minutes: number) {
-            this.dataDebate! = BritishDebateFactory.fromMinutes(minutes)
+            this.dataDebate! = BritishDebateBuilder.fromMinutes(minutes)
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm");
         },
