@@ -1,0 +1,91 @@
+{
+  "titles": {
+    "bp": "Parlamento británico",
+    "cp": "Parlamento canadiense",
+    "usp": "Parlamento americano",
+    "me": "Formato ampliado Mace"
+  },
+  "notifications": {
+    "title": "Se acabó el tiempo",
+    "subtitle": "Termine su ronda"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "playMinutesRemainingSound": "¿Sonido de minutos restantes?",
+    "minuteRemainingRange": "Para este intervalo de minutos"
+  },
+  "options": {
+    "cp": {
+      "title": "Parlamento canadiense",
+      "pmOption": "Primer ministro : rondas de 6-4 o 7-3 minutos",
+      "coOption": "Líder de la oposición : Una ronda larga (Tradicional) o Partida",
+      "split": "Dividir",
+      "trad": "Tradicional",
+      "confirm": "Confirme"
+    },
+    "bp": {
+      "title": "Parlamento británico",
+      "nbMinutes": "Número de minutos"
+    },
+    "mace": {
+      "title": "Formato ampliado Mace",
+      "minutesMain": "Actas de los principales debates",
+      "minutesSummary": "Resumen de las actas de los debates"
+    }
+  },
+  "debateView": {
+    "whoIsTalking": "¿Quién habla?",
+    "poi": "Preguntas permitidas (POI)",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "accessibility": {
+    "back": "Volver a una ronda anterior",
+    "start": "Iniciar cuenta atrás",
+    "pause": "Pausa",
+    "skip": "Saltar esta ronda"
+  },
+  "roles": {
+    "cp": {
+      "pm": "Primer Ministro",
+      "co": "Líder de la oposición",
+      "mc": "Ministro de la Corona",
+      "mo": "Miembro de la oposición"
+    },
+    "ap": {
+      "pm": "Presidente de la Cámara",
+      "co": "Líder de la minoría",
+      "mg": "Miembro de la mayoría",
+      "mo": "Miembro de la minoría"
+    },
+    "bp": {
+      "pm": "Primer Ministro",
+      "co": "Jefe de la oposición",
+      "vpm": "Viceprimer Ministro",
+      "cao": "Líder adjunto de la oposición",
+      "mg": "Miembro del Gobierno",
+      "mo": "Miembro de la oposición",
+      "wg": "Látigo del Gobierno",
+      "wo": "Líder de la oposición"
+    },
+    "me": {
+      "fp": "Primera propuesta",
+      "fo": "Primera oposición",
+      "sp": "Segunda propuesta",
+      "so": "Segunda oposición",
+      "sup": "Resumen de la propuesta",
+      "suo": "Resumen de la oposición"
+    }
+  },
+  "welcome": {
+    "header": "Bienvenido",
+    "title": "Bienvenido a la aplicación DébaTemps",
+    "desc": "Puedes elegir un tipo de debate en el menú superior izquierdo",
+    "soundCreditTitle": "Créditos de sonido (Encontrados en FreeSound)",
+    "privacy_policy": "Política de privacidad aquí",
+    "alshred": "Alshred : Sonido para el comienzo y el final del tiempo protegido",
+    "tubbers": "Tubbers: Sonido de palmas para el final de la ronda",
+    "cabled_mess": "cabled_mess: sonido para el tiempo restante",
+    "MoonCube": "MoonCubeDesign: Sonido del comienzo de los últimos segundos de gracia y sonido de la notificación"
+  }
+}

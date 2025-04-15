@@ -1,13 +1,13 @@
 <template>
-  <ion-app>
+  <ion-app :lang="language">
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
             <ion-list-header>DébatTemps</ion-list-header>
   
-            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
+              <ion-item @click="selectedIndex = i" router-direction="root" :href="p.url" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <img :src="items[i]">
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -22,9 +22,11 @@
 
 <script lang="ts">
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
+import { createApp, defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { useI18n } from "vue-i18n";
+
 
 export default defineComponent({
   name: 'App',
@@ -43,36 +45,49 @@ export default defineComponent({
   },
   data() {
     return {
-      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg"]
+      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg", "assets/mace.svg", "assets/settings.svg"],
+      language: 'fr'
     }
   },
   setup() {
-    const selectedIndex = ref(0);
+    const { t } = useI18n();
+
+    const selectedIndex = ref(2);
     const appPages = [
       {
-        title: 'Parlementaire Brittanique',
+        title: t('titles.bp'),
         url: '/debatePlay/uk',
-
       },
       {
-        title: 'Parlementaire Canadien',
+        title: t('titles.cp'),
         url: '/debatePlay/ca',
       },
       {
-        title: 'Parlementaire US',
+        title: t('titles.usp'),
         url: '/debatePlay/us',
-
       },
       {
-        title: 'Testing',
+        title: t("titles.me"),
+        url: '/debatePlay/me'
+      },
+      {
+        title: t("settings.title"),
+        url: "/settings"
+      }
+
+      /** {
+        //title: 'Testing',
         url: '/debatePlay/test'
       }
+      **/
     ];
-    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-    
-    const path = window.location.pathname.split('folder/')[1];
+
+
+
+  const path = window.location.pathname;
+  console.log(path)
     if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      selectedIndex.value = appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
     }
 
     
@@ -82,7 +97,6 @@ export default defineComponent({
     return { 
       selectedIndex,
       appPages, 
-      labels,
       archiveOutline, 
       archiveSharp, 
       bookmarkOutline, 
@@ -218,6 +232,10 @@ ion-note {
   font-size: 16px;
 
   color: var(--ion-color-medium-shade);
+}
+
+ion-item img {
+  margin: 10px;
 }
 
 ion-item.selected {

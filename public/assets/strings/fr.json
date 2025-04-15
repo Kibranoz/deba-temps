@@ -1,0 +1,91 @@
+{
+  "titles": {
+    "bp": "Parlementaire Britanique",
+    "cp": "Parlementaire Canadien",
+    "usp": "Parlementaire Américain",
+    "me": "Mace format étendu"
+  },
+  "notifications": {
+    "title": "Le temps est écoulé",
+    "subtitle": "Terminez votre ronde"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "playMinutesRemainingSound": "Jouer le son des minutes",
+    "minuteRemainingRange": "Pour cet intervalle"
+  },
+  "options": {
+    "cp": {
+      "title": "Parlementaire Canadien",
+      "pmOption": "Premier ministre : Rondes de 7-3 ou 6-4 minutes",
+      "coOption": "Chef de l'opposition : Une longue ronde (Traditionnel) ou divisée (Split)",
+      "split": "Split",
+      "trad": "Traditionnel",
+      "confirm": "Confirmer"
+    },
+    "bp": {
+      "title": "Parlementaire Britannique",
+      "nbMinutes": "Nombre de minutes"
+    },
+    "mace": {
+      "title": "Mace format étendu",
+      "minutesMain": "Nombre de minutes pour les débatteurs principaux",
+      "minutesSummary": "Nombre de minutes pour les débatteurs du résumé"
+    }
+  },
+  "accessibility": {
+    "back": "Retourner à une ronde précédente",
+    "start": "Commencer le décompte",
+    "pause": "Mettre sur pause",
+    "skip": "Passer cette ronde"
+  },
+  "debateView": {
+    "whoIsTalking": "Qui parle?",
+    "poi": "Questions autorisées ?",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "roles": {
+    "cp": {
+      "pm": "Premier ministre",
+      "co": "Chef de l'opposition",
+      "mc": "Ministre de la couronne",
+      "mo": "Membre de l'opposition"
+    },
+    "ap": {
+      "pm": "Président de la chambre",
+      "co": "Chef de la minorité",
+      "mg": "Membre de la majorité",
+      "mo": "Membre de la minorité"
+    },
+    "bp": {
+      "pm": "Premier ministre",
+      "co": "Chef de l'opposition",
+      "vpm": "Vice Premier ministre",
+      "cao": "Chef adjoint de l'opposition",
+      "mg": "Membre du gouvernement",
+      "mo": "Membre de l'opposition",
+      "wg": "Whip du gouvernement",
+      "wo": "Whip de l'opposition"
+    },
+    "me": {
+      "fp": "Première proposition",
+      "fo": "Première opposition",
+      "sp": "Deuxième proposition",
+      "so": "Deuxième opposition",
+      "sup": "Résumé de la proposition",
+      "suo": "Résumé de l'opposition"
+    }
+  },
+  "welcome": {
+    "header": "Accueil",
+    "title": "Bienvenue dans l'application DébaTemps",
+    "desc": "Vous pouvez choisir un type de débat dans le menu en haut à gauche",
+    "soundCreditTitle": "Crédit son (Retrouvés sur FreeSound)",
+    "alshred": "Alshred : Son pour le début et la fin du temps protégé",
+    "MoonCube": "MoonCubeDesign: son des notifications",
+    "tubbers": "Tubbers: Son d'applaudissement de fin du temps",
+    "privacy_policy": "Politique de confidentialité ici",
+    "cabled_mess": "Cabled mess: son du temps restant"
+  }
+}

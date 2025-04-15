@@ -1,0 +1,91 @@
+{
+  "titles": {
+    "bp": "Brittiska parlamentet",
+    "cp": "Kanadensiska parlamentet",
+    "usp": "Amerikansk parlamentarisk",
+    "me": "Mace utökat format"
+  },
+  "notifications": {
+    "title": "Tiden är över",
+    "subtitle": "Avsluta din runda"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "playMinutesRemainingSound": "Spela minuter kvar ljud?",
+    "minuteRemainingRange": "För detta minutintervall"
+  },
+  "options": {
+    "cp": {
+      "title": "Kanadensiska parlamentet",
+      "pmOption": "Premiärminister : 6-4 eller 7-3 minuters omgångar",
+      "coOption": "Oppositionsledare : En lång runda (traditionell) eller delad",
+      "split": "Delad",
+      "trad": "Traditionell",
+      "confirm": "Bekräfta"
+    },
+    "bp": {
+      "title": "Brittiska parlamentet",
+      "nbMinutes": "Antal minuter"
+    },
+    "mace": {
+      "title": "Mace utökat format",
+      "minutesMain": "Huvuddebattörernas protokoll",
+      "minutesSummary": "Sammanfattning av debatternas protokoll"
+    }
+  },
+  "debateView": {
+    "whoIsTalking": "Vem är det som pratar?",
+    "poi": "Frågor tillåtna ? (POI)",
+    "yes": "Ja",
+    "no": "Nej"
+  },
+  "accessibility": {
+    "back": "Gå tillbaka till en tidigare omgång",
+    "start": "Starta nedräkning",
+    "pause": "Paus",
+    "skip": "Hoppa över denna omgång"
+  },
+  "roles": {
+    "cp": {
+      "pm": "Premiärminister",
+      "co": "Oppositionsledare",
+      "mc": "Kronminister",
+      "mo": "Medlem av oppositionen"
+    },
+    "ap": {
+      "pm": "Talman i representanthuset",
+      "co": "Minoritetsledare",
+      "mg": "Medlem av majoriteten",
+      "mo": "Medlem av minoriteten"
+    },
+    "bp": {
+      "pm": "Premiärminister",
+      "co": "Chef för oppositionen",
+      "vpm": "Vice premiärminister",
+      "cao": "Biträdande oppositionsledare",
+      "mg": "Medlem av regeringen",
+      "mo": "Medlem av oppositionen",
+      "wg": "Regeringens inpiskare",
+      "wo": "Oppositionens inpiskare"
+    },
+    "me": {
+      "fp": "Första förslaget",
+      "fo": "Första invändningen",
+      "sp": "Andra förslaget",
+      "so": "Andra invändningen",
+      "sup": "Sammanfattande förslag",
+      "suo": "Sammanfattande invändning"
+    }
+  },
+  "welcome": {
+    "header": "Välkommen",
+    "title": "Välkommen in i DébaTemps applikation",
+  "desc": "Du kan välja en debatttyp i den övre vänstra menyn",
+    "soundCreditTitle": "Ljudkrediter (hittades på FreeSound)",
+    "alshred": "Alshred : Ljud för början och slutet av skyddad tid",
+    "tubbers": "Tubbers: Klappljud för rundans slut",
+    "cabled_mess": "cabled mess: ljud för återstående tid",
+    "privacy_policy": "Sekretesspolicy här",
+    "MoonCube": "MoonCubeDesign: Ljudet av början av de sista sekunderna av nåd och ljudet av meddelandet"
+  }
+}

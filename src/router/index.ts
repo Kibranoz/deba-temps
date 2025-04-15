@@ -4,16 +4,24 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
-    redirect: '/debatePlay/uk'
+    redirect: '/home'
   },
   {
-    path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
+    path: '/home',
+    component: () => import ('../views/Welcome.vue')
   },
   {
     path: '/debatePlay/:id',
     component: () => import ('../views/DebatePlay.vue')
-  }
+  },
+  {
+    path: '/configMaker',
+    component: () => import("../views/DebateConfigurationMaker.vue")
+  },
+  {
+  path: "/settings",
+  component: ()=> import("../views/Settings.vue")
+}
 ]
 
 const router = createRouter({

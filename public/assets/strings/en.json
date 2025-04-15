@@ -1,0 +1,92 @@
+
+{"titles": {
+  "bp": "British Parliamentary",
+  "cp": "Canadian Parliamentary",
+  "usp": "American parliamentary",
+  "me": "Mace extended format"
+
+  },
+  "notifications": {
+  "title": "Time is over",
+  "subtitle": "Finish your round"
+  },
+  "settings": {
+  "title": "Settings",
+  "playMinutesRemainingSound": "Play minutes remaining sound?",
+  "minuteRemainingRange": "For this minute range"
+  },
+  "options": {
+  "cp": {
+  "title": "Canadian Parliamentary",
+  "pmOption": "Prime minister : 6-4  or 7-3 minutes rounds",
+  "coOption": "Opposition Leader : One long round (Traditionnal) or Split",
+  "split": "Split",
+  "trad": "Traditionnal",
+  "confirm": "Confirm"
+  },
+  "bp": {
+  "title": "British Parliamentary",
+  "nbMinutes": "Number of minutes"
+  },
+  "mace": {
+  "title": "Mace extended format",
+  "minutesMain": "Main debatters' minutes",
+  "minutesSummary": "Summary debatters' minutes"
+  }
+  },
+  "debateView": {
+  "whoIsTalking": "Who is talking?",
+  "poi": "Questions allowed ? (POI)",
+  "yes": "Yes",
+  "no": "No"
+  },
+  "accessibility": {
+  "back": "Go back to a previous round",
+  "start": "Start countdown",
+  "pause": "Pause",
+  "skip": "Skip this round"
+  },
+  "roles": {
+  "cp": {
+  "pm": "Prime Minister",
+  "co": "Opposition leader",
+  "mc": "Crown Minister",
+  "mo": "Opposition member"
+  },
+  "ap": {
+  "pm": "Speaker of the House",
+  "co": "Minority Leader",
+  "mg": "Member of the majority",
+  "mo": "Member of the minority"
+  },
+  "bp": {
+  "pm": "Prime minister",
+  "co": "Chief of the opposition",
+  "vpm": "Deputy prime minister",
+  "cao": "Deputy leader of the opposition",
+  "mg": "Member of the governement",
+  "mo": "Member of the opposition",
+  "wg": "Government whip",
+  "wo": "Opposition whip"
+  },
+  "me": {
+  "fp": "First proposition",
+  "fo": "First opposition",
+  "sp": "Second proposition",
+  "so": "Second opposition",
+  "sup": "Summary proposition",
+  "suo": "Summary opposition"
+  }
+  },
+  "welcome": {
+  "header": "Welcome",
+  "title": "Welcome in the DébaTemps Application",
+  "desc": "You can choose a debate type in the upper left menu",
+  "soundCreditTitle": "Sound credits (Found on FreeSound)",
+  "alshred": "Alshred : Sound for the beginning and end of protected time",
+  "tubbers": "Tubbers: Clapping sound for round's end",
+  "cabled_mess": "Cabled mess: sound for remaining time",
+  "privacy_policy": "Privacy policy here",
+  "MoonCube": "MoonCubeDesign: Sound of the beginning of the last seconds of grace and sound of the notification"
+  }
+  }
