@@ -12,13 +12,13 @@
         <ion-content>
             <div class="welcomeText">
                 {{ $t("welcome.title") }}
-            <br>
-            {{ $t("welcome.desc") }}
+                <br>
+                {{ $t("welcome.desc") }}
             </div>
             <div class="credits">
                 <b>{{ $t("welcome.soundCreditTitle") }}</b>
-                </div>
-                <ul>
+            </div>
+            <ul>
                 <li>
                     {{ $t("welcome.alshred") }}
                 </li>
@@ -31,15 +31,17 @@
                 <li>
                     {{ $t("welcome.cabled_mess") }}
                 </li>
-                </ul>
-                <a class="link" href='https://sites.google.com/view/louis-couture/politique-de-confidentialit%C3%A9?authuser=0'>  {{ $t("welcome.privacy_policy") }}</a>
-            </ion-content>
+            </ul>
+            <a class="link"
+                href='https://sites.google.com/view/louis-couture/politique-de-confidentialit%C3%A9?authuser=0'> {{
+                    $t("welcome.privacy_policy") }}</a>
+        </ion-content>
     </ion-page>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from "@ionic/vue"
 
 export default defineComponent({
     name: 'WelcomePage',
@@ -62,18 +64,20 @@ export default defineComponent({
     justify-self: center;
     align-self: center;
     font-size: 20px;
-    height:auto;
+    height: auto;
     padding-left: 10px;
     padding-right: 10px;
 }
-.credits{
+
+.credits {
     display: flex;
     justify-self: center;
     align-self: center;
-    height:auto;
+    height: auto;
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .link {
     padding-left: 10px;
 }

@@ -6,14 +6,14 @@
             <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sixFour"
                 @click="selectOptionCa(GovMode.SIX_FOUR, 'sixFour', 'gov')">6-4</button>
             <button type="button" class="modalButton" forArea="primeMinisterSelect" id="sevenThree"
-                @click="selectOptionCa(GovMode.SEVEN_THREE,'sevenThree', 'gov')">7-3</button>
+                @click="selectOptionCa(GovMode.SEVEN_THREE, 'sevenThree', 'gov')">7-3</button>
         </span>
         <p class="modalChoice">{{ $t("options.cp.coOption") }}</p>
         <span>
             <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="split"
-                @click="selectOptionCa(OppMode.SPLIT,'split', 'opp')">{{ $t("options.cp.split") }}</button>
+                @click="selectOptionCa(OppMode.SPLIT, 'split', 'opp')">{{ $t("options.cp.split") }}</button>
             <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
-                @click="selectOptionCa(OppMode.TRAD,'trad', 'opp')">{{ $t("options.cp.trad") }}</button>
+                @click="selectOptionCa(OppMode.TRAD, 'trad', 'opp')">{{ $t("options.cp.trad") }}</button>
         </span>
         <span><button type="button" class="modalButton" @click="confirmSelectionCa">{{ $t("options.cp.confirm")
         }}</button></span>
@@ -31,18 +31,19 @@
         <input class="choiceInput" type="number" v-model="minutesMain">
         <p class="modalChoice">{{ $t("options.mace.minutesSummary") }}</p>
         <input class="choiceInput" type="number" v-model="minutesSummary">
-        <span><button type="button" class="modalButton" @click="confirmSelectionMace">{{ $t("options.cp.confirm") }} </button> </span>
+        <span><button type="button" class="modalButton" @click="confirmSelectionMace">{{ $t("options.cp.confirm") }}
+            </button> </span>
 
     </template>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import CanadianDebateBuilder from '@/models/CanadianDebateBuilder';
-import debate from '@/models/debate';
-import BritishDebateBuilder from '@/models/BritishDebateBuilder';
-import GovMode from '@/enum/GovMode';
-import OppMode from '@/enum/OppMode';
-import MaceExtendedDebateBuilder from '@/models/MaceExtendedBuilder';
+import { defineComponent } from 'vue'
+import CanadianDebateBuilder from '@/models/CanadianDebateBuilder'
+import debate from '@/models/debate'
+import BritishDebateBuilder from '@/models/BritishDebateBuilder'
+import GovMode from '@/enum/GovMode'
+import OppMode from '@/enum/OppMode'
+import MaceExtendedDebateBuilder from '@/models/MaceExtendedBuilder'
 
 
 export default defineComponent({
@@ -53,13 +54,13 @@ export default defineComponent({
     },
     data() {
         return {
-            GovMode:GovMode,
-            OppMode:OppMode,
-            minutesMain:5,
-            minutesSummary:5,
+            GovMode: GovMode,
+            OppMode: OppMode,
+            minutesMain: 5,
+            minutesSummary: 5,
             dataDebate: this.debateProp,
             canadianDebateFactory: new CanadianDebateBuilder()
-        };
+        }
     },
     computed: {
         isCa(): boolean {
@@ -76,25 +77,25 @@ export default defineComponent({
     methods: {
         async sendSelection() {
             await this.dataDebate?.initializeWithPreferences()
-            this.$emit("update:debateProp", this.dataDebate);
+            this.$emit("update:debateProp", this.dataDebate)
             this.$emit("confirm")
         },
         confirmSelectionCa() {
-            const configurationResults = this.canadianDebateFactory.makeConfigList();
+            const configurationResults = this.canadianDebateFactory.makeConfigList()
             this.dataDebate!.setConfigurations(configurationResults)
-            this.sendSelection();
+            this.sendSelection()
         },
         confirmSelectionMace() {
-            const maceExtendedDebateFactory = new MaceExtendedDebateBuilder();
+            const maceExtendedDebateFactory = new MaceExtendedDebateBuilder()
             maceExtendedDebateFactory.setMainSpeakerMinutes(this.minutesMain)
             maceExtendedDebateFactory.setSummarySpeakerMinutes(this.minutesSummary)
             const configurationResults = maceExtendedDebateFactory.makeConfigList()
             this.dataDebate!.setConfigurations(configurationResults)
-            this.sendSelection();
+            this.sendSelection()
         },
 
-        selectOptionCa(choice:GovMode|OppMode, targetId: string, forTeam: string) {
-            let button = document.getElementById(targetId) as HTMLElement;
+        selectOptionCa(choice: GovMode | OppMode, targetId: string, forTeam: string) {
+            let button = document.getElementById(targetId) as HTMLElement
             button.style.backgroundColor = "mediumseagreen"
             button.style.borderStyle = "dotted"
             this.redify(button.getAttribute("forArea") as string, targetId)
@@ -108,7 +109,7 @@ export default defineComponent({
 
         selectOptionUk(minutes: number) {
             this.dataDebate! = BritishDebateBuilder.fromMinutes(minutes)
-            this.sendSelection();
+            this.sendSelection()
         },
 
         redify(debateConfigCategory: string, targetId: string) {
@@ -128,7 +129,7 @@ export default defineComponent({
         }
     }
 }
-);
+)
 </script>
 <style>
 .modalTitle {

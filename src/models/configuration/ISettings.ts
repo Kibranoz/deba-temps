@@ -1,4 +1,4 @@
 export interface ISettings {
-    shouldBeCountingUp(): Promise<boolean>;
-    shouldPlayMinuteSounds(): Promise<boolean>;
-    }
+    shouldBeCountingUp(): Promise<boolean>
+    shouldPlayMinuteSounds(): Promise<boolean>
+}

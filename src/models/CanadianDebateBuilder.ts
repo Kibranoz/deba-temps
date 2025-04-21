@@ -1,38 +1,38 @@
-import Round from "./round";
-import {i18n} from "@/main"
-import RoundBuilder from "./roundBuilder";
-import GovMode from "@/enum/GovMode";
-import OppMode from "@/enum/OppMode";
+import Round from "./round"
+import { i18n } from "@/main"
+import RoundBuilder from "./roundBuilder"
+import GovMode from "@/enum/GovMode"
+import OppMode from "@/enum/OppMode"
 class CanadianDebateBuilder {
     govMode = GovMode.SEVEN_THREE;
     oppMode = OppMode.SPLIT;
 
-    private configuration:Round[] = []
+    private configuration: Round[] = []
 
-    setGovMode(govMode:GovMode){
+    setGovMode(govMode: GovMode) {
         this.govMode = govMode
     }
-    setOppMode(oppMode:OppMode){
+    setOppMode(oppMode: OppMode) {
         this.oppMode = oppMode
     }
 
-    makeConfigList():Round[]{
-        this.makePrimeMinisterBeginning();
+    makeConfigList(): Round[] {
+        this.makePrimeMinisterBeginning()
         this.makeOppositionLeaderBeginning()
         this.makeSecondSpeakers()
-        this.makeOppositionLeaderEnd();
+        this.makeOppositionLeaderEnd()
         this.makePrimeMinisterEnd()
 
         return this.configuration
     }
 
-    private getBaseCanadianBuilder():RoundBuilder{
-        return new RoundBuilder().setProtectedAmount(60);
+    private getBaseCanadianBuilder(): RoundBuilder {
+        return new RoundBuilder().setProtectedAmount(60)
     }
 
     private makePrimeMinisterBeginning() {
         let roundBuilder = this.getBaseCanadianBuilder()
-        if (this.govMode == GovMode.SEVEN_THREE){
+        if (this.govMode == GovMode.SEVEN_THREE) {
             roundBuilder = roundBuilder.setMinutes(7)
         }
         else {
@@ -43,8 +43,8 @@ class CanadianDebateBuilder {
         this.configuration.push(roundBuilder.getResult())
     }
 
-    private makeOppositionLeaderBeginning(){
-        if (this.oppMode == OppMode.SPLIT){
+    private makeOppositionLeaderBeginning() {
+        if (this.oppMode == OppMode.SPLIT) {
             let roundBuilder = this.getBaseCanadianBuilder()
             roundBuilder = roundBuilder.setMinutes(7)
             roundBuilder.setRoles(i18n.global.t("roles.cp.co"))
@@ -58,35 +58,35 @@ class CanadianDebateBuilder {
             this.makeSecondSpeaker(i18n.global.t("roles.cp.mo"))
         }
         else {
-            this.makeSecondSpeaker(i18n.global.t("roles.cp.mo")) 
+            this.makeSecondSpeaker(i18n.global.t("roles.cp.mo"))
             this.makeSecondSpeaker(i18n.global.t("roles.cp.mc"))
         }
     }
-    private makeSecondSpeaker(role:string){
-        let roundBuilder = this.getBaseCanadianBuilder();
+    private makeSecondSpeaker(role: string) {
+        let roundBuilder = this.getBaseCanadianBuilder()
         roundBuilder = roundBuilder.setMinutes(7)
         roundBuilder.setRoles(role)
         this.configuration.push(roundBuilder.getResult())
     }
 
-    private makeOppositionLeaderEnd(){
-        let roundBuilder = this.getBaseCanadianBuilder();
-        if (this.oppMode == OppMode.TRAD){
-            roundBuilder = roundBuilder.setMinutes(10);
-            roundBuilder.overrideProtectedEndAmount(4*60)
+    private makeOppositionLeaderEnd() {
+        let roundBuilder = this.getBaseCanadianBuilder()
+        if (this.oppMode == OppMode.TRAD) {
+            roundBuilder = roundBuilder.setMinutes(10)
+            roundBuilder.overrideProtectedEndAmount(4 * 60)
         }
 
-        else{
+        else {
             roundBuilder = roundBuilder.setMinutes(3)
-            roundBuilder = roundBuilder.setToBeClosingRound();
+            roundBuilder = roundBuilder.setToBeClosingRound()
         }
         roundBuilder.setRoles(i18n.global.t("roles.cp.co"))
         this.configuration.push(roundBuilder.getResult())
     }
 
-    private makePrimeMinisterEnd(){
+    private makePrimeMinisterEnd() {
         let roundBuilder = this.getBaseCanadianBuilder()
-        if (this.govMode == GovMode.SEVEN_THREE){
+        if (this.govMode == GovMode.SEVEN_THREE) {
             roundBuilder = roundBuilder.setMinutes(3)
         }
         else {

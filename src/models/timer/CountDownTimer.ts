@@ -1,16 +1,16 @@
-import { ITimer } from "./ITimer";
-import timer from "./timer";
+import { ITimer } from "./ITimer"
+import timer from "./timer"
 
 export default class CountDownTimer extends timer implements ITimer {
 
     tick(): void {
         if (this.paused) {
-            this.currentPauseTime = Date.now();
+            this.currentPauseTime = Date.now()
         }
-        if (this.playing){
-        this.currentTime = (this.timeStartedAt + this.upperLimit * 1000) - Date.now();
-        this.currentDisplayTime = this.currentTime;
-        }    
+        if (this.playing) {
+            this.currentTime = (this.timeStartedAt + this.upperLimit * 1000) - Date.now()
+            this.currentDisplayTime = this.currentTime
+        }
     }
-    
+
 }
