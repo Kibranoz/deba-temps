@@ -1,11 +1,10 @@
-import { Preferences } from "@capacitor/preferences"
 import debate from "./debate"
 import { ISettings } from "./configuration/ISettings"
 import Settings from "./configuration/Settings"
 
 class DebateSoundManager {
-    minutesReminderFor = [5, 4, 3, 2, 1];
-    clockSoundsJustPlayed: any = { "5": false, "4": false, "3": false, "2": false, "1": false };
+    minutesReminderFor = [5, 4, 3, 2, 1]
+    clockSoundsJustPlayed: any = { "5": false, "4": false, "3": false, "2": false, "1": false }
     configuration: ISettings
     private shouldPlayMinuteSounds = true
 
