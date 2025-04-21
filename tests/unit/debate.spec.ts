@@ -1,10 +1,8 @@
 import BritishDebateBuilder from "@/models/BritishDebateBuilder";
 import Round from "@/models/round";
-import debateState from "@/models/debate";
-//import  debate from "@/models/debate"
-
+import debate from "@/models/debate";
 describe("debateModel", ()=>{
-    let debateState:debateState;
+    let debateState:debate;
     beforeEach(()=>{
         debateState= BritishDebateBuilder.fromMinutes(5);
         debateState.getTimer().sendNotification = ()=>{
@@ -13,11 +11,6 @@ describe("debateModel", ()=>{
         debateState.getTimer().play()
 
         debateState.getTimer().tick();
-
-        //déclarer ailleurs
-        //eightMinutes = new eightMinutes();
-        //let thirtySeconds:thirtySeconds = new thirtySeconds()
-        //let debate = new debate([eightMinutes,thirtySeconds,eightMinutes,thirtySeconds], ["first person", "first person", "second person", "second person", "third person", "third person", "fourth person", "fourth person"]);
     });
     it("will go to the next configuration", ()=> {
         debateState.nextConfiguration();

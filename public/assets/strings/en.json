@@ -13,7 +13,8 @@
   "settings": {
   "title": "Settings",
   "playMinutesRemainingSound": "Play minutes remaining sound?",
-  "minuteRemainingRange": "For this minute range"
+  "minuteRemainingRange": "For this minute range",
+  "countUp": "Counting up instead of down"
   },
   "options": {
   "cp": {

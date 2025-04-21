@@ -1,5 +1,5 @@
 
-class Round{
+class Round {
 
     private totalRoundTime = 0
     private middleRound = true;
@@ -9,91 +9,91 @@ class Round{
 
 
     public getRole(): string {
-        return this.role;
+        return this.role
     }
 
     public setRole(role: string): void {
-        this.role = role;
+        this.role = role
     }
 
 
     public getTotalRoundTime(): number {
-        return this.totalRoundTime;
+        return this.totalRoundTime
     }
 
-    public getTotalRoundTimeInMinutes(){
+    public getTotalRoundTimeInMinutes() {
         return this.totalRoundTime / 60
     }
 
     public setTotalRoundTime(totalRoundTime: number): void {
-        this.totalRoundTime = totalRoundTime;
+        this.totalRoundTime = totalRoundTime
     }
 
     public isMiddleRound(): boolean {
-        return this.middleRound;
+        return this.middleRound
     }
 
     public setIsMiddleRound(isMiddle: boolean): void {
-        this.middleRound = isMiddle;
+        this.middleRound = isMiddle
     }
 
     public getAmountOfSecondsProtectedInTheBeginning(): number {
-        return this.amountOfSecondsProtectedInTheBeginning;
+        return this.amountOfSecondsProtectedInTheBeginning
     }
 
     public setAmountOfSecondsProtectedInTheBeginning(amountOfSecondsProtectedInTheBeginning: number): void {
-        this.amountOfSecondsProtectedInTheBeginning = amountOfSecondsProtectedInTheBeginning;
+        this.amountOfSecondsProtectedInTheBeginning = amountOfSecondsProtectedInTheBeginning
     }
 
     public getAmountOfSecondsProtectedInTheEnd(): number {
-        return this.amountOfSecondsProtectedInTheEnd;
+        return this.amountOfSecondsProtectedInTheEnd
     }
 
     public setAmountOfSecondsProtectedInTheEnd(amountOfSecondsProtectedInTheEnd: number): void {
-        this.amountOfSecondsProtectedInTheEnd = amountOfSecondsProtectedInTheEnd;
+        this.amountOfSecondsProtectedInTheEnd = amountOfSecondsProtectedInTheEnd
     }
 
 
-    getConfigurationTotalRunTime():number{
-        return this.totalRoundTime;
+    getConfigurationTotalRunTime(): number {
+        return this.totalRoundTime
     }
-    timeIsBelowUpperBound(currentTime:number):boolean {
-         return currentTime <= this.getTimeWhenQuestionStartsToBeAllowed() * 1000
+    timeIsBelowUpperBound(currentTime: number): boolean {
+        return currentTime <= this.getTimeWhenQuestionStartsToBeAllowed() * 1000
     }
-    timeIsAboveLowerBound(currentTime:number):boolean {
+    timeIsAboveLowerBound(currentTime: number): boolean {
         return currentTime > this.getTimeWhenQuestionStopBeingAllowed() * 1000
     }
-    getTimeWhenQuestionStartsToBeAllowed():number{
+    getTimeWhenQuestionStartsToBeAllowed(): number {
         if (this.middleRound) {
-            return this.totalRoundTime - this.amountOfSecondsProtectedInTheBeginning;
+            return this.totalRoundTime - this.amountOfSecondsProtectedInTheBeginning
         }
         else {
-            return -10; //never
+            return -10 //never
         }
 
     }
 
 
-    getTimeWhenQuestionStopBeingAllowed():number{
+    getTimeWhenQuestionStopBeingAllowed(): number {
         if (this.middleRound) {
-            return this.amountOfSecondsProtectedInTheEnd;
+            return this.amountOfSecondsProtectedInTheEnd
         }
-        else { 
+        else {
             return this.totalRoundTime
         }
     }
-    equals(otherConfig:Round):boolean {
-        if (this.totalRoundTime == otherConfig.totalRoundTime){
-            if (this.middleRound == otherConfig.middleRound){
-                    if (this.amountOfSecondsProtectedInTheBeginning == otherConfig.amountOfSecondsProtectedInTheBeginning){
-                        if (this.amountOfSecondsProtectedInTheEnd == otherConfig.amountOfSecondsProtectedInTheEnd){
-                            return true;
-                        }
+    equals(otherConfig: Round): boolean {
+        if (this.totalRoundTime == otherConfig.totalRoundTime) {
+            if (this.middleRound == otherConfig.middleRound) {
+                if (this.amountOfSecondsProtectedInTheBeginning == otherConfig.amountOfSecondsProtectedInTheBeginning) {
+                    if (this.amountOfSecondsProtectedInTheEnd == otherConfig.amountOfSecondsProtectedInTheEnd) {
+                        return true
                     }
+                }
             }
         }
-        return false;
+        return false
     }
 
 }
-export default Round;
+export default Round

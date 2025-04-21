@@ -5,9 +5,10 @@
         <ion-content>
           <ion-list id="inbox-list">
             <ion-list-header>DébatTemps</ion-list-header>
-  
+
             <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :href="p.url" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+              <ion-item @click="selectedIndex = i" router-direction="root" :href="p.url" :router-link="p.url"
+                lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <img :src="items[i]">
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -21,38 +22,38 @@
 </template>
 
 <script lang="ts">
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
-import { createApp, defineComponent, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import { useI18n } from "vue-i18n";
+import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue'
+import { createApp, defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons'
+import { useI18n } from "vue-i18n"
 
 
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, 
-    IonContent, 
+    IonApp,
+    IonContent,
     //IonIcon, 
-    IonItem, 
-    IonLabel, 
-    IonList, 
-    IonListHeader, 
-    IonMenu, 
-    IonMenuToggle,  
-    IonRouterOutlet, 
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonRouterOutlet,
     IonSplitPane,
   },
   data() {
     return {
-      items:["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg", "assets/mace.svg", "assets/settings.svg"],
+      items: ["/assets/uk.svg", "/assets/canada.svg", "/assets/usa.svg", "assets/mace.svg", "assets/settings.svg"],
       language: 'fr'
     }
   },
   setup() {
-    const { t } = useI18n();
+    const { t } = useI18n()
 
-    const selectedIndex = ref(2);
+    const selectedIndex = ref(2)
     const appPages = [
       {
         title: t('titles.bp'),
@@ -80,41 +81,41 @@ export default defineComponent({
         url: '/debatePlay/test'
       }
       **/
-    ];
+    ]
 
 
 
-  const path = window.location.pathname;
-  console.log(path)
+    const path = window.location.pathname
+    console.log(path)
     if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
+      selectedIndex.value = appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase())
     }
 
-    
-    
-    const route = useRoute();
-    
-    return { 
+
+
+    const route = useRoute()
+
+    return {
       selectedIndex,
-      appPages, 
-      archiveOutline, 
-      archiveSharp, 
-      bookmarkOutline, 
-      bookmarkSharp, 
-      heartOutline, 
-      heartSharp, 
-      mailOutline, 
-      mailSharp, 
-      paperPlaneOutline, 
-      paperPlaneSharp, 
-      trashOutline, 
-      trashSharp, 
-      warningOutline, 
+      appPages,
+      archiveOutline,
+      archiveSharp,
+      bookmarkOutline,
+      bookmarkSharp,
+      heartOutline,
+      heartSharp,
+      mailOutline,
+      mailSharp,
+      paperPlaneOutline,
+      paperPlaneSharp,
+      trashOutline,
+      trashSharp,
+      warningOutline,
       warningSharp,
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
-});
+})
 </script>
 
 <style scoped>

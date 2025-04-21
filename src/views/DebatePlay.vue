@@ -60,28 +60,28 @@
     </ion-page>
 </template>
 <script lang="ts">
-import debate from "@/models/debate";
 import CPSelect from "@/views/selection/CPSelect.vue"
-import { debuggerStatement } from "@babel/types";
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
-import { HtmlAttributes } from "csstype";
-import { getName } from "ionicons/dist/types/components/icon/utils";
+import { debuggerStatement } from "@babel/types"
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue"
+import { HtmlAttributes } from "csstype"
+import { getName } from "ionicons/dist/types/components/icon/utils"
 import { caretForwardSharp, pauseSharp, playSkipBackSharp, playSkipForwardSharp, chatbubbleSharp, handLeftSharp, personSharp, pause, play, time } from "ionicons/icons"
-import { computed, defineComponent } from "vue";
-import { LocalNotifications } from "@capacitor/local-notifications";
-import { App } from '@capacitor/app';
-import { Device } from '@capacitor/device';
-import { highlightTrailingWhitespace } from "jest-matcher-utils";
-import { I18nInjectionKey } from "vue-i18n";
-import debateSoundManager from "@/models/DebateSoundManager";
-import GovMode from "@/enum/GovMode";
-import OppMode from "@/enum/OppMode";
-import debateState from "@/models/debate";
+import { computed, defineComponent } from "vue"
+import { LocalNotifications } from "@capacitor/local-notifications"
+import { App } from '@capacitor/app'
+import { Device } from '@capacitor/device'
+import { highlightTrailingWhitespace } from "jest-matcher-utils"
+import { I18nInjectionKey } from "vue-i18n"
+import debateSoundManager from "@/models/DebateSoundManager"
+import GovMode from "@/enum/GovMode"
+import OppMode from "@/enum/OppMode"
+import debate from "@/models/debate"
 
-import CanadianDebateBuilder from "@/models/CanadianDebateBuilder";
-import BritishDebateBuilder from "@/models/BritishDebateBuilder";
-import USDebateBuilder from "@/models/USDebateBuilder";
-import MaceExtendedBuilder from "@/models/MaceExtendedBuilder";
+import CanadianDebateBuilder from "@/models/CanadianDebateBuilder"
+import BritishDebateBuilder from "@/models/BritishDebateBuilder"
+import USDebateBuilder from "@/models/USDebateBuilder"
+import MaceExtendedBuilder from "@/models/MaceExtendedBuilder"
+import Settings from "@/models/configuration/Settings"
 
 export default defineComponent({
     name: "DebatePlay",
@@ -122,35 +122,36 @@ export default defineComponent({
     },
     computed: {
         currentConfigurationIndex() {
-            return this.currentDebate.configurationIndex;
+            return this.currentDebate.configurationIndex
         },
         currentDebatePlaying() {
-            return this.currentDebate.debateTimer.playing;
+            return this.currentDebate.debateTimer.playing
         }
 
     },
 
     beforeUnmount() {
-        this.shouldOpenModal = false;
+        this.shouldOpenModal = false
     },
 
     async created() {
-        this.format = this.$route.params.id.toString();
+        this.format = this.$route.params.id.toString()
         if (this.format == 'ca') {
-            this.shouldOpenModal = true;
+            this.shouldOpenModal = true
         }
         if (this.format == 'uk') {
-            this.shouldOpenModal = true;
+            this.shouldOpenModal = true
         }
         if (this.format == 'me') {
-            this.shouldOpenModal  = true
+            this.shouldOpenModal = true
         }
         else {
             this.currentDebate = this.getNewDebate(this.format)
+            this.currentDebate.initializeWithPreferences()
         }
         App.addListener('appStateChange', ({ isActive }) => {
-            console.log('App state changed. Is active?', isActive);
-        });
+            console.log('App state changed. Is active?', isActive)
+        })
         if (await (await LocalNotifications.checkPermissions()).display == "prompt") {
             await LocalNotifications.requestPermissions()
         }
@@ -172,20 +173,20 @@ export default defineComponent({
 
         setInterval(() => {
             this.currentDebate.getTimer().tick()
-            this.canTalk = (this.currentDebate.getIfPOIAllowed() ? this.$t("debateView.yes") : this.$t("debateView.no"));
-            if (this.currentDebate.debateTimer.currentTime <= 0 && this.currentDebate.getTimer().playing) {
+            this.canTalk = (this.currentDebate.getIfPOIAllowed() ? this.$t("debateView.yes") : this.$t("debateView.no"))
+            if (this.currentDebate.debateTimer.isDone() && this.currentDebate.getTimer().playing) {
                 console.log("next configuration")
-                this.currentDebate.nextConfiguration();
-                this.currentDebate.getTimer().tick();
+                this.currentDebate.nextConfiguration()
+                this.currentDebate.getTimer().tick()
                 this.role = this.currentDebate.getWhoIsTalking()
             }
             if (this.currentDebate.getTimer().playing) {
-                this.isPlaying = true;
+                this.isPlaying = true
             }
             else {
-                this.isPlaying = false;
+                this.isPlaying = false
             }
-            this.time = this.currentDebate.getTimer().getTimeString();
+            this.time = this.currentDebate.getTimer().getTimeString()
             debateSoundManager.playAnyNecessarySound(this.currentDebate)
         }
             , 100)
@@ -194,25 +195,25 @@ export default defineComponent({
 
     methods: {
         play() {
-            this.isPlaying = true;
+            this.isPlaying = true
             this.currentDebate.play()
             this.role = this.currentDebate.getWhoIsTalking()
             console.log("playing")
         },
 
         pause() {
-            this.isPlaying = false;
-            this.currentDebate.debateTimer.pause();
+            this.isPlaying = false
+            this.currentDebate.debateTimer.pause()
         },
         forward() {
-            this.currentDebate.fastForward();
-            this.currentDebate.getTimer().tick();
+            this.currentDebate.fastForward()
+            this.currentDebate.getTimer().tick()
             this.time = this.currentDebate.getTimer().getTimeString()
             this.role = this.currentDebate.getWhoIsTalking()
         },
         backward() {
-            this.currentDebate.fastBackward();
-            this.currentDebate.getTimer().tick();
+            this.currentDebate.fastBackward()
+            this.currentDebate.getTimer().tick()
             this.time = this.currentDebate.getTimer().getTimeString()
             this.role = this.currentDebate.getWhoIsTalking()
         },
@@ -221,7 +222,7 @@ export default defineComponent({
             console.log("confirmCa")
             this.shouldOpenModal = false
             this.currentDebate.restartTimer()
-            this.time = this.currentDebate.getTimer().getTimeString();
+            this.time = this.currentDebate.getTimer().getTimeString()
         },
 
 
@@ -244,22 +245,22 @@ export default defineComponent({
             }
         },
 
-        getNewDebate(symbol: string): debateState {
+        getNewDebate(symbol: string): debate {
             if (symbol == "uk") {
                 console.log("uk")
-                return BritishDebateBuilder.fromMinutes(6);
+                return BritishDebateBuilder.fromMinutes(6)
             }
             if (symbol == "ca") {
-                let debateCa = new CanadianDebateBuilder();
-                debateCa.setGovMode(GovMode.SEVEN_THREE);
-                debateCa.setOppMode(OppMode.SPLIT);
-                return new debateState(debateCa.makeConfigList())
+                let debateCa = new CanadianDebateBuilder()
+                debateCa.setGovMode(GovMode.SEVEN_THREE)
+                debateCa.setOppMode(OppMode.SPLIT)
+                return new debate(debateCa.makeConfigList(), Settings)
             }
             if (symbol == 'us') {
-                return new debateState(new USDebateBuilder().createDefaultDebate())
+                return new debate(new USDebateBuilder().createDefaultDebate(), Settings)
             }
 
-            return BritishDebateBuilder.fromMinutes(6);
+            return BritishDebateBuilder.fromMinutes(6)
 
         }
 

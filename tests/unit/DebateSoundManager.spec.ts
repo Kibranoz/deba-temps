@@ -1,6 +1,6 @@
 import BritishDebateBuilder from "@/models/BritishDebateBuilder";
 import debateSoundManager from "@/models/DebateSoundManager";
-import debateState from "@/models/debate";
+import debate from "@/models/debate";
 import Round from "@/models/round";
 const mockAudio = {
         play: jest.fn(),
@@ -49,7 +49,7 @@ it("will play the minutes remaining the number of times it is being asked", ()=>
 })
 
 it("does not play any sound following the forwarding of a round", ()=> {
-    let debateState:debateState = jest.createMockFromModule("@/models/debate")
+    let debateState:debate = jest.createMockFromModule("@/models/debate")
     debateState.isSwitchingRound = ()=>{return true;}
     debateState.dismissIsSwitchingRound = jest.fn()
     jest.spyOn(debateSoundManager,"blockFirstSoundFromPopping").mockImplementationOnce(jest.fn())
@@ -59,7 +59,7 @@ it("does not play any sound following the forwarding of a round", ()=> {
 })
 
 it("will prevent the minutes clock from being played at the beginning using the block function", ()=> {
-    let debateState:debateState = BritishDebateBuilder.fromMinutes(MINUTES_AMOUNT);
+    let debateState:debate = BritishDebateBuilder.fromMinutes(MINUTES_AMOUNT);
     debateSoundManager.blockFirstSoundFromPopping(debateState)
     expect(debateSoundManager.clockSoundsJustPlayed[MINUTES_INDEX]).toBeTruthy()
 })
@@ -71,11 +71,6 @@ it("will not play the minute sounds if the settings says so", ()=>{
 
 })
 
-it("will select the correct sound to play", ()=>{
-    //let debateState:debateState = jest.mock('@/models/debateState');
-    //debateState.roundJustEnded =
-    //expect(debateSoundManager.round
-})
 }
 
 )
