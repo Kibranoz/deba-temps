@@ -2,9 +2,10 @@ import { i18n } from "@/main";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { IonThumbnail } from "@ionic/vue";
 
-class timer {
+abstract class timer {
     timeStartedAt = 0;
     currentTime = 0;
+    currentDisplayTime = 0;
     paused = false;
     playing = false;
     pauseStartedAt = 0;
@@ -21,15 +22,11 @@ setUpperLimit(newUpperLimit:number) {
     this.upperLimit = newUpperLimit
 }
 
-    tick():void{
-        if (this.paused) {
-            this.currentPauseTime = Date.now();
-        }
-        if (this.playing){
-        this.currentTime = (this.timeStartedAt + this.upperLimit * 1000) - Date.now();
-        // before was just get milliseconds
-        }
-    }
+isDone(): boolean {
+    return this.currentTime <= 0;
+}
+abstract tick():void;
+
     async play(){
         if (this.paused) {
             const pauseDelta:number = (this.currentPauseTime - this.pauseStartedAt)
@@ -44,8 +41,8 @@ setUpperLimit(newUpperLimit:number) {
         }
         const whenToSend = new Date()
         whenToSend.setTime((this.timeStartedAt + this.upperLimit * 1000))
-    if (LocalNotifications) {
-        this.sendNotification(whenToSend)
+        if (LocalNotifications) {
+            this.sendNotification(whenToSend)
         }
     }
 
@@ -63,7 +60,6 @@ setUpperLimit(newUpperLimit:number) {
         this.playing = false;
         this.paused = true
         this.pauseStartedAt = Date.now();
-        const pendingNotifications = (await LocalNotifications.getPending()).notifications
         }
 
     hasExactlyNMinutesRemaining(n:number) {
@@ -81,7 +77,7 @@ setUpperLimit(newUpperLimit:number) {
     }
 
     getTimeString() {
-            let currentTimeSeconds = this.currentTime / 1000
+            let currentTimeSeconds = this.currentDisplayTime / 1000
             this.minutes = Math.floor(currentTimeSeconds/60) % 60
             currentTimeSeconds -= this.minutes*60
             this.seconds = Math.round(currentTimeSeconds) % 60

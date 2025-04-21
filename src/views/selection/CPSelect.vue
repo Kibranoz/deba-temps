@@ -15,7 +15,7 @@
             <button type="button" class="modalButton" forArea="oppositionMemberSelect" id="trad"
                 @click="selectOptionCa(OppMode.TRAD,'trad', 'opp')">{{ $t("options.cp.trad") }}</button>
         </span>
-        <span><button type="button" class="modalButton" @click="confirmSelection">{{ $t("options.cp.confirm")
+        <span><button type="button" class="modalButton" @click="confirmSelectionCa">{{ $t("options.cp.confirm")
         }}</button></span>
     </template>
     <template v-if="isUk">
@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CanadianDebateBuilder from '@/models/CanadianDebateBuilder';
-import debateState from '@/models/debate';
+import debate from '@/models/debate';
 import BritishDebateBuilder from '@/models/BritishDebateBuilder';
 import GovMode from '@/enum/GovMode';
 import OppMode from '@/enum/OppMode';
@@ -48,7 +48,7 @@ import MaceExtendedDebateBuilder from '@/models/MaceExtendedBuilder';
 export default defineComponent({
     name: "CPSelect",
     props: {
-        debateProp: debateState,
+        debateProp: debate,
         format: String
     },
     data() {
@@ -74,11 +74,15 @@ export default defineComponent({
     },
     emits: ["confirm", "update:debateProp"],
     methods: {
-        confirmSelection() {
-            const configurationResults = this.canadianDebateFactory.makeConfigList();
-            this.dataDebate!.setConfigurations(configurationResults)
+        async sendSelection() {
+            await this.dataDebate?.initializeWithPreferences()
             this.$emit("update:debateProp", this.dataDebate);
             this.$emit("confirm")
+        },
+        confirmSelectionCa() {
+            const configurationResults = this.canadianDebateFactory.makeConfigList();
+            this.dataDebate!.setConfigurations(configurationResults)
+            this.sendSelection();
         },
         confirmSelectionMace() {
             const maceExtendedDebateFactory = new MaceExtendedDebateBuilder();
@@ -86,8 +90,7 @@ export default defineComponent({
             maceExtendedDebateFactory.setSummarySpeakerMinutes(this.minutesSummary)
             const configurationResults = maceExtendedDebateFactory.makeConfigList()
             this.dataDebate!.setConfigurations(configurationResults)
-            this.$emit("update:debateProp", this.dataDebate)
-            this.$emit("confirm");
+            this.sendSelection();
         },
 
         selectOptionCa(choice:GovMode|OppMode, targetId: string, forTeam: string) {
@@ -105,8 +108,7 @@ export default defineComponent({
 
         selectOptionUk(minutes: number) {
             this.dataDebate! = BritishDebateBuilder.fromMinutes(minutes)
-            this.$emit("update:debateProp", this.dataDebate);
-            this.$emit("confirm");
+            this.sendSelection();
         },
 
         redify(debateConfigCategory: string, targetId: string) {

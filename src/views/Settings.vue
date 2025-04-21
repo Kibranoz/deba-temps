@@ -13,6 +13,10 @@
                 <ion-label>{{ $t("settings.playMinutesRemainingSound") }}</ion-label>
                 <ion-toggle @ion-change="updatePlayMinuteSoundSettings" slot="end" v-model="shouldPlayMinuteSounds"     :checked="shouldPlayMinuteSounds"></ion-toggle>
             </ion-item>
+            <ion-item>
+                <ion-label>{{ $t("settings.countUp") }}</ion-label>
+                <ion-toggle @ion-change="updateCountUpSettings" slot="end" v-model="shouldCountUp"     :checked="shouldCountUp"></ion-toggle>
+            </ion-item>
         </ion-content>
     </ion-page>
 </template>
@@ -40,12 +44,16 @@ export default defineComponent({
     },
     data(){
         return {
-            shouldPlayMinuteSounds: true
+            shouldPlayMinuteSounds: false,
+            shouldCountUp: false
         }
     },
     async mounted() {
         await Preferences.get({key:"playMinuteSoundSetting"}).then((value)=> {
             this.shouldPlayMinuteSounds = value.value == "true" ? true : false
+        })
+        await Preferences.get({key:"countUpSetting"}).then((value)=> {
+            this.shouldCountUp = value.value == "true" ? true : false
         })
         console.log("sounnd setting", this.shouldPlayMinuteSounds)
     },
@@ -56,6 +64,14 @@ export default defineComponent({
                 key: "playMinuteSoundSetting",
                 value: this.shouldPlayMinuteSounds.toString()
             })
+        },
+        async updateCountUpSettings() {
+
+            await Preferences.set({
+                key: "countUpSetting",
+                value: this.shouldCountUp.toString()
+            })
+
         }
     }
 })

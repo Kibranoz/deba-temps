@@ -1,11 +1,15 @@
 import Round from "./round";
 import debateSoundManager from "./DebateSoundManager";
-import timer from "./timer";
+import Coun from "./timer/timer";
+import { ITimer } from "./timer/ITimer";
+import CountUpTimer from "./timer/CountUpTImer";
+import { ISettings } from "./configuration/ISettings";
+import CountDownTimer from "./timer/CountDownTimer";
 
-class debateState {
-    //caN Be any amount 
+class debate {
     configurations: any;
     configurationIndex = 0;
+    settings: ISettings
     time = 0
     POIAllowed = false;
     private switchingRound = false;
@@ -37,17 +41,27 @@ class debateState {
         this._POIAllowedJustChanged = value;
     }
     
-    debateTimer: timer
+    debateTimer: ITimer
 
-    constructor(configurations: any) {
+    constructor(configurations: any, settings: ISettings) {
         this.configurations = configurations
-        this.debateTimer = new timer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
+        this.settings = settings
+        this.debateTimer = new CountDownTimer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
     }
+
+    async initializeWithPreferences() {
+        if (await this.settings.shouldBeCountingUp()) {
+            this.debateTimer = new CountUpTimer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
+        } else {
+            this.debateTimer = new CountDownTimer(this.configurations[this.configurationIndex].getConfigurationTotalRunTime())
+        }
+    }
+
 
     getCurrentConfiguration(): Round {
         return this.configurations[this.configurationIndex]
     }
-    getTimer(): timer {
+    getTimer(): ITimer {
         return this.debateTimer
     }
 
@@ -150,4 +164,4 @@ class debateState {
 
 //export const Debate = new debate([new sixMinutes(), new tenMinutes()], ["role 1", "role b"])
 
-export default debateState
+export default debate

@@ -60,7 +60,6 @@
     </ion-page>
 </template>
 <script lang="ts">
-import debate from "@/models/debate";
 import CPSelect from "@/views/selection/CPSelect.vue"
 import { debuggerStatement } from "@babel/types";
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
@@ -76,12 +75,13 @@ import { I18nInjectionKey } from "vue-i18n";
 import debateSoundManager from "@/models/DebateSoundManager";
 import GovMode from "@/enum/GovMode";
 import OppMode from "@/enum/OppMode";
-import debateState from "@/models/debate";
+import debate from "@/models/debate";
 
 import CanadianDebateBuilder from "@/models/CanadianDebateBuilder";
 import BritishDebateBuilder from "@/models/BritishDebateBuilder";
 import USDebateBuilder from "@/models/USDebateBuilder";
 import MaceExtendedBuilder from "@/models/MaceExtendedBuilder";
+import Settings from "@/models/configuration/Settings";
 
 export default defineComponent({
     name: "DebatePlay",
@@ -147,6 +147,7 @@ export default defineComponent({
         }
         else {
             this.currentDebate = this.getNewDebate(this.format)
+            this.currentDebate.initializeWithPreferences()
         }
         App.addListener('appStateChange', ({ isActive }) => {
             console.log('App state changed. Is active?', isActive);
@@ -173,7 +174,7 @@ export default defineComponent({
         setInterval(() => {
             this.currentDebate.getTimer().tick()
             this.canTalk = (this.currentDebate.getIfPOIAllowed() ? this.$t("debateView.yes") : this.$t("debateView.no"));
-            if (this.currentDebate.debateTimer.currentTime <= 0 && this.currentDebate.getTimer().playing) {
+            if (this.currentDebate.debateTimer.isDone() && this.currentDebate.getTimer().playing) {
                 console.log("next configuration")
                 this.currentDebate.nextConfiguration();
                 this.currentDebate.getTimer().tick();
@@ -244,7 +245,7 @@ export default defineComponent({
             }
         },
 
-        getNewDebate(symbol: string): debateState {
+        getNewDebate(symbol: string): debate {
             if (symbol == "uk") {
                 console.log("uk")
                 return BritishDebateBuilder.fromMinutes(6);
@@ -253,10 +254,10 @@ export default defineComponent({
                 let debateCa = new CanadianDebateBuilder();
                 debateCa.setGovMode(GovMode.SEVEN_THREE);
                 debateCa.setOppMode(OppMode.SPLIT);
-                return new debateState(debateCa.makeConfigList())
+                return new debate(debateCa.makeConfigList(), Settings)
             }
             if (symbol == 'us') {
-                return new debateState(new USDebateBuilder().createDefaultDebate())
+                return new debate(new USDebateBuilder().createDefaultDebate(), Settings)
             }
 
             return BritishDebateBuilder.fromMinutes(6);

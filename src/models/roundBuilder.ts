@@ -1,4 +1,4 @@
-import debateState from "./debate";
+import debate from "./debate";
 import Round from "./round";
 
 class RoundBuilder {

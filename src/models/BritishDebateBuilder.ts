@@ -1,10 +1,11 @@
-import debateState from "./debate";
+import debate from "./debate";
 import { i18n } from "@/main";
 import Round from "./round";
 import RoundBuilder from "./roundBuilder";
+import Settings from "./configuration/Settings";
 
 class BritishDebateBuilder {
-    static fromMinutes(minutes:number):debateState {
+    static fromMinutes(minutes:number):debate {
         const configurations: (Round | undefined)[] = []
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.pm")))
         configurations.push(this.makeMiddleDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.co")))
@@ -15,7 +16,7 @@ class BritishDebateBuilder {
         configurations.push(this.makeEndDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.wg")))
         configurations.push(this.makeEndDebateRoundFromMinutes(minutes,i18n.global.t("roles.bp.wo")))
 
-        const brittishDebate = new debateState(configurations)
+        const brittishDebate = new debate(configurations, Settings)
 
         return brittishDebate
     }

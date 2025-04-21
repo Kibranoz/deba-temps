@@ -12,7 +12,8 @@
   "settings": {
     "title": "Paramètres",
     "playMinutesRemainingSound": "Jouer le son des minutes",
-    "minuteRemainingRange": "Pour cet intervalle"
+    "minuteRemainingRange": "Pour cet intervalle",
+    "countUp": "Temps croissant au lieu de décroissant"
   },
   "options": {
     "cp": {

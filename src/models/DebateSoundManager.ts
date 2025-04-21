@@ -1,10 +1,17 @@
 import { Preferences } from "@capacitor/preferences";
 import debate from "./debate";
+import { ISettings } from "./configuration/ISettings";
+import Settings from "./configuration/Settings";
 
 class DebateSoundManager  {
     minutesReminderFor = [5,4,3,2,1];
     clockSoundsJustPlayed:any = {"5":false,"4":false,"3":false, "2":false, "1":false};
+    configuration: ISettings;
     private shouldPlayMinuteSounds = true
+
+    constructor(configuration: ISettings) {
+        this.configuration = configuration
+    }
 
 
     public isShouldPlayMinuteSounds(): boolean {
@@ -28,12 +35,7 @@ class DebateSoundManager  {
         thud.play()
     }
     async fetchPreferences():Promise<void> {
-       await Preferences.get({key:"playMinuteSoundSetting"}).then((value)=> {
-            this.shouldPlayMinuteSounds = (value.value == "true" ? true : false)
-        }
-        )
-
-        console.log("fetch preference", this.shouldPlayMinuteSounds)
+        this.shouldPlayMinuteSounds = await this.configuration.shouldPlayMinuteSounds();
     }
     minutesRemaining(minutesRemaining:number){
 
@@ -87,5 +89,5 @@ class DebateSoundManager  {
     }
 }
 
-const debateSoundManager = new DebateSoundManager();
+const debateSoundManager = new DebateSoundManager(Settings);
 export default debateSoundManager;
